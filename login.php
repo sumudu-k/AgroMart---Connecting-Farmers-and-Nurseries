@@ -1,3 +1,38 @@
+<?php
+session_start();
+include 'config.php';
+
+if (isset($_POST['login'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Check if the user exists in the database
+    $sql = "SELECT * FROM users WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    if ($user) {
+        if (password_verify($password, $user['password'])) {
+            // Password is correct, start the session
+            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['username'] = $user['username'];
+
+            header("Location: home.php");
+
+            exit();
+        } else {
+            echo "Invalid password!";
+        }
+    } else {
+        echo "User not found!";
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
