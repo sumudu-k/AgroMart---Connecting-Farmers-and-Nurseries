@@ -23,6 +23,21 @@ if (isset($_POST['submit'])) {
     $stmt->bind_param("ssdsiss", $title, $description, $price, $phone_number, $user_id, $category_id, $district);
     $stmt->execute();
     $ad_id = $conn->insert_id;
+
+    for ($i = 0; $i < count($_FILES['images']['name']); $i++) {
+        if ($_FILES['images']['error'][$i] == 0) {
+            $image_name = basename($_FILES['images']['name'][$i]);
+            $target_path = 'uploads/' . $image_name;
+
+            if (move_uploaded_file($_FILES['images']['tmp_name'][$i], $target_path)) {
+                $img_sql = "INSERT INTO ad_images (ad_id, image_path) VALUES (?, ?)";
+                $stmt_img = $conn->prepare($img_sql);
+                $stmt_img->bind_param("is", $ad_id, $target_path);
+                $stmt_img->execute();
+            }
+        }
+    }
+    echo "Ad and images uploaded successfully!";
 }
 ?>
 
