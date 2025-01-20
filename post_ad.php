@@ -1,3 +1,31 @@
+<?php
+
+session_start();
+include 'config.php';
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
+
+if (isset($_POST['submit'])) {
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+    $price = $_POST['price'];
+    $phone_number = $_POST['phone_number'];
+    $district = $_POST['district'];
+    $user_id = $_SESSION['user_id'];
+    $category_id = $_POST['category'];
+
+    // Insert ad details into the ads table
+    $ad_sql = "INSERT INTO ads (title, description, price, phone_number, user_id, category_id, district) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($ad_sql);
+    $stmt->bind_param("ssdsiss", $title, $description, $price, $phone_number, $user_id, $category_id, $district);
+    $stmt->execute();
+    $ad_id = $conn->insert_id;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +37,12 @@
     <input type="number" name="price" placeholder="Price" required><br>
     <label>Category:</label>
     <select name="category" required>
-
+        <?php
+        $categories = $conn->query("SELECT * FROM categories");
+        while ($category = $categories->fetch_assoc()) {
+            echo "<option value='{$category['category_id']}'>{$category['category_name']}</option>";
+        }
+        ?>
     </select><br>
     <label>District:</label>
     <select name="district" required>
