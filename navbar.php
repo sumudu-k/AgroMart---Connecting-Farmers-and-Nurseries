@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navbar</title>
     <style>
-    /* Navbar CSS */
+    
     body {
         margin: 0;
         font-family: Arial, sans-serif;
@@ -99,7 +99,7 @@
         color: black;
     }
 
-    /* Search Bar */
+   
     .search-container {
         float: left;
         padding: 14px 20px;
