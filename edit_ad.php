@@ -26,7 +26,7 @@ $categories_result = $conn->query($categories_sql);
 
 // Handle form submission
 if (isset($_POST['submit'])) {
-    // Update the ad details
+ 
     $title = $_POST['title'];
     $description = $_POST['description'];
     $price = $_POST['price'];
@@ -59,19 +59,19 @@ if (isset($_POST['submit'])) {
     // Handle image deletions
     if (isset($_POST['delete_images'])) {
         foreach ($_POST['delete_images'] as $image_id) {
-            // Delete the image from the database and server
+          
             $del_img_sql = "SELECT image_path FROM ad_images WHERE image_id = ?";
             $stmt = $conn->prepare($del_img_sql);
             $stmt->bind_param("i", $image_id);
             $stmt->execute();
             $img_path = $stmt->get_result()->fetch_assoc()['image_path'];
 
-            // Delete image file from server
+        
             if (file_exists($img_path)) {
                 unlink($img_path);
             }
 
-            // Delete image from database
+        
             $delete_sql = "DELETE FROM ad_images WHERE image_id = ?";
             $stmt = $conn->prepare($delete_sql);
             $stmt->bind_param("i", $image_id);
@@ -79,7 +79,7 @@ if (isset($_POST['submit'])) {
         }
     }
 
-    // Reload the page to show the updated data
+    
     header("Location: edit_ad.php?ad_id=" . $ad_id);
     exit();
 }
@@ -101,9 +101,9 @@ if (isset($_POST['submit'])) {
     </style>
     <script>
         function removeImage(button) {
-            // Remove image from view
+      
             button.parentElement.classList.add('hidden');
-            // Enable hidden checkbox for the image to mark it for deletion
+
             button.nextElementSibling.checked = true;
         }
     </script>
@@ -114,7 +114,7 @@ if (isset($_POST['submit'])) {
 <h2>Edit Ad</h2>
 
 <form action="edit_ad.php?ad_id=<?= $ad_id ?>" method="POST" enctype="multipart/form-data" class="ad-form">
-    <!-- Existing fields -->
+
     <label for="title">Ad Title</label>
     <input type="text" name="title" value="<?= $ad['title'] ?>" required>
 
@@ -167,7 +167,6 @@ if (isset($_POST['submit'])) {
         <option value="Vavuniya" <?= $ad['district'] == 'Vavuniya' ? 'selected' : '' ?>>Vavuniya</option>
     </select>
 
-    <!-- Existing fields for images and submit button -->
     <h3>Current Images</h3>
     <?php while ($img_row = $img_result->fetch_assoc()): ?>
         <div class="image-wrapper">
