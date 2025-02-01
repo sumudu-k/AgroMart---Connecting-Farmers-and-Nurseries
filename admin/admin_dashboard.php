@@ -1,3 +1,14 @@
+<?php
+session_start();
+if (!isset($_SESSION['admin_logged_in'])) {
+    header("Location: admin_login.php");
+    exit();
+}
+
+include '../config.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -81,6 +92,16 @@
         <?php include 'admin_navbar.php'; ?>
         <h1>Welcome to Admin Dashboard</h1>
 
+        <?php if (isset($_SESSION['success'])): ?>
+        <div class="success-message"><?= $_SESSION['success'];
+                                            unset($_SESSION['success']); ?></div>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['error'])): ?>
+        <div class="error-message"><?= $_SESSION['error'];
+                                        unset($_SESSION['error']); ?></div>
+        <?php endif; ?>
+
         <thead>
             <tr>
                 <th>Category Name</th>
@@ -88,7 +109,19 @@
             </tr>
         </thead>
         <tbody>
-
+            <?php
+            // Fetch categories from the database
+            $categories = $conn->query("SELECT * FROM categories");
+            while ($category = $categories->fetch_assoc()):
+            ?>
+            <tr>
+                <td><?= htmlspecialchars($category['category_name']); ?></td>
+                <td>
+                    <a href="delete_category.php?category_id=<?= $category['category_id']; ?>" class="delete-button"
+                        onclick="return confirm('Are you sure you want to delete this category?')">Delete</a>
+                </td>
+            </tr>
+            <?php endwhile; ?>
         </tbody>
     </div>
 </body>
