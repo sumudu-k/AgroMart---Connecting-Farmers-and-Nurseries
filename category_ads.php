@@ -6,6 +6,7 @@ include 'navbar.php';
 if (isset($_GET['category_id_qp'])) {
     $category_id = $_GET['category_id_qp'];
 
+    // Fetch all ads for the selected category
     $ad_sql = "SELECT ads.*, categories.category_name 
            FROM ads 
            JOIN categories ON ads.category_id = categories.category_id 
@@ -14,8 +15,9 @@ if (isset($_GET['category_id_qp'])) {
     $stmt->bind_param("i", $category_id);
     $stmt->execute();
     $result = $stmt->get_result();
+    
     ?>
-
+    
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -23,6 +25,7 @@ if (isset($_GET['category_id_qp'])) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Category Ads</title>
         <style>
+        
             .ad-container {
                 display: flex;
                 flex-wrap: wrap;
@@ -32,6 +35,7 @@ if (isset($_GET['category_id_qp'])) {
                 max-width: 1200px;
             }
 
+            
             .ad-card {
                 background-color: #f9f9f9;
                 border: 1px solid #ddd;
@@ -44,11 +48,13 @@ if (isset($_GET['category_id_qp'])) {
                 padding: 10px;
             }
 
+            
             .ad-card:hover {
                 transform: translateY(-5px);
                 box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
             }
 
+         
             .ad-card img {
                 width: 100%;
                 height: 150px;
@@ -56,6 +62,7 @@ if (isset($_GET['category_id_qp'])) {
                 border-radius: 8px;
             }
 
+           
             .ad-card h4 {
                 font-size: 18px;
                 color: #333;
@@ -64,12 +71,14 @@ if (isset($_GET['category_id_qp'])) {
                 text-transform: capitalize;
             }
 
+            
             .ad-card p {
                 font-size: 16px;
                 color: #007b00;
                 font-weight: 500;
             }
 
+          
             @media (max-width: 768px) {
                 .ad-card {
                     width: 45%;
@@ -93,22 +102,33 @@ if (isset($_GET['category_id_qp'])) {
                     while ($ad = $result->fetch_assoc()) {
                         $ad_id = $ad['ad_id'];
 
+                       
                         $img_sql = "SELECT image_path FROM ad_images WHERE ad_id = ? LIMIT 1";
                         $stmt_img = $conn->prepare($img_sql);
                         $stmt_img->bind_param("i", $ad_id);
                         $stmt_img->execute();
                         $img_result = $stmt_img->get_result();
-                        $image = $img_result->fetch_assoc();
+                        $image = $img_result->fetch_assoc(); 
+
+                   
+                        $description = substr(htmlspecialchars($ad['description']), 0, 100);
+                        if (strlen($ad['description']) > 100) {
+                            $description .= '...'; 
+                        }
                         ?>
                         <div class="ad-card">
                             <a href="view_ad.php?ad_id=<?= $ad_id; ?>">
+                              
                                 <?php if ($image): ?>
                                     <img src="<?= htmlspecialchars($image['image_path']); ?>" alt="<?= htmlspecialchars($ad['title']); ?>">
+                                <?php else: ?>
+                                    <img src="images/placeholder/No_Image_AD.png" alt="No Image Available">
                                 <?php endif; ?>
                                 <h4><?= htmlspecialchars($ad['title']); ?></h4>
+                                <p><?= $description; ?></p> 
                                 <p>Price: Rs <?= htmlspecialchars($ad['price']); ?></p>
                                 <p>District: <?= htmlspecialchars($ad['district']); ?></p>
-                                <p>Posted on: <?= date('F j, Y', strtotime($ad['created_at'])); ?></p>
+                                <p>Posted on: <?= date('F j, Y', strtotime($ad['created_at'])); ?></p> 
                             </a>
                         </div>
                         <?php
