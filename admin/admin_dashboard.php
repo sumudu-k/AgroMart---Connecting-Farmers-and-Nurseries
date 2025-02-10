@@ -46,34 +46,6 @@ include '../config.php';
         padding: 0px 20px;
         width: 100%;
     }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-
-    table,
-    th,
-    td {
-        border: 1px solid black;
-    }
-
-    th,
-    td {
-        padding: 12px;
-        text-align: left;
-    }
-
-    .delete-button {
-        color: red;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
-    .delete-button:hover {
-        text-decoration: underline;
-    }
     </style>
 </head>
 
@@ -102,27 +74,6 @@ include '../config.php';
                                         unset($_SESSION['error']); ?></div>
         <?php endif; ?>
 
-        <thead>
-            <tr>
-                <th>Category Name</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            // Fetch categories from the database
-            $categories = $conn->query("SELECT * FROM categories");
-            while ($category = $categories->fetch_assoc()):
-            ?>
-            <tr>
-                <td><?= htmlspecialchars($category['category_name']); ?></td>
-                <td>
-                    <a href="delete_category.php?category_id=<?= $category['category_id']; ?>" class="delete-button"
-                        onclick="return confirm('Are you sure you want to delete this category?')">Delete</a>
-                </td>
-            </tr>
-            <?php endwhile; ?>
-        </tbody>
     </div>
 </body>
 
