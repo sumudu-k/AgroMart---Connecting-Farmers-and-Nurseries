@@ -45,8 +45,11 @@ if (isset($_POST['login'])) {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            background-color: #f3f4f6;
             font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f3f4f6;
         }
 
         /* Centered Wrapper */
@@ -54,37 +57,38 @@ if (isset($_POST['login'])) {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 90vh;
+            min-height: 100vh;
+            padding: 20px;
         }
 
         /* Login Container Styling */
         .login-container {
-            align-items: center;
             display: flex;
-            gap: 10px;
+            gap: 20px;
             background-color: #e2e6eb;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 50%;
+            max-width: 1300px;
         }
 
         .plant-image {
-            width: 300px;
-            height: 300px;
-            background-image: url("images/login image.png"); /* Replace with actual image path */
+            flex: 0.75;
+            background-image: url("images/login image.png");
             background-size: cover;
             background-position: center;
+            border-radius: 10px;
+            min-height: 300px;
         }
 
         .login-form {
-            flex: 1;
+            flex: 1.25;
             max-width: 100%;
             padding: 20px;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-left: auto;
         }
 
         .login-form h2 {
@@ -95,7 +99,7 @@ if (isset($_POST['login'])) {
         .login-form form {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 10px;
         }
 
         .login-form input {
@@ -132,6 +136,61 @@ if (isset($_POST['login'])) {
             font-weight: bold;
         }
 
+        /* Responsive Styles */
+        @media (max-width: 850px) {
+            .login-container {
+                flex-direction: column;
+                align-items: center;
+                width: 80%;
+                padding: 10px;
+            }
+
+            .plant-image {
+                width: 80%;
+                height: auto;
+                min-height: 350px;
+                margin-bottom: 20px;
+            }
+
+            .login-form {
+                width: 90%;
+            }
+        }
+
+        @media (min-width: 850px) and (max-width: 1300px) {
+            .login-container {
+                flex-direction: row;
+                width: 90%;
+                padding: 15px;
+            }
+
+            .plant-image {
+                width: 50%;
+                min-height: 300px;
+            }
+
+            .login-form {
+                width: 50%;
+            }
+        }
+
+        @media (min-width: 1301px) {
+            .login-container {
+                flex-direction: row;
+                width: 60%;
+                gap: 30px;
+            }
+
+            .plant-image {
+                width: 45%;
+                min-height: 400px;
+            }
+
+            .login-form {
+                width: 55%;
+            }
+        }
+
     </style>
 
 </head>
@@ -139,16 +198,16 @@ if (isset($_POST['login'])) {
 <body>
     <div class="wrapper">
         <div class="login-container">
-            <div class="plant-image"></div>
-            <div class="login-form">
+            <div class="card plant-image"></div>
+            <div class="card login-form">
                 <h2>Welcome Back</h2>
                 <form action="login.php" method="post">
                     <input type="email" name="email" placeholder="Email" required><br>
                     <input type="password" name="password" placeholder="Password" required><br>
                     <button type="submit" name="login">Login</button>
                 </form>
-                <p><a class="Forgot_Password" href="forgotpw.php">Forgot Password?</a> &ensp; <a class ="link" href="forgotpw.php">Reset here</a>.</p></p>
-                <p><h class="p1">Haven't an account yet? &ensp; <a class="link" href="register.php">Register here</a>.</p>
+                <p> Forgot Password? &ensp; <a class ="link" href="forgotpw.php">Reset here</a>.</p></p>
+                <p> Haven't an account yet? &ensp; <a class="link" href="register.php">Register here</a>.</p>
             </div>   
         </div>
     </div> 
