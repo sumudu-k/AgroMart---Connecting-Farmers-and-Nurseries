@@ -115,7 +115,7 @@ if (isset($_POST['register'])) {
         .register-form form {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 5px;
         }
 
         .register-form input {
@@ -132,6 +132,7 @@ if (isset($_POST['register'])) {
             font-size: 18px;
             border: none;
             border-radius: 5px;
+            margin-bottom: 10px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
@@ -143,7 +144,7 @@ if (isset($_POST['register'])) {
         .p1 {
             font-size: 14px;
             color: black;
-            margin-top: 10px;
+            margin: 10px 0;
         }
 
         .link {
@@ -170,7 +171,7 @@ if (isset($_POST['register'])) {
                     <input type="password" name="password" placeholder="Password" required><br>
                     <button type="submit" name="register">Register</button>
                 </form>
-                <p class="p1">Already have an account? <a class="link" href="login.php">Login here</a>.</p>
+                <p class="p1">Already have an account? &ensp; <a class="link" href="login.php">Login here</a>.</p>
             </div>
         </div>
     </div>
