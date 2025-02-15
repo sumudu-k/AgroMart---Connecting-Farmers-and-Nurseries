@@ -56,19 +56,124 @@ if (isset($_POST['register'])) {
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f3f4f6;
+        }
+
+        /* Centered Wrapper */
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Register Container Styling */
+        .register-container {
+            display: flex;
+            gap: 20px;
+            background-color: #e2e6eb;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 75%;
+        }
+
+        .plant-image {
+            flex: 1;
+            background-image: url("images/register_image.png");
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            min-height: 300px;
+        }
+
+        .register-form {
+            flex: 1;
+            max-width: 100%;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .register-form h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .register-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .register-form input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .register-form button {
+            background-color: #007a33;
+            color: #fff;
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .register-form button:hover {
+            background-color: #005922;
+        }
+
+        .p1 {
+            font-size: 14px;
+            color: black;
+            margin-top: 10px;
+        }
+
+        .link {
+            text-decoration: none;
+            color: #0917ee;
+            font-weight: bold;
+        }
+    </style>
+
 </head>
 
 <body>
-    <h2>Register</h2>
-    <form action="register.php" method="POST">
-        <input type="text" name="username" placeholder="Username" required><br>
-        <input type="email" name="email" placeholder="Email" required><br>
-        <input type="email" name="confirm_email" placeholder="Confirm Email" required><br>
-        <input type="text" name="contact" placeholder="Contact Number" required><br>
-        <input type="text" name="address" placeholder="Address" required><br>
-        <input type="password" name="password" placeholder="Password" required><br>
-        <button type="submit" name="register">Register</button>
-    </form>
+<div class="wrapper">
+        <div class="register-container">
+            <div class="plant-image"></div>
+            <div class="register-form">
+                <h2>Register</h2>
+                <form action="register.php" method="POST">
+                    <input type="text" name="username" placeholder="Username" required><br>
+                    <input type="email" name="email" placeholder="Email" required><br>
+                    <input type="email" name="confirm_email" placeholder="Confirm Email" required><br>
+                    <input type="text" name="contact" placeholder="Contact Number" required><br>
+                    <input type="text" name="address" placeholder="Address" required><br>
+                    <input type="password" name="password" placeholder="Password" required><br>
+                    <button type="submit" name="register">Register</button>
+                </form>
+                <p class="p1">Already have an account? <a class="link" href="login.php">Login here</a>.</p>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
