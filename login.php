@@ -64,7 +64,7 @@ if (isset($_POST['login'])) {
         /* Login Container Styling */
         .login-container {
             display: flex;
-            gap: 20px;
+            align-content: center;
             background-color: #e2e6eb;
             padding: 20px;
             border-radius: 10px;
@@ -93,13 +93,13 @@ if (isset($_POST['login'])) {
 
         .login-form h2 {
             font-size: 24px;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
         }
 
         .login-form form {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            /* gap: 5px; */
         }
 
         .login-form input {
@@ -116,6 +116,7 @@ if (isset($_POST['login'])) {
             font-size: 18px;
             border: none;
             border-radius: 5px;
+            margin-bottom: 15px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
@@ -127,7 +128,7 @@ if (isset($_POST['login'])) {
         p {
             font-size: 15px;
             color: black;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
         .link {
