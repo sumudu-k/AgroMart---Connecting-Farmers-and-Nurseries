@@ -172,6 +172,110 @@ $ads_result = $conn->query($ads_query);
         margin-bottom: 20px;
     }
     
+    /* Ads Section CSS */
+    .ads-container {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
+        background-color: #e9ecef;
+        border-radius: 10px;
+        padding: 40px 0;
+        margin: 30px 0;
+    }
+
+    /* Center the title in the ads container */
+    .ads-title {
+        text-align: center;
+        width: 100%;
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .sugestion-ads {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        border-radius: 10px;
+        padding: 20px 0;
+    }
+
+    .ad-card {
+        width: calc(20% - 25px); /* Adjust width to fit four cards per row */
+        text-align: center;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        margin: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .ad-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        border: 1px solid #f09319;
+    }
+
+    .ad-card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        mix-blend-mode: multiply;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .ad-card h4 {
+        font-size: 1.2rem;
+        color: #333;
+        margin: 5px 0;
+    }
+
+    .ad-card .description {
+        line-height: 1.4;
+        font-size: 14px;
+        color: #555;
+        text-align: left;
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* Limit to 10 lines */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 0px 15px 10px 15px;
+    }
+    .ad-details {
+        margin: 5px 15px 10px 15px;
+        text-align: center;
+    }
+    .ad-details p {
+        line-height: 1.4;
+        font-size: 14px;
+        color: #555;
+    }
+
+    /* View All Products Button */
+    .view-all-btn {
+        text-align: center;
+        /* margin: 20px 0 30px 0; */
+    }
+
+    .view-all-btn button {
+        padding: 12px 25px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        background-color: #f09319;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .view-all-btn button:hover {
+        background-color: #cb790d;
+    }
 
 
     </style>
@@ -232,6 +336,32 @@ $ads_result = $conn->query($ads_query);
                 <p>AgroMart is an innovative online platform developed by Idea Innovators (Pvt) Ltd. that aims to revolutionize Sri Lanka's agricultural sector by creating a seamless connection between farmers and nurseries. The platform serves as a centralized marketplace where farmers can easily access detailed crop information, compare prices, and find quality agricultural resources, while nurseries can expand their customer reach through a user-friendly advertisement system. Through its robust search functionality and comprehensive product categorization, AgroMart eliminates the traditional challenges farmers face in finding suitable nurseries, while simultaneously providing nurseries with direct market access and simplified product promotion capabilities. This digital bridge between agricultural buyers and sellers not only streamlines the supply chain but also fosters a more efficient and transparent marketplace for Sri Lanka's farming community.</p>
             </div>
         </section>
+
+        <!-- Ads area HTML -->
+        <div class="ads-container">
+            <h1 class="ads-title">Find What You Want Here</h1>
+            <div class="sugestion-ads">
+                <?php if ($ads_result->num_rows > 0): ?>
+                    <?php while ($ad = $ads_result->fetch_assoc()): ?>
+                        <div class="ad-card" onclick="window.location.href='view_ad.php?ad_id=<?= $ad['ad_id']; ?>'">
+                            <img src="<?= htmlspecialchars($ad['image']); ?>" alt="Ad Image">
+                            <h4><?= htmlspecialchars($ad['title']); ?></h4>
+                            <p class="description"><?= htmlspecialchars(substr($ad['description'], 0, 100)) . '...'; ?></p>
+                            <div class="ad-details">
+                              <p>Rs <?= htmlspecialchars($ad['price']); ?></p>
+                              <p><strong>District:</strong> <?= htmlspecialchars($ad['district']); ?></p>
+                              <p><strong>Posted on:</strong> <?= htmlspecialchars(date('Y-m-d', strtotime($ad['created_at']))); ?></p>
+                            </div>
+                        </div>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <p>No ads available at the moment.</p>
+                <?php endif; ?>
+            </div>
+            <div class="view-all-btn">
+                <a href="all_ads.php"><button>View All Ads</button></a>
+            </div>
+        </div>
 
     </div>
     <?php
