@@ -363,6 +363,73 @@ $ads_result = $conn->query($ads_query);
             </div>
         </div>
 
+        <section class="contact-section">
+          <h1>Contact</h1>
+             <div class="contact-container">
+                <!-- Contact Info -->
+                <div class="contact-info">
+                  <h2 class="contact-title">Contact Information</h2>
+
+                  <div class="info-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <div>
+                      <h3>Our Location</h3>
+                      <hr />
+                      <p>
+                        A108 Adam Street,<br />
+                        New York,<br />
+                        NY 535022
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="info-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <div>
+                      <h3>Phone Number</h3>
+                      <hr />
+                      <p>057 2229534</p>
+                      <p>071 3864286</p>
+                    </div>
+                  </div>
+
+                  <div class="info-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    <div>
+                      <h3>Email Address</h3>
+                      <hr />
+                      <p>info@agromt.com</p>
+                      <p>contact@agromt.com</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Get in Touch Form -->
+                <div class="get-in-touch">
+                  <h2>Get In Touch</h2>
+                    <form action="https://api.web3forms.com/submit" method="POST">
+                    <div class="form-row">
+                      <input
+                        type="hidden"
+                        name="access_key"
+                        value="83e39209-89c2-4845-b467-d7d03f3ba2dd"
+                      />
+                      <input type="text" name="name" placeholder="Your Name" required />
+                      <input
+                        type="email"
+                        name="email"
+                        placeholder="Your Email"
+                        required
+                      />
+                    </div>
+                    <input type="text" name="subject" placeholder="Subject" />
+                    <textarea placeholder="Message" name="message" required></textarea>
+                    <button type="submit">Send Message</button>
+                  </form>
+                </div>
+              </div>
+        </section>
+
     </div>
     <?php
     $conn->close();
