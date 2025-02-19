@@ -24,97 +24,43 @@ $ads_result = $conn->query($ads_query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Categories</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <title>AgroMart Home</title>
     <style>
-    .category-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        margin-top: 20px;
-    }
-
-    .category-card {
-        width: calc(25% - 20px);
-        margin: 10px;
-        text-align: center;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        padding: 10px;
-        background-color: #f9f9f9;
-        box-sizing: border-box;
-    }
-
-    .category-card img {
-        width: 100%;
-        height: auto;
-        max-height: 150px;
-        object-fit: cover;
-        border-radius: 5px;
-    }
-
-    .category-card h3 {
-        font-size: 1.2rem;
-        margin: 10px 0;
-    }
-
-    .category-card a {
-        text-decoration: none;
-        color: black;
-    }
-
-    .category-card a:hover {
-        color: #007bff;
-    }
-
-
-    body,
-    html {
-        overflow-x: hidden;
-    }
-
-
-    .ads-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        margin-top: 20px;
-    }
-
-    .ad-card {
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        overflow: hidden;
-        width: calc(25% - 20px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s, box-shadow 0.2s;
-        text-align: center;
-        cursor: pointer;
-        margin-bottom: 20px;
-    }
-
-    .ad-card img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        border-radius: 8px;
-    }
-
-    .ad-card h4 {
-        font-size: 1.1rem;
-        margin: 10px 0 5px 0;
-    }
-
-    .ad-card p {
-        font-size: 0.9rem;
-        color: #555;
-        margin: 5px 0;
-    }
     </style>
 </head>
 
 <body>
 
+    <!-- Home page banner slider -->
+    <div class="banner-image">
+        <img class="banner-slides active" src="images/cover.jpg" alt="Slide 1">
+        <img class="banner-slides" src="images/lettuce-plant-on-field-vegetable-and-agriculture-sunset-and-light-free-photo.jpg" alt="Slide 2">
+        <img class="banner-slides" src="images/iStock-531690340_c_valentinrussanov.webp" alt="Slide 3">
+    </div>
+
+    <script>
+        let slideIndex = 0;
+        const slides = document.getElementsByClassName("banner-slides");
+
+        function showSlides() {
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");
+            }
+
+            slideIndex++;
+
+            if (slideIndex > slides.length) {slideIndex = 1}
+            slides[slideIndex - 1].classList.add("active");
+            setTimeout(showSlides, 3000);
+        }
+
+        showSlides(); // Start the slideshow
+
+    </script>
+
+
+    <!-- Home page category list -->
     <h1>Our Categories</h1>
     <div class="category-container">
         <?php while ($category = $result->fetch_assoc()): ?>
@@ -128,34 +74,32 @@ $ads_result = $conn->query($ads_query);
         <?php endwhile; ?>
     </div>
 
-    <h2>Find What you want here</h2>
-    <div class="ads-container">
-        <?php if ($ads_result->num_rows > 0): ?>
-        <?php while ($ad = $ads_result->fetch_assoc()): ?>
-        <div class="ad-card" onclick="window.location.href='view_ad.php?ad_id=<?= $ad['ad_id']; ?>'">
-            <img src="<?= htmlspecialchars($ad['image']); ?>" alt="Ad Image">
-            <h4><?= htmlspecialchars($ad['title']); ?></h4>
-            <p class="ad-description"><?= htmlspecialchars(substr($ad['description'], 0, 200)) . '...'; ?></p>
-            <p>Rs <?= htmlspecialchars($ad['price']); ?></p>
-            <p><strong>District:</strong> <?= htmlspecialchars($ad['district']); ?></p>
-            <p><strong>Posted on:</strong> <?= htmlspecialchars(date('Y-m-d', strtotime($ad['created_at']))); ?></p>
+    <div class="main-container">
+
+        <!-- category section -->
+        <div class="category-container">
+            <h1 class="category-title">Categories</h1>
+
+            <?php while ($category = $result->fetch_assoc()): ?>
+                <div class="category-card">
+                    <a href="category_ads.php?category_id_qp=<?php echo $category['category_id']; ?>">
+                        <img src="uploads/<?php echo $category['category_image']; ?>" alt="<?php echo $category['category_name']; ?>">
+                    </a>
+                    <h3 class="category-name"><?php echo $category['category_name']; ?></h3>
+                </div>
+            <?php endwhile; ?>
         </div>
-        <?php endwhile; ?>
-        <?php else: ?>
-        <p>No ads available at the moment.</p>
-        <?php endif; ?>
-    </div>
 
-
-    <div style="text-align: center; margin: 20px 0;">
-        <a href="all_ads.php" style="text-decoration: none;">
-            <button
-                style="padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; background-color: #007bff; color: white; cursor: pointer;">
-                View All Ads
-            </button>
-        </a>
-    </div>
-
+        <!-- Welcome section -->
+        <section class="welcome-section">
+            <div class="welcome-image">
+                <img src="images/inner_home_05-1024x768.jpg" alt="Gardening Image">
+            </div>
+            <div class="welcome-text">
+                <h2>Nature In Your House</h2>
+                <p>AgroMart is an innovative online platform developed by Idea Innovators (Pvt) Ltd. that aims to revolutionize Sri Lanka's agricultural sector by creating a seamless connection between farmers and nurseries. The platform serves as a centralized marketplace where farmers can easily access detailed crop information, compare prices, and find quality agricultural resources, while nurseries can expand their customer reach through a user-friendly advertisement system. Through its robust search functionality and comprehensive product categorization, AgroMart eliminates the traditional challenges farmers face in finding suitable nurseries, while simultaneously providing nurseries with direct market access and simplified product promotion capabilities. This digital bridge between agricultural buyers and sellers not only streamlines the supply chain but also fosters a more efficient and transparent marketplace for Sri Lanka's farming community.</p>
+            </div>
+        </section>
 
     <?php
     $conn->close();
