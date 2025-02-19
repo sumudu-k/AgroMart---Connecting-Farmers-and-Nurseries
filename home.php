@@ -27,6 +27,153 @@ $ads_result = $conn->query($ads_query);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <title>AgroMart Home</title>
     <style>
+
+    /* General Styles */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+    }
+
+    /* Banner Image */
+    .banner-image {
+        position: relative;
+        width: 100%;
+        height: 750px;
+        overflow: hidden;
+    }
+
+    .banner-slides {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 1s ease-in-out; /* Smooth fade transition */
+    }
+
+    .banner-slides.active {
+        opacity: 1;
+        z-index: 1;
+    }
+
+
+    .main-container {
+        width: 75%;
+        margin: 0 auto;/* Centers the container */
+    }
+
+
+    /* Category Section */
+    
+    /* Container for all categories */
+    .category-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        border-radius: 10px;
+        margin-top: 30px;
+        padding: 40px 0 50px 0;
+        background-color: #e9ecef;
+    }
+
+    /* Categories title */
+    .category-title {
+        text-align: center;
+        width: 100%;
+        font-size: 2.3rem;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    /* For category card */
+    .category-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 200px;
+    }
+
+    .category-card a {
+        display: block;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        overflow: hidden;
+        background-color: #f5f5a9;
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .category-card:hover {
+        transform: scale(1.05);
+    }
+
+    .category-card img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    /* Category name  */
+    .category-name {
+        margin-top: 20px;
+        font-size: 1.2rem;
+        color: #333;
+        font-weight: bold;
+    }
+
+    /* Welcome Section */
+    .welcome-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 10px;
+        margin-top: 30px;
+        padding: 40px;
+    }
+
+    .welcome-image {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+    }
+
+    .welcome-image img {
+        max-width: 100%;
+        height: auto;
+        mix-blend-mode: multiply;
+        border-radius: 10px;
+    }
+
+    .welcome-text {
+        flex: 1;
+        margin-left: 20px;
+    }
+
+    .welcome-text h2 {
+        color: #ff8c00;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+
+    .welcome-text p {
+        color: #666;
+        font-size: 1.1rem;
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-line-clamp: 15; /* Limit to 10 lines */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 20px;
+    }
+    
+
+
     </style>
 </head>
 
@@ -59,21 +206,6 @@ $ads_result = $conn->query($ads_query);
 
     </script>
 
-
-    <!-- Home page category list -->
-    <h1>Our Categories</h1>
-    <div class="category-container">
-        <?php while ($category = $result->fetch_assoc()): ?>
-        <div class="category-card">
-            <a href="category_ads.php?category_id_qp=<?php echo $category['category_id']; ?>">
-                <img src="uploads/<?php echo $category['category_image']; ?>"
-                    alt="<?php echo $category['category_name']; ?>">
-                <h3><?php echo $category['category_name']; ?></h3>
-            </a>
-        </div>
-        <?php endwhile; ?>
-    </div>
-
     <div class="main-container">
 
         <!-- category section -->
@@ -101,6 +233,7 @@ $ads_result = $conn->query($ads_query);
             </div>
         </section>
 
+    </div>
     <?php
     $conn->close();
     ?>
