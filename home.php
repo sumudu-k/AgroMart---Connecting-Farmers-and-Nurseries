@@ -277,6 +277,163 @@ $ads_result = $conn->query($ads_query);
         background-color: #cb790d;
     }
 
+    /* Contact Section */
+    .contact-section {
+        border-radius: 10px;
+        padding: 50px 0;
+        margin: 30px 0;
+    }
+
+    .contact-section h1 {
+        text-align: center;
+        width: 100%;
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .contact-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        padding: 0;
+    }
+
+    .contact-info {
+        background-color: rgba(0, 100, 0, 0.7);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 3px 3px 3px 3px rgb(240, 147, 25, 0.8);
+        width: 45%;
+    }
+    .contact-title {
+        text-align: center;
+        font-size: 1.8rem;
+        color: white;
+        margin-bottom: 20px;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.6);
+        width: 80%;
+        border-radius: 10px;
+        padding: 10px;
+        margin: 0 auto 20px auto;
+    }
+
+    .info-item i {
+        min-width: 25px;
+        height: 25px;
+        color: #181c14;
+        font-size: 1.5rem;
+        margin: 0 20px 0 10px;
+    }
+
+    .info-item div {
+        width: 100%;
+    }
+
+    .contact-info h3 {
+        text-align: left;
+        color: #181c14;
+    }
+
+    .info-item div hr {
+        border: none;
+        width: 80px;
+        height: 3px;
+        background-color: #181c14;
+        border-radius: 10px;
+        margin: 5px 0 15px 0;
+    }
+
+    .contact-info p {
+        text-align: left;
+        color: #3c3d37;
+        margin-bottom: 8px;
+        font-size: 1rem;
+    }
+
+    .get-in-touch {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.1);
+        width: 45%;
+    }
+
+    .get-in-touch h2 {
+        color: #333;
+        text-align: center;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    .get-in-touch p {
+        text-align: center;
+        font-size: 1.2rem;
+        color: #666;
+        margin-bottom: 20px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 10px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        resize: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    textarea:focus {
+        outline: none;
+        border-color: #f09319;
+    }
+
+    input[type="text"]::placeholder,
+    input[type="email"]::placeholder,
+    textarea::placeholder {
+        color: #888;
+        font-size: 0.9rem;
+        font-style: italic;
+        letter-spacing: 0.5px;
+        font-weight: 500;
+    }
+    textarea {
+        height: 200px;
+    }
+
+    button[type="submit"] {
+        font-size: 16px;
+        background-color: #f09319;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #cb790d;
+    }
+
 
     </style>
 </head>
@@ -376,9 +533,9 @@ $ads_result = $conn->query($ads_query);
                       <h3>Our Location</h3>
                       <hr />
                       <p>
-                        A108 Adam Street,<br />
-                        New York,<br />
-                        NY 535022
+                        No 15,<br />
+                        Haputhalegama,<br />
+                        Haputhale
                       </p>
                     </div>
                   </div>
