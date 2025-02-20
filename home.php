@@ -586,8 +586,47 @@ $ads_result = $conn->query($ads_query);
                 </div>
               </div>
         </section>
-
     </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-container">
+        <div class="footer-info">
+          <h3>AgroMart</h3>
+          <address>A108 Adam Street, New York, NY 535022</address>
+          <p>Phone: +1 5589 55488 5</p>
+          <p>Email: info@example.com</p>
+        </div>
+        <div class="footer-links">
+          <h3>Useful Links</h3>
+          <hr />
+          <ul>
+            <li><a href="home.php">Home</a></li>
+            <li><a href="post_ads.php">POST ADS</a></li>
+            <li><a href="categories.php">Categories</a></li>
+          </ul>
+        </div>
+        <div class="social-links">
+          <h3>Social Links</h3>
+          <hr />
+          <ul>
+            <li>
+              <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fa-brands fa-youtube"></i></a>
+            </li>
+          </ul>
+        </div>
+        <!-- Add more footer sections as needed -->
+      </div>
+    </footer>
     <?php
     $conn->close();
     ?>
