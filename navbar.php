@@ -313,6 +313,7 @@
             <ul>
                 <li><a href="my_ads.php">My Ads</a></li>
                 <li><a href="post_ad.php" class="place-ad">Post Ad</a></li>
+                <li><a href="wishlist.php">Wishlist</a></li>
                 
                 <?php if (isset($_SESSION['username'])): ?>
                     <li><a href="#">Welcome,<?= $_SESSION['username']; ?></a></li>
