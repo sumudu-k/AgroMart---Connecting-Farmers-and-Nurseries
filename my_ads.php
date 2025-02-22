@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'config.php'; 
+include 'navbar.php';
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
@@ -29,55 +30,112 @@ $result = $stmt->get_result();
     <title>My Ads</title>
     <style>
 
-    .card-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    /* Container width */
+
+    .title {
+        background-color: #dbffc7;
+        text-align: left;
+        text-transform: capitalize;
+        padding: 20px 12.5%;
+        font-size: 2.2rem;
+    }
+
+    .container {
+        width: 75%; /* Changed to 90% for better responsiveness */
+        margin: 0 auto;
+    }
+
+    /* Card layout for ads */
+    .ads-container {
+        display: flex;
+        flex-wrap: wrap;
         gap: 20px;
-        margin: 20px;
+        justify-content: center;
+        margin: 35px 0;
     }
 
-    .card {
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        padding: 15px;
+    .ad-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         text-align: center;
-        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+        width: calc(25% - 20px); /* 4 cards per row with gap consideration */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+        padding: 15px;
     }
 
-    .card img {
+    .ad-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .ad-card img {
         width: 100%;
         height: 200px;
         object-fit: cover;
+        mix-blend-mode: multiply;
         border-radius: 8px;
     }
 
-    .card h4 {
-        margin: 10px 0;
+    .ad-card h4 {
+        font-size: 16px;
+        color: #333;
+        margin: 10px 0 5px 0;
+        font-weight: 600;
+        text-transform: capitalize;
     }
 
-    .card p {
+    .ad-card p {
+        line-height: 1.4;
+        font-size: 14px;
         color: #555;
+        text-align: left;
+        display: -webkit-box;
+        -webkit-line-clamp: 4; /* Limit to 10 lines */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 10px 10px;
     }
 
-    .card .btn {
+    .ad-card .price {
+        font-weight: 700;
+        color: #b03052;
+        margin: 10px 10px;
+    }
+
+    /* Button styles */
+    .ad-buttons {
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn {
+        text-decoration: none;
         padding: 10px 15px;
         border: none;
         border-radius: 5px;
         background-color: #28a745;
         color: white;
         cursor: pointer;
+        margin: 5px; 
+        display: inline-block; 
     }
 
-    .card .btn:hover {
+    .btn:hover {
         background-color: #218838;
     }
 
-    .card .btn-danger {
+    .btn-danger {
         background-color: red;
         cursor: pointer;
     }
 
-    .card .btn-danger:hover {
+    .btn-danger:hover {
         background-color: darkred;
     }
 
@@ -86,6 +144,7 @@ $result = $stmt->get_result();
         font-size: 1.5rem;
         margin-top: 50px;
     }
+
     </style>
 
     <script>
@@ -100,36 +159,39 @@ $result = $stmt->get_result();
 
 <body>
 
-    <?php include 'navbar.php'; ?>
+<h2 class="title">My Ads</h2>
+<div class="container">
+    
 
-    <h2 style="text-align: center;">My Ads</h2>
-
-    <div class="card-container">
-        <?php
-    if ($result->num_rows > 0) {
-
-        while ($row = $result->fetch_assoc()) {
-            $images = explode(',', $row['images']);
-            $first_image = !empty($images[0]) ? $images[0] : 'default_image.jpg'; 
+    <div class="ads-container">
+        <?php if ($result->num_rows > 0): ?>
+            <?php while ($row = $result->fetch_assoc()): 
+                $images = explode(',', $row['images']);
+                $first_image = !empty($images[0]) ? $images[0] : 'default_image.jpg';
             ?>
-        <div class="card">
-            <img src="<?= $first_image ?>" alt="Ad Image">
-            <h4><?= $row['title'] ?></h4>
-            <p><?= $row['description'] ?></p>
-            <p>Price: $<?= number_format($row['price'], 2) ?></p>
-            <a href="view_ad.php?ad_id=<?= $row['ad_id'] ?>" class="btn">View Ad</a>
-            <br><br>
-            <a href="edit_ad.php?ad_id=<?= $row['ad_id'] ?>" class="btn">Edit Ad</a>
-            <button class="btn btn-danger" onclick="confirmDelete(<?= $row['ad_id'] ?>)">Delete Ad</button>
-        </div>
-        <?php
-        }
-    } else {
-        echo "<p class='no-ads'>You haven't placed any ads yet!</p>";
-    }
-    ?>
+                <div class="ad-card">
+                    <div class="details">
+                        <img src="<?= htmlspecialchars($first_image) ?>" alt="Ad Image">
+                        <h4><?= htmlspecialchars($row['title']) ?></h4>
+                        <p><?= htmlspecialchars($row['description']) ?></p>
+                        <p class="price" >Price: Rs <?= number_format($row['price'], 2) ?></p>
+                    </div>
+                    <div class="ad-buttons" style="margin-top: 10px;">
+                        <a href="view_ad.php?ad_id=<?= $row['ad_id'] ?>" class="btn">View Ad</a>
+                        <a href="edit_ad.php?ad_id=<?= $row['ad_id'] ?>" class="btn">Edit Ad</a>
+                        <button class="btn btn-danger" onclick="confirmDelete(<?= $row['ad_id'] ?>)">Delete Ad</button>
+                    </div>
+                </div>
+                    
+                    <!-- Buttons positioned inside the ad card, below the content -->
+                
+            <?php endwhile; ?>
+        <?php else: ?>
+            <p class="no-ads">You haven't placed any ads yet!</p>
+        <?php endif; ?>
     </div>
 
+</div>
 </body>
 
 </html>
