@@ -1,10 +1,24 @@
 <?php
 session_start();
-include 'config.php';
+include 'config.php'; // Database connection
 include 'navbar.php'; 
 
-if (isset($_GET['category_id_qp'])) {
-    $category_id = $_GET['category_id_qp'];
+// Check if category_id is passed in the URL
+$category_id = isset($_GET['category_id_qp']) ? (int) $_GET['category_id_qp'] : 0;
+
+// Fetch the category name based on category_id
+$category_name = 'Category'; 
+if ($category_id > 0) {
+    $query = "SELECT category_name FROM categories WHERE category_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $category_id);
+    $stmt->execute();
+    $stmt->bind_result($category_name);
+    $stmt->fetch();
+    $stmt->close();
+}
+
+$category_name = htmlspecialchars($category_name);
 
     // Fetch all ads for the selected category
     $ad_sql = "SELECT ads.*, categories.category_name 
@@ -16,7 +30,7 @@ if (isset($_GET['category_id_qp'])) {
     $stmt->execute();
     $result = $stmt->get_result();
     
-    ?>
+?>
     
     <!DOCTYPE html>
     <html lang="en">
@@ -38,7 +52,7 @@ if (isset($_GET['category_id_qp'])) {
 /* Flex container for ad cards */
 
 .container {
-  width: 75%; /* Changed to 90% for better responsiveness */
+  width: 75%; 
   margin: 0 auto;
 }
 
@@ -55,7 +69,7 @@ if (isset($_GET['category_id_qp'])) {
   border: 1px solid #ddd;
   border-radius: 10px;
   overflow: hidden;
-  width: calc(25% - 20px); /* 4 cards per row with gap consideration */
+  width: calc(25% - 20px); 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
   padding-bottom: 15px;
@@ -76,14 +90,13 @@ if (isset($_GET['category_id_qp'])) {
 }
 
 .ad-card a {
-  text-decoration: none; /* Remove underline from links */
-  color: inherit; /* Inherit color from parent, to keep text color consistent */
-  display: block; /* Make the entire card clickable */
+  text-decoration: none; 
+  color: inherit; 
+  display: block; 
 }
 
 .ad-card a:hover {
-  text-decoration: none; /* Remove underline on hover as well */
-}
+  text-decoration: none;
 
 .ad-card h4 {
   font-size: 16px;
@@ -98,7 +111,7 @@ if (isset($_GET['category_id_qp'])) {
   font-size: 14px;
   color: #555;
   display: -webkit-box;
-  -webkit-line-clamp: 4; /* Limit to 10 lines */
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -155,8 +168,7 @@ if (isset($_GET['category_id_qp'])) {
                     // Limit the description to 100 characters
                     $description = substr(htmlspecialchars($ad['description']), 0, 100);
                     if (strlen($ad['description']) > 100) {
-                        $description .= '...'; // Append ellipsis if trimmed
-                    }
+                        $description .= '...'; 
                     ?>
                     <div class="ad-card">
                         <a href="view_ad.php?ad_id=<?= $ad_id; ?>">

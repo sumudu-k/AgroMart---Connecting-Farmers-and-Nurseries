@@ -3,7 +3,6 @@ session_start();
 include 'config.php';
 include 'navbar.php';
 
-
 if (isset($_GET['ad_id'])) {
     $ad_id = $_GET['ad_id'];
 
@@ -26,7 +25,6 @@ if (isset($_GET['ad_id'])) {
         exit;
     }
 
-
     $img_sql = "SELECT image_path FROM ad_images WHERE ad_id = ?";
     $stmt_img = $conn->prepare($img_sql);
     $stmt_img->bind_param("i", $ad_id);
@@ -36,7 +34,6 @@ if (isset($_GET['ad_id'])) {
     while ($image = $img_result->fetch_assoc()) {
         $images[] = $image['image_path'];
     }
-
 
     $similar_ads_sql = "
         SELECT ads.*, categories.category_name, 
@@ -50,10 +47,21 @@ if (isset($_GET['ad_id'])) {
     $similar_stmt->bind_param("ii", $category_id, $ad_id);
     $similar_stmt->execute();
     $similar_ads_result = $similar_stmt->get_result();
-}
-else {
+} else {
     echo "No ad selected.";
     exit;
+}
+
+$user_id = $_SESSION['user_id'] ?? null;
+$is_wishlisted = false;
+
+if ($user_id) {
+    $wishlist_check_sql = "SELECT * FROM wishlist WHERE user_id = ? AND ad_id = ?";
+    $wishlist_stmt = $conn->prepare($wishlist_check_sql);
+    $wishlist_stmt->bind_param("ii", $user_id, $ad_id);
+    $wishlist_stmt->execute();
+    $wishlist_result = $wishlist_stmt->get_result();
+    $is_wishlisted = $wishlist_result->num_rows > 0;
 }
 ?>
 
@@ -64,110 +72,15 @@ else {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($ad['title']); ?></title>
     <style>
-       
-        .ad-details {
-            text-align: center;
-            margin: 20px;
-        }
-
-        .ad-images {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .ad-images img {
-            width: 300px;
-            height: 300px;
-            object-fit: cover;
-            border-radius: 10px;
-            cursor: pointer; 
-        }
-
-        
-        #imageModal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        #imageModal img {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
-            border-radius: 8px;
-        }
-
-        #closeModal {
-            position: absolute;
-            top: 10px;
-            right: 20px;
+        .wishlist-button {
+            background-color: #ff4081;
             color: white;
-            font-size: 30px;
-            font-weight: bold;
+            border: none;
+            padding: 10px 15px;
             cursor: pointer;
-        }
-
-    
-        .more-items-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 40px;
-        }
-
-        .more-item-card {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-            width: 23%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-align: center;
-            padding: 10px;
-            cursor: pointer;
-        }
-
-        .more-item-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .more-item-card img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .more-item-card h4 {
+            border-radius: 5px;
             font-size: 16px;
-            color: #333;
-            margin: 10px 0 5px 0;
-            font-weight: 600;
-            text-transform: capitalize;
-        }
-
-        .more-item-card p {
-            font-size: 14px;
-            color: #007b00;
-            font-weight: 500;
-        }
-
-        
-        body, html {
-            overflow-x: hidden;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -182,17 +95,23 @@ else {
         <p><strong>Category:</strong> <?= htmlspecialchars($ad['category_name']); ?></p>
         <p><strong>Posted On:</strong> <?= htmlspecialchars($ad['formatted_date']); ?></p>
         <p><strong>District:</strong> <?= htmlspecialchars($ad['district']); ?></p>
+        
+        <?php if ($user_id): ?>
+            <form method="post" action="wishlist.php">
+                <input type="hidden" name="ad_id" value="<?= $ad_id; ?>">
+                <button type="submit" class="wishlist-button">
+                    <?= $is_wishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'; ?>
+                </button>
+            </form>
+        <?php else: ?>
+            <p><a href="login.php">Log in</a> to add this ad to your wishlist.</p>
+        <?php endif; ?>
     </div>
-
+    
     <div class="ad-images">
         <?php foreach ($images as $image): ?>
             <img src="<?= htmlspecialchars($image); ?>" alt="Ad Image" onclick="openModal(this.src)">
         <?php endforeach; ?>
-    </div>
-
-    <div id="imageModal" onclick="closeModal()">
-        <span id="closeModal">&times;</span>
-        <img id="modalImage" src="" alt="Full Size Image">
     </div>
 
     <h3>Similar Products</h3>
