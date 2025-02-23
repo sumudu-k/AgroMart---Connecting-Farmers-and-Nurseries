@@ -1,6 +1,9 @@
 <?php
-session_start();
+//session_start();
+
 include 'config.php';
+include 'navbar.php';
+
 
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
@@ -191,7 +194,6 @@ if (isset($_POST['login'])) {
                 width: 55%;
             }
         }
-
     </style>
 
 </head>
@@ -207,11 +209,12 @@ if (isset($_POST['login'])) {
                     <input type="password" name="password" placeholder="Password" required><br>
                     <button type="submit" name="login">Login</button>
                 </form>
-                <p> Forgot Password? &ensp; <a class ="link" href="forgotpw.php">Reset here</a>.</p></p>
+                <p> Forgot Password? &ensp; <a class="link" href="forgotpw.php">Reset here</a>.</p>
+                </p>
                 <p> Haven't an account yet? &ensp; <a class="link" href="register.php">Register here</a>.</p>
-            </div>   
+            </div>
         </div>
-    </div> 
+    </div>
 </body>
 
 </html>
