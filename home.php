@@ -28,7 +28,7 @@ $ads_result = $conn->query($ads_query);
     <title>AgroMart Home</title>
     <style>
 
-    /* General Styles */
+    
     body {
         font-family: Arial, sans-serif;
         margin: 0;
@@ -61,12 +61,11 @@ $ads_result = $conn->query($ads_query);
 
     .main-container {
         width: 75%;
-        margin: 0 auto;/* Centers the container */
+        margin: 0 auto;
     }
 
 
     /* Category Section */
-    
     /* Container for all categories */
     .category-container {
         display: flex;
@@ -165,7 +164,7 @@ $ads_result = $conn->query($ads_query);
         font-size: 1.1rem;
         line-height: 1.5;
         display: -webkit-box;
-        -webkit-line-clamp: 15; /* Limit to 10 lines */
+        -webkit-line-clamp: 15; /* Limit to 15 lines */
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -203,7 +202,7 @@ $ads_result = $conn->query($ads_query);
     }
 
     .ad-card {
-        width: calc(20% - 25px); /* Adjust width to fit four cards per row */
+        width: calc(20% - 25px); 
         text-align: center;
         background-color: white;
         border: 1px solid #ddd;
@@ -240,7 +239,7 @@ $ads_result = $conn->query($ads_query);
         color: #555;
         text-align: left;
         display: -webkit-box;
-        -webkit-line-clamp: 3; /* Limit to 10 lines */
+        -webkit-line-clamp: 3; /* Limit to 3 lines */
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -736,7 +735,7 @@ $ads_result = $conn->query($ads_query);
             </li>
           </ul>
         </div>
-        <!-- Add more footer sections as needed -->
+        
       </div>
     </footer>
     <?php
