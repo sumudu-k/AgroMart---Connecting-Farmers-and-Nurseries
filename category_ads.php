@@ -41,112 +41,112 @@ $category_name = htmlspecialchars($category_name);
         <link rel="stylesheet" href="css/category_ads.css">
         <title>Category Ads</title>
         <style>
-        
-        /* Title styles */
-        .title {
-          background-color: #dbffc7;
-          text-align: left;
-          text-transform: capitalize;
-          padding: 20px 12.5%;
-          font-size: 2.2rem;
-        }
 
+           /* Title styles */
+           .title {
+              background-color: #dbffc7;
+              text-align: left;
+              text-transform: capitalize;
+              padding: 20px 12.5%;
+              font-size: 2.2rem;
+           }
 
-        /* Flex container for ad cards */
-        .container {
-          width: 75%; 
-          margin: 0 auto;
-        }
+          /* Flex container for ad cards */
 
-        .ads-container {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 20px;
-          justify-content: center;
-          margin: 35px 0;
-        }
+          .container {
+            width: 75%; 
+            margin: 0 auto;
+          }
 
-        .ad-card {
-          text-align: center;
-          border: 1px solid #ddd;
-          border-radius: 10px;
-          overflow: hidden;
-          width: calc(25% - 20px); 
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          transition: transform 0.2s, box-shadow 0.2s;
-          padding-bottom: 15px;
-          cursor: pointer;
-        }
+          .ads-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 35px 0;
+          }
 
-        .ad-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-        }
+          .ad-card {
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            width: calc(25% - 20px); 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            padding-bottom: 15px;
+            cursor: pointer;
+          }
 
-        .ad-card img {
-          width: 100%;
-          height: 200px;
-          object-fit: cover;
-          mix-blend-mode: multiply;
-          border-radius: 8px;
-        }
+          .ad-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+          }
 
-        .ad-card a {
-          text-decoration: none; 
-          color: inherit; 
-          display: block; 
-        }
+          .ad-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            mix-blend-mode: multiply;
+            border-radius: 8px;
+          }
 
-        .ad-card a:hover {
-          text-decoration: none;
-        }
+          .ad-card a {
+            text-decoration: none; 
+            color: inherit; 
+            display: block; 
+          }
 
-        .ad-card h4 {
-          font-size: 16px;
-          color: #333;
-          margin: 10px 0 5px 0;
-          font-weight: 600;
-          text-transform: capitalize;
-        }
+          .ad-card a:hover {
+            text-decoration: none;
+          }
 
-        .ad-card .description {
-          line-height: 1.4;
-          font-size: 14px;
-          color: #555;
-          display: -webkit-box;
-          -webkit-line-clamp: 4;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          margin: 10px 10px;
-        }
+          .ad-card h4 {
+            font-size: 16px;
+            color: #333;
+            margin: 10px 0 5px 0;
+            font-weight: 600;
+            text-transform: capitalize;
+          }
 
-        .ad-card p {
-          font-size: 14px;
-          color: #555;
-          font-weight: 500;
-          margin: 8px 0;
-        }
+          .ad-card .description {
+            line-height: 1.4;
+            font-size: 14px;
+            color: #555;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin: 10px 10px;
+          }
 
-        /* Left-align the specific details */
-        .ad-details {
-          margin-left: 20px;
-          text-align: left;
-          margin-top: 10px;
-        }
+          .ad-card p {
+            font-size: 14px;
+            color: #555;
+            font-weight: 500;
+            margin: 8px 0;
+          }
 
-        .ad-details p {
-          font-weight: 700;
-          color: black;
-          margin: 15px 0;
-        }
+          /* Left-align the specific details */
+          .ad-details {
+            margin-left: 20px;
+            text-align: left;
+            margin-top: 10px;
+          }
 
-        .price {
-          font-weight: 700;
-          color: #b03052;
-          margin: 0;
-        }
-            
+          .ad-details p {
+            font-weight: 700;
+            color: black;
+            margin: 15px 0;
+          }
+
+          .price {
+            font-weight: 700;
+            color: #b03052;
+            margin: 0;
+          }
+                      
         </style>
     </head>
     <body>
