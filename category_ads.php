@@ -1,13 +1,13 @@
 <?php
 session_start();
-include 'config.php'; // Database connection
+include 'config.php';
 include 'navbar.php'; 
 
-// Check if category_id is passed in the URL
+
 $category_id = isset($_GET['category_id_qp']) ? (int) $_GET['category_id_qp'] : 0;
 
 // Fetch the category name based on category_id
-$category_name = 'Category'; // Default value if no category is found
+$category_name = 'Category'; 
 if ($category_id > 0) {
     $query = "SELECT category_name FROM categories WHERE category_id = ?";
     $stmt = $conn->prepare($query);
@@ -166,12 +166,12 @@ $category_name = htmlspecialchars($category_name);
                             $stmt_img->bind_param("i", $ad_id);
                             $stmt_img->execute();
                             $img_result = $stmt_img->get_result();
-                            $image = $img_result->fetch_assoc(); // Fetch the first image
+                            $image = $img_result->fetch_assoc(); 
 
                             // Limit the description to 100 characters
                             $description = substr(htmlspecialchars($ad['description']), 0, 100);
                             if (strlen($ad['description']) > 100) {
-                                $description .= '...'; // Append ellipsis if trimmed
+                                $description .= '...'; 
                             }
                             ?>
                             <div class="ad-card">
@@ -183,10 +183,10 @@ $category_name = htmlspecialchars($category_name);
                                         <img src="placeholder.png" alt="No Image Available">
                                     <?php endif; ?>
                                     <h4><?= htmlspecialchars($ad['title']); ?></h4>
-                                    <p  class="description"><?= $description; ?></p> <!-- Description -->
+                                    <p  class="description"><?= $description; ?></p>
                                     <p>Price: <span class="price"> Rs <?= htmlspecialchars($ad['price']); ?></span></p>
-                                    <p>District: <?= htmlspecialchars($ad['district']); ?></p> <!-- District -->
-                                    <p>Posted on: <?= date('F j, Y', strtotime($ad['created_at'])); ?></p> <!-- Posted Date -->
+                                    <p>District: <?= htmlspecialchars($ad['district']); ?></p> 
+                                    <p>Posted on: <?= date('F j, Y', strtotime($ad['created_at'])); ?></p> 
                                 </a>
                             </div>
                             <?php
