@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 ob_start();
 include 'config.php';
 include 'navbar.php';
@@ -157,7 +157,7 @@ if (isset($_POST['register'])) {
 </head>
 
 <body>
-<div class="wrapper">
+    <div class="wrapper">
         <div class="register-container">
             <div class="plant-image"></div>
             <div class="register-form">
