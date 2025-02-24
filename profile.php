@@ -21,8 +21,17 @@ if (isset($_POST['update'])) {
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
     $contact_number = $_POST['contact_number'];
     $address = $_POST['address'];
+
+    $hashpassword = password_hash($password, PASSWORD_DEFAULT);
+
+
+    if ($password != $confirm_password) {
+        echo "password does not match";
+        exit;
+    }
 }
 
 
@@ -52,33 +61,34 @@ function updateProfile() {
             <tbody>
                 <tr>
                     <td><label>Username</label></td>
-                    <td><input type='text' name="username" value=<?= $userData['username'] ?>></td>
+                    <td><input type='text' required name="username" value=<?= $userData['username']  ?>></td>
                 </tr>
 
                 <tr>
                     <td><label>Email</label></td>
-                    <td><input type='text' name="email" value=<?= $userData['email'] ?>></td>
+                    <td><input type='text' name="email" required value=<?= $userData['email'] ?>></td>
                 </tr>
 
                 <tr>
                     <td><label>New Password</label></td>
-                    <td><input type='text' name="password"></td>
+                    <td><input type='text' required name="password"></td>
                 </tr>
 
                 <tr>
                     <td><label>Confirm Password</label></td>
-                    <td><input type='text' name="confirm_password"></td>
+                    <td><input type='text' required name="confirm_password"></td>
                 </tr>
 
 
                 <tr>
                     <td><label>Contact Number</label></td>
-                    <td><input type='number' name="contact_number" value=<?= $userData['contact_number'] ?>></td>
+                    <td><input type='number' required name="contact_number" value=<?= $userData['contact_number'] ?>>
+                    </td>
                 </tr>
 
                 <tr>
                     <td><label>Address</label></td>
-                    <td><input type='text' name="address" value=<?= $userData['address'] ?>></td>
+                    <td><input type='text' required name="address" value=<?= $userData['address'] ?>></td>
                 </tr>
 
                 <tr>
