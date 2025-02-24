@@ -27,11 +27,26 @@ if (isset($_POST['update'])) {
 
     $hashpassword = password_hash($password, PASSWORD_DEFAULT);
 
+    $user_email_check= "SELECT * FROM users WHERE email=?";
+    $stmt=$conn->prepare($user_email_check);
+    $stmt->bind_param('s',$email);
+    $stmt->execute();
+    $result=$stmt->get_result();
+
+    if($result->num_rows>0){
+        echo "Email already exist. Please use another Email";
+        exit;
+    }
+
 
     if ($password != $confirm_password) {
         echo "password does not match";
         exit;
     }
+
+
+    $update_sql = "UPDATE users SET username=?, email=? ,password=?, contact_number=?, address=? WHERE user_id=?  "
+
 }
 
 
