@@ -72,18 +72,8 @@ if ($user_id) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($ad['title']); ?></title>
     <style>
-        .wishlist-button {
-            background-color: #ff4081;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 16px;
-            margin-top: 10px;
-        }
 
-        body,
+body,
 html {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -178,7 +168,23 @@ html {
   margin: 10px 0;
 }
 
-/* Similar Products section styling */
+.wishlist-button {
+    background-color: #f09319;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+.wishlist-button:hover {
+    background-color: #cb790d;
+}
+
+/* Similar Products section */
 .similar-products {
   max-width: 75%;
   background-color: #f0ffe8;
