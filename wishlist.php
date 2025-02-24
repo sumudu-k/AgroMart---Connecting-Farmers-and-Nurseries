@@ -1,5 +1,6 @@
 <?php
 session_start();
+ob_start();
 include 'config.php';
 
 if (!isset($_SESSION['user_id'])) {
@@ -12,7 +13,7 @@ $user_id = $_SESSION['user_id'];
 // Handle add/remove wishlist actions
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['ad_id'])) {
     $ad_id = $_POST['ad_id'];
-    
+
     // Check if the ad is already in the wishlist
     $check_sql = "SELECT * FROM wishlist WHERE user_id = ? AND ad_id = ?";
     $stmt = $conn->prepare($check_sql);
@@ -53,32 +54,35 @@ $wishlist_result = $stmt->get_result();
 <!DOCTYPE html>
 <html lang="en">
 <?php include 'navbar.php'; ?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wishlist</title>
 </head>
+
 <body>
-<div class="container">
-    <h1>Your Wishlist</h1>
-    <div class="wishlist-items">
-        <?php if ($wishlist_result->num_rows > 0): ?>
+    <div class="container">
+        <h1>Your Wishlist</h1>
+        <div class="wishlist-items">
+            <?php if ($wishlist_result->num_rows > 0): ?>
             <?php while ($item = $wishlist_result->fetch_assoc()): ?>
-                <div class="wishlist-item">
-                    <img src="<?= htmlspecialchars($item['image'] ?? 'default.jpg'); ?>" alt="Product Image">
-                    <h3><?= htmlspecialchars($item['title']); ?></h3>
-                    <p>Category: <?= htmlspecialchars($item['category_name']); ?></p>
-                    <p>Price: Rs <?= htmlspecialchars($item['price']); ?></p>
-                    <form method="post">
-                        <input type="hidden" name="ad_id" value="<?= $item['ad_id']; ?>">
-                        <button type="submit">Remove from Wishlist</button>
-                    </form>
-                </div>
+            <div class="wishlist-item">
+                <img src="<?= htmlspecialchars($item['image'] ?? 'default.jpg'); ?>" alt="Product Image">
+                <h3><?= htmlspecialchars($item['title']); ?></h3>
+                <p>Category: <?= htmlspecialchars($item['category_name']); ?></p>
+                <p>Price: Rs <?= htmlspecialchars($item['price']); ?></p>
+                <form method="post">
+                    <input type="hidden" name="ad_id" value="<?= $item['ad_id']; ?>">
+                    <button type="submit">Remove from Wishlist</button>
+                </form>
+            </div>
             <?php endwhile; ?>
-        <?php else: ?>
+            <?php else: ?>
             <p>Your wishlist is empty.</p>
-        <?php endif; ?>
+            <?php endif; ?>
+        </div>
     </div>
-</div>
 </body>
+
 </html>
