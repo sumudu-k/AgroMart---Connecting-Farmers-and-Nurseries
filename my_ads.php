@@ -1,6 +1,7 @@
 <?php
 session_start();
-include 'config.php'; 
+ob_start();
+include 'config.php';
 include 'navbar.php';
 
 if (!isset($_SESSION['user_id'])) {
@@ -29,7 +30,6 @@ $result = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Ads</title>
     <style>
-
     /* Container width */
 
     .title {
@@ -41,7 +41,8 @@ $result = $stmt->get_result();
     }
 
     .container {
-        width: 75%; /* Changed to 90% for better responsiveness */
+        width: 75%;
+        /* Changed to 90% for better responsiveness */
         margin: 0 auto;
     }
 
@@ -62,7 +63,8 @@ $result = $stmt->get_result();
         border: 1px solid #ddd;
         border-radius: 10px;
         overflow: hidden;
-        width: calc(25% - 20px); /* 4 cards per row with gap consideration */
+        width: calc(25% - 20px);
+        /* 4 cards per row with gap consideration */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         transition: transform 0.2s, box-shadow 0.2s;
         padding: 15px;
@@ -95,7 +97,8 @@ $result = $stmt->get_result();
         color: #555;
         text-align: left;
         display: -webkit-box;
-        -webkit-line-clamp: 4; /* Limit to 10 lines */
+        -webkit-line-clamp: 4;
+        /* Limit to 10 lines */
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -122,8 +125,8 @@ $result = $stmt->get_result();
         background-color: #28a745;
         color: white;
         cursor: pointer;
-        margin: 5px; 
-        display: inline-block; 
+        margin: 5px;
+        display: inline-block;
     }
 
     .btn:hover {
@@ -144,11 +147,9 @@ $result = $stmt->get_result();
         font-size: 1.5rem;
         margin-top: 50px;
     }
-
     </style>
 
     <script>
-
     function confirmDelete(adId) {
         if (confirm("Are you sure you want to delete this ad?")) {
             window.location.href = "delete_ad.php?ad_id=" + adId;
@@ -159,39 +160,39 @@ $result = $stmt->get_result();
 
 <body>
 
-<h2 class="title">My Ads</h2>
-<div class="container">
-    
+    <h2 class="title">My Ads</h2>
+    <div class="container">
 
-    <div class="ads-container">
-        <?php if ($result->num_rows > 0): ?>
-            <?php while ($row = $result->fetch_assoc()): 
-                $images = explode(',', $row['images']);
-                $first_image = !empty($images[0]) ? $images[0] : 'default_image.jpg';
-            ?>
-                <div class="ad-card">
-                    <div class="details">
-                        <img src="<?= htmlspecialchars($first_image) ?>" alt="Ad Image">
-                        <h4><?= htmlspecialchars($row['title']) ?></h4>
-                        <p><?= htmlspecialchars($row['description']) ?></p>
-                        <p class="price" >Price: Rs <?= number_format($row['price'], 2) ?></p>
-                    </div>
-                    <div class="ad-buttons" style="margin-top: 10px;">
-                        <a href="view_ad.php?ad_id=<?= $row['ad_id'] ?>" class="btn">View Ad</a>
-                        <a href="edit_ad.php?ad_id=<?= $row['ad_id'] ?>" class="btn">Edit Ad</a>
-                        <button class="btn btn-danger" onclick="confirmDelete(<?= $row['ad_id'] ?>)">Delete Ad</button>
-                    </div>
+
+        <div class="ads-container">
+            <?php if ($result->num_rows > 0): ?>
+            <?php while ($row = $result->fetch_assoc()):
+                    $images = explode(',', $row['images']);
+                    $first_image = !empty($images[0]) ? $images[0] : 'default_image.jpg';
+                ?>
+            <div class="ad-card">
+                <div class="details">
+                    <img src="<?= htmlspecialchars($first_image) ?>" alt="Ad Image">
+                    <h4><?= htmlspecialchars($row['title']) ?></h4>
+                    <p><?= htmlspecialchars($row['description']) ?></p>
+                    <p class="price">Price: Rs <?= number_format($row['price'], 2) ?></p>
                 </div>
-                    
-                    <!-- Buttons positioned inside the ad card, below the content -->
-                
-            <?php endwhile; ?>
-        <?php else: ?>
-            <p class="no-ads">You haven't placed any ads yet!</p>
-        <?php endif; ?>
-    </div>
+                <div class="ad-buttons" style="margin-top: 10px;">
+                    <a href="view_ad.php?ad_id=<?= $row['ad_id'] ?>" class="btn">View Ad</a>
+                    <a href="edit_ad.php?ad_id=<?= $row['ad_id'] ?>" class="btn">Edit Ad</a>
+                    <button class="btn btn-danger" onclick="confirmDelete(<?= $row['ad_id'] ?>)">Delete Ad</button>
+                </div>
+            </div>
 
-</div>
+            <!-- Buttons positioned inside the ad card, below the content -->
+
+            <?php endwhile; ?>
+            <?php else: ?>
+            <p class="no-ads">You haven't placed any ads yet!</p>
+            <?php endif; ?>
+        </div>
+
+    </div>
 </body>
 
 </html>
