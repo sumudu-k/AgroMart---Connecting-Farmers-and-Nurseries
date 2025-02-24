@@ -326,7 +326,8 @@ if (session_status() === PHP_SESSION_NONE) {
             <li><a href="wishlist.php">Wishlist</a></li>
 
             <?php if (isset($_SESSION['username'])): ?>
-            <li><a href="#">Welcome,<?= $_SESSION['username']; ?></a></li>
+            <!-- <li><a href="#">Welcome,<?= $_SESSION['username']; ?></a></li> -->
+            <li><a href="profile.php"><img src='uploads/user.png'></a></li>
             <li><a href="#" onclick="confirmLogout(); return false;">Log Out</a></li>
             <?php else: ?>
             <li><a href="login.php">Login</a></li>
