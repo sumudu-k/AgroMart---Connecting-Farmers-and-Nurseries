@@ -25,11 +25,51 @@ print_r($userData);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Profile</title>
 </head>
 
 <body>
+    <form>
+        <table>
+            <thead>
+                <th>A</th>
+                <th>B</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><label>Username</label></td>
+                    <td><input type='text' value=<?= $userData['username'] ?>></td>
+                </tr>
 
+                <tr>
+                    <td><label>Email</label></td>
+                    <td><input type='text' value=<?= $userData['email'] ?>></td>
+                </tr>
+
+                <tr>
+                    <td><label>New Password</label></td>
+                    <td><input type='text'></td>
+                </tr>
+
+                <tr>
+                    <td><label>Confirm Password</label></td>
+                    <td><input type='text'></td>
+                </tr>
+
+
+                <tr>
+                    <td><label>Contact Number</label></td>
+                    <td><input type='number' value=<?= $userData['contact_number'] ?>></td>
+                </tr>
+
+                <tr>
+                    <td><label>Address</label></td>
+                    <td><input type='text' value=<?= $userData['address'] ?>></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </form>
 </body>
 
 </html>
