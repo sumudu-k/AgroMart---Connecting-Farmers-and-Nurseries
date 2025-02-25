@@ -388,8 +388,7 @@ $ads_result = $conn->query($ads_query);
         gap: 10px;
     }
 
-    input[type="text"],
-    input[type="email"],
+    input,
     textarea {
         width: 100%;
         padding: 10px;
@@ -399,15 +398,13 @@ $ads_result = $conn->query($ads_query);
         resize: none;
     }
 
-    input[type="text"]:focus,
-    input[type="email"]:focus,
+    input:focus,
     textarea:focus {
         outline: none;
         border-color: #f09319;
     }
 
-    input[type="text"]::placeholder,
-    input[type="email"]::placeholder,
+    input::placeholder,
     textarea::placeholder {
         color: #888;
         font-size: 0.9rem;
@@ -420,7 +417,7 @@ $ads_result = $conn->query($ads_query);
         height: 200px;
     }
 
-    button[type="submit"] {
+    .get-in-touch button {
         font-size: 16px;
         background-color: #f09319;
         color: white;
@@ -431,7 +428,7 @@ $ads_result = $conn->query($ads_query);
         transition: background-color 0.2s;
     }
 
-    button[type="submit"]:hover {
+    .get-in-touch button:hover {
         background-color: #cb790d;
     }
 

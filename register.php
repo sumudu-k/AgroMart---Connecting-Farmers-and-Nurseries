@@ -86,7 +86,8 @@ if (isset($_POST['register'])) {
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 75%;
+            width: 100%;
+            max-width: 1200px;
         }
 
         .plant-image {
@@ -100,7 +101,6 @@ if (isset($_POST['register'])) {
 
         .register-form {
             flex: 1;
-            max-width: 100%;
             padding: 20px;
             background-color: #fff;
             border-radius: 10px;
@@ -112,27 +112,29 @@ if (isset($_POST['register'])) {
             margin-bottom: 20px;
         }
 
-        .register-form form {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
         .register-form input {
+            width: 100%;
             padding: 10px;
             font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #007a33;
         }
 
         .register-form button {
+            width: 100%;
             background-color: #007a33;
             color: #fff;
             padding: 10px;
+            margin: 20px 0 10px;
             font-size: 18px;
             border: none;
             border-radius: 5px;
-            margin-bottom: 10px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
@@ -152,6 +154,68 @@ if (isset($_POST['register'])) {
             color: #0917ee;
             font-weight: bold;
         }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile Devices (319px - 480px) */
+        @media (max-width: 480px) {
+            .register-container {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                padding: 10px;
+            }
+
+            .plant-image {
+                width: 100%;
+                height: 200px;
+                min-height: 200px;
+                margin-bottom: 20px;
+            }
+
+            .register-form {
+                width: 100%;
+            }
+        }
+
+        /* iPads and Tablets (481px - 1200px) */
+        @media (min-width: 481px) and (max-width: 1200px) {
+            .register-container {
+                flex-direction: row;
+                width: 90%;
+                padding: 15px;
+            }
+
+            .plant-image {
+                width: 50%;
+                min-height: 300px;
+            }
+
+            .register-form {
+                width: 50%;
+            }
+        }
+
+        /* Laptops and Desktops (1201px and more) */
+        @media (min-width: 1201px) {
+            .register-container {
+                flex-direction: row;
+                width: 70%;
+                gap: 30px;
+            }
+
+            .plant-image {
+                width: 45%;
+                min-height: 400px;
+            }
+
+            .register-form {
+                width: 55%;
+            }
+        }
+
     </style>
 
 </head>
