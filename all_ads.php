@@ -35,11 +35,22 @@ $result = $conn->query($ads_sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Ads</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
         .container {
-            width: 75%; 
+            width: 75%;
             margin: 0 auto;
         }
 
+        /* Card layout for ads */
         .ads-container {
             display: flex;
             flex-wrap: wrap;
@@ -50,6 +61,7 @@ $result = $conn->query($ads_sql);
 
         .ad-card {
             text-align: center;
+            position: relative;
             border: 1px solid #ddd;
             border-radius: 10px;
             overflow: hidden;
@@ -120,9 +132,12 @@ $result = $conn->query($ads_sql);
             line-height: 2;
         }
 
-        .ad-details .date {
+        .date {
+            position: absolute;
+            bottom: 8px;
             font-size: 0.8rem;
-            color: #666666;
+            font-style: italic;
+            color: #666666 ;
             padding: 0 10px;
             text-align: left;
         }
@@ -223,17 +238,6 @@ $result = $conn->query($ads_sql);
                 padding: 7px 11px;
             }
         }
-
-        /* Desktops (1201px and up) - 6 rows × 4 columns = 24 items */
-        @media screen and (min-width: 1201px) {
-            .container {
-                width: 90%;
-            }
-
-            .ad-card {
-                width: calc(25% - 15px);
-            }
-        }
     </style>
 </head>
 
@@ -256,6 +260,9 @@ $result = $conn->query($ads_sql);
                     <p class="district"><?= htmlspecialchars($ad['district']); ?></p>
                     <p class="date"><?= date('F j, Y h:i A', strtotime($ad['created_at'])); ?></p>
                 </div>
+
+                
+                
             </div>
             <?php endwhile; ?>
             <?php else: ?>
