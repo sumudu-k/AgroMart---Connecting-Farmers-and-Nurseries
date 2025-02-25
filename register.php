@@ -159,7 +159,7 @@ if (isset($_POST['register'])) {
             text-decoration: underline;
         }
 
-        /* Mobile Devices (319px - 480px) */
+        /* responsive design */
         @media (max-width: 480px) {
             .register-container {
                 flex-direction: column;
@@ -180,7 +180,7 @@ if (isset($_POST['register'])) {
             }
         }
 
-        /* iPads and Tablets (481px - 1200px) */
+        
         @media (min-width: 481px) and (max-width: 1200px) {
             .register-container {
                 flex-direction: row;
@@ -198,7 +198,7 @@ if (isset($_POST['register'])) {
             }
         }
 
-        /* Laptops and Desktops (1201px and more) */
+        
         @media (min-width: 1201px) {
             .register-container {
                 flex-direction: row;

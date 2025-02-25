@@ -130,19 +130,22 @@ if (isset($_POST['submit'])) {
             font-weight: bold;
         }
 
-        input, select {
+        input, select, textarea {
             flex: 0.8;
             padding: 8px;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
 
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #007a33;
+        }
+
         textarea {
-            flex: 0.8;
             height: 200px;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
         }
 
         h3{

@@ -97,27 +97,26 @@ if (isset($_POST['login'])) {
         margin-bottom: 40px;
     }
 
-    .login-form form {
-        display: flex;
-        flex-direction: column;
-        /* gap: 5px; */
-    }
-
     .login-form input {
         width: 100%;
         padding: 10px;
         font-size: 16px;
         border: 1px solid #ccc;
         border-radius: 5px;
-        margin-bottom: 10px;
+        margin-bottom: 25px;
     }
+
+    input:focus {
+            outline: none;
+            border-color: #007a33;
+        }
 
     .login-form button {
         width: 100%;
         background-color: #007a33;
         color: #fff;
         padding: 10px;
-        margin-bottom: 10px;
+        margin: 10px 0 10px;
         font-size: 1.125rem;
         border: none;
         border-radius: 5px;
@@ -142,7 +141,7 @@ if (isset($_POST['login'])) {
     }
 
     /* responsive design */
-    @media (max-width: 480px) {
+        @media (max-width: 480px) {
             .login-container {
                 flex-direction: column;
                 align-items: center;
