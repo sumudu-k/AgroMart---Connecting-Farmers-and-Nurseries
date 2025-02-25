@@ -41,6 +41,15 @@ $category_name = htmlspecialchars($category_name);
         <link rel="stylesheet" href="css/category_ads.css">
         <title>Category Ads</title>
         <style>
+          * {
+            box-sizing: border-box;
+          }
+
+          body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+          }
 
            /* Title styles */
            .title {
@@ -49,10 +58,11 @@ $category_name = htmlspecialchars($category_name);
               text-transform: capitalize;
               padding: 20px 12.5%;
               font-size: 2.2rem;
+              margin: 0;
            }
 
-          /* Flex container for ad cards */
 
+          /*container for ad cards */
           .container {
             width: 75%; 
             margin: 0 auto;
@@ -128,7 +138,7 @@ $category_name = htmlspecialchars($category_name);
             margin: 8px 0;
           }
 
-          /* Left-align the specific details */
+          
           .ad-details {
             margin-left: 20px;
             text-align: left;
@@ -146,6 +156,78 @@ $category_name = htmlspecialchars($category_name);
             color: #b03052;
             margin: 0;
           }
+
+          /* Responsive styles */
+
+          /* Mobile Devices */
+        @media screen and (max-width: 480px) {
+            .title {
+                padding: 15px 5%;
+                font-size: 1.5rem;
+            }
+
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+
+            .ads-container {
+                gap: 15px;
+                margin: 20px 0;
+            }
+
+            .ad-card {
+                width: 100%;
+            }
+
+            .ad-card img {
+                height: 150px;
+            }
+
+            .ad-card h4 {
+                font-size: 14px;
+            }
+
+            .ad-card .description {
+                font-size: 12px;
+                -webkit-line-clamp: 3;
+            }
+
+            .ad-details p {
+                font-size: 12px;
+                margin: 6px 0;
+            }
+        }
+
+        /* Tablets*/
+        @media screen and (min-width: 481px) and (max-width: 1200px) {
+            .title {
+                padding: 20px 8%;
+                font-size: 1.8rem;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+            .ad-card {
+                width: calc(50% - 10px);
+            }
+
+            .ad-card img {
+                height: 180px;
+            }
+
+            .ad-card h4 {
+                font-size: 15px;
+            }
+
+            .ad-card .description {
+                font-size: 13px;
+            }
+        }
+
+        
                       
         </style>
     </head>
