@@ -21,8 +21,6 @@ $userData = $result->fetch_assoc();
 if (isset($_POST['update'])) {
     $username = $_POST['username'];
     $email = $_POST['email'];
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
     $contact_number = $_POST['contact_number'];
     $address = $_POST['address'];
 
@@ -37,42 +35,14 @@ if (isset($_POST['update'])) {
         }
     }
 
-    if (!empty($password) || !empty($confirm_password)) {
-        if ($password !== $confirm_password) {
-            echo "Passwords do not match.";
-            return;
-        }
-        $hashpassword = password_hash($password, PASSWORD_DEFAULT);
-    } else {
-        $hashpassword = $userData['password'];
-    }
-
-    $update_sql = "UPDATE users SET username=?, email=?, password=?, contact_number=?, address=? WHERE user_id=?";
+    $update_sql = "UPDATE users SET username=?, email=?, contact_number=?, address=? WHERE user_id=?";
     $stmt = $conn->prepare($update_sql);
-    $stmt->bind_param("sssisi", $username, $email, $hashpassword, $contact_number, $address, $user_id);
+    $stmt->bind_param("ssisi", $username, $email, $contact_number, $address, $user_id);
 
     if ($stmt->execute()) {
         echo "Profile updated successfully!";
     } else {
         echo "Error updating profile.";
-    }
-}
-
-if (isset($_POST['delete_account'])) {
-    $entered_password = $_POST['delete_password'];
-
-    if (password_verify($entered_password, $userData['password'])) {
-        $stmt = $conn->prepare("DELETE FROM users WHERE user_id = ?");
-        $stmt->bind_param("i", $user_id);
-        if ($stmt->execute()) {
-            session_destroy();
-            header("Location: register.php");
-            exit();
-        } else {
-            echo "Error deleting account.";
-        }
-    } else {
-        echo "Incorrect password. Account not deleted.";
     }
 }
 ?>
@@ -100,14 +70,6 @@ if (isset($_POST['delete_account'])) {
                     <td><input type='email' name="email" required value="<?= $userData['email'] ?>"></td>
                 </tr>
                 <tr>
-                    <td><label>New Password</label></td>
-                    <td><input type='password' name="password"></td>
-                </tr>
-                <tr>
-                    <td><label>Confirm Password</label></td>
-                    <td><input type='password' name="confirm_password"></td>
-                </tr>
-                <tr>
                     <td><label>Contact Number</label></td>
                     <td><input type='number' required name="contact_number" value="<?= $userData['contact_number'] ?>">
                     </td>
@@ -124,13 +86,11 @@ if (isset($_POST['delete_account'])) {
         </table>
     </form>
 
-    <h2>Delete My Account</h2>
-    <p>This action cannot be undone. Please confirm your password to proceed with account deletion.</p>
-    <form action="profile.php" method="post">
-        <label for="delete_password">Enter Password:</label>
-        <input type="password" name="delete_password" required>
-        <button type="submit" name="delete_account">Delete Account</button>
-    </form>
+    <h2>Account Settings</h2>
+    <ul>
+        <li><a href="change_password.php">Change Password</a></li>
+        <li><a href="delete_account.php">Delete My Account</a></li>
+    </ul>
 </body>
 
 </html>
