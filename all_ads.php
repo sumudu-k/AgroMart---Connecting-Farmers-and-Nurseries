@@ -1,15 +1,29 @@
 <?php
 session_start();
 include 'config.php';
-include 'navbar.php';
+include 'navbar.php'; // Including the navbar
 
-// Fetch all ads from the database
+// Set the number of ads per page
+$ads_per_page = 16;
+
+// Get the current page number from the URL, default to 1 if not set
+$current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($current_page - 1) * $ads_per_page;
+
+// Fetch the total number of ads
+$total_ads_sql = "SELECT COUNT(*) AS total FROM ads";
+$total_ads_result = $conn->query($total_ads_sql);
+$total_ads = $total_ads_result->fetch_assoc()['total'];
+$total_pages = ceil($total_ads / $ads_per_page);
+
+// Fetch ads for the current page
 $ads_sql = "
     SELECT ads.*, categories.category_name, 
         (SELECT image_path FROM ad_images WHERE ad_id = ads.ad_id LIMIT 1) AS image 
     FROM ads 
     JOIN categories ON ads.category_id = categories.category_id 
-    ORDER BY ads.created_at DESC";
+    ORDER BY ads.created_at DESC 
+    LIMIT $ads_per_page OFFSET $offset";
 $result = $conn->query($ads_sql);
 ?>
 
@@ -21,97 +35,243 @@ $result = $conn->query($ads_sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Ads</title>
     <style>
-    /* Card layout for ads */
-    .ads-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        justify-content: center;
-        margin: 20px;
-    }
+        .container {
+            width: 75%; 
+            margin: 0 auto;
+        }
 
-    .ad-card {
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        overflow: hidden;
-        width: 23%;
-        /* 4 items per row */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s, box-shadow 0.2s;
-        text-align: center;
-        cursor: pointer;
-    }
+        .ads-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 35px 0;
+        }
 
-    .ad-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    }
+        .ad-card {
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            width: calc(25% - 20px); /* 4 cards per row with gap consideration */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            padding-bottom: 15px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
 
-    .ad-card img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        border-radius: 8px;
-    }
+        .ad-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
 
+        .ad-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            mix-blend-mode: multiply;
+            border-radius: 8px 8px 0 0;
+        }
 
-    .ad-card h4 {
-        font-size: 16px;
-        color: #333;
-        margin: 10px 0 5px 0;
-        font-weight: 600;
-        text-transform: capitalize;
-    }
+        .ad-card h4 {
+            font-size: 1.1rem;
+            color: #333;
+            margin: 10px 0 5px 0;
+            font-weight: 600;
+            text-transform: capitalize;
+            padding: 0 10px;
+        }
 
-    .ad-card p {
-        font-size: 14px;
-        color: #007b00;
-        font-weight: 500;
-        margin: 5px 0;
-    }
+        .ad-details {
+            margin: 10px 8px;
+        }
 
-    body,
-    html {
-        overflow-x: hidden;
-    }
+        .ad-details .description {
+            line-height: 1.4;
+            font-size: 0.9rem;
+            color: #000000;
+            text-align: left;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin: 0 10px 10px;
+        }
+
+        .ad-details .price {
+            font-size: 1rem;
+            color: #d84400;
+            font-weight: bolder;
+            margin-top: 5px;
+            padding: 0 10px;
+            text-align: left;
+            line-height: 2;
+        }
+
+        .ad-details .district {
+            font-size: 0.9rem;
+            color: #000000;
+            margin-top: 5px;
+            padding: 0 10px;
+            text-align: left;
+            font-weight: bolder;
+            line-height: 2;
+        }
+
+        .ad-details .date {
+            font-size: 0.8rem;
+            color: #666666;
+            padding: 0 10px;
+            text-align: left;
+        }
+
+        .pagination {
+            text-align: center;
+            margin: 20px 0;
+            padding-bottom: 20px;
+        }
+
+        .pagination a {
+            margin: 0 5px;
+            padding: 8px 12px;
+            text-decoration: none;
+            color: #333;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .pagination a.active {
+            background-color: #333;
+            color: #fff;
+            border-color: #333;
+        }
+
+        .pagination a:hover {
+            background-color: #555;
+            color: #fff;
+        }
+
+        /* Mobile Devices (319px - 480px) - 8 rows × 1 column = 8 items */
+        @media screen and (max-width: 480px) {
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+
+            .ads-container {
+                gap: 15px;
+                margin: 20px 0;
+            }
+
+            .ad-card {
+                width: 100%;
+            }
+
+            .ad-card img {
+                height: 150px;
+            }
+
+            .ad-card h4 {
+                font-size: 1rem;
+            }
+
+            .ad-details .description {
+                font-size: 0.85rem;
+                -webkit-line-clamp: 3;
+            }
+
+            .ad-details .price {
+                font-size: 0.95rem;
+            }
+
+            .ad-details .district {
+                font-size: 0.85rem;
+            }
+
+            .ad-details .date {
+                font-size: 0.75rem;
+            }
+
+            .pagination a {
+                padding: 6px 10px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Tablets (481px - 1200px) - 6 rows × 2 columns = 12 items */
+        @media screen and (min-width: 481px) and (max-width: 1200px) {
+            .container {
+                width: 95%;
+            }
+
+            .ad-card {
+                width: calc(50% - 10px);
+            }
+
+            .ad-card img {
+                height: 180px;
+            }
+
+            .ad-card h4 {
+                font-size: 1.05rem;
+            }
+
+            .pagination a {
+                padding: 7px 11px;
+            }
+        }
+
+        /* Desktops (1201px and up) - 6 rows × 4 columns = 24 items */
+        @media screen and (min-width: 1201px) {
+            .container {
+                width: 90%;
+            }
+
+            .ad-card {
+                width: calc(25% - 15px);
+            }
+        }
     </style>
 </head>
 
 <body>
-
     <div class="container">
-        <h2>All Ads</h2>
-        <div class="ads-container">
+        <div class="ads-container" id="ads-container">
             <?php if ($result->num_rows > 0): ?>
-            <?php while ($ad = $result->fetch_assoc()):
-                    // Limit the description to 200 characters
-                    $description = $ad['description'];
-                    if (strlen($description) > 200) {
-                        $description = substr($description, 0, 200) . '...';
-                    }
-                ?>
+            <?php while ($ad = $result->fetch_assoc()): 
+                $description = $ad['description'];
+                if (strlen($description) > 200) {
+                    $description = substr($description, 0, 200) . '...';
+                }
+            ?>
             <div class="ad-card" onclick="window.location.href='view_ad.php?ad_id=<?= $ad['ad_id']; ?>'">
-                <?php if ($ad['image']): ?>
-                <img src="<?= htmlspecialchars($ad['image']); ?>" alt="Product Image">
-
-                <?php else: ?>
-                <img src="images/placeholder/NO IMAGE AD.png" alt="Product Image">
-                <?php endif; ?>
-
+                <img src="<?= htmlspecialchars($ad['image'] ?? 'images/placeholder/no-image.jpg'); ?>" alt="Product Image">
                 <h4><?= htmlspecialchars($ad['title']); ?></h4>
-                <p><?= htmlspecialchars($description); ?></p>
-                <p><strong>Price:</strong> Rs <?= htmlspecialchars($ad['price']); ?></p>
-                <p><strong>District:</strong> <?= htmlspecialchars($ad['district']); ?></p>
-                <p><strong>Posted on:</strong> <?= date('F j, Y', strtotime($ad['created_at'])); ?></p>
+                <div class="ad-details">
+                    <p class="description"><?= htmlspecialchars($description); ?></p>
+                    <p class="price">Rs <?= htmlspecialchars($ad['price']); ?></p>
+                    <p class="district"><?= htmlspecialchars($ad['district']); ?></p>
+                    <p class="date"><?= date('F j, Y h:i A', strtotime($ad['created_at'])); ?></p>
+                </div>
             </div>
             <?php endwhile; ?>
             <?php else: ?>
             <p>No ads found.</p>
             <?php endif; ?>
         </div>
+
+        <!-- Pagination Links Below the Ads Container -->
+        <div class="pagination">
+            <?php for ($page = 1; $page <= $total_pages; $page++): ?>
+            <a href="?page=<?= $page; ?>" class="<?= $page == $current_page ? 'active' : ''; ?>">
+                <?= $page; ?>
+            </a>
+            <?php endfor; ?>
+        </div>
     </div>
 
 </body>
-
 </html>
