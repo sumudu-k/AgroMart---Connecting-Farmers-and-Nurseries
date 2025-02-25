@@ -208,6 +208,7 @@ if ($user_id) {
         }
 
         .more-item-card {
+            flex:1;
             background-color: #ffffff;
             border: 1px solid #ddd;
             border-radius: 10px;
