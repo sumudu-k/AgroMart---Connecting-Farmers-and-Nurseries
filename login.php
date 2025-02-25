@@ -67,18 +67,17 @@ if (isset($_POST['login'])) {
     /* Login Container Styling */
     .login-container {
         display: flex;
-        align-content: center;
         background-color: #e2e6eb;
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 50%;
-        max-width: 1300px;
+        width: 100%;
+        max-width: 1200px;
     }
 
     .plant-image {
         flex: 0.75;
-        background-image: url("images/login image.png");
+        background-image: url("images/login_image.png");
         background-size: cover;
         background-position: center;
         border-radius: 10px;
@@ -87,7 +86,6 @@ if (isset($_POST['login'])) {
 
     .login-form {
         flex: 1.25;
-        max-width: 100%;
         padding: 20px;
         background-color: #fff;
         border-radius: 10px;
@@ -99,27 +97,29 @@ if (isset($_POST['login'])) {
         margin-bottom: 40px;
     }
 
-    .login-form form {
-        display: flex;
-        flex-direction: column;
-        /* gap: 5px; */
-    }
-
     .login-form input {
+        width: 100%;
         padding: 10px;
         font-size: 16px;
         border: 1px solid #ccc;
         border-radius: 5px;
+        margin-bottom: 25px;
     }
 
+    input:focus {
+            outline: none;
+            border-color: #007a33;
+        }
+
     .login-form button {
+        width: 100%;
         background-color: #007a33;
         color: #fff;
         padding: 10px;
-        font-size: 18px;
+        margin: 10px 0 10px;
+        font-size: 1.125rem;
         border: none;
         border-radius: 5px;
-        margin-bottom: 15px;
         cursor: pointer;
         transition: background-color 0.3s;
     }
@@ -129,7 +129,7 @@ if (isset($_POST['login'])) {
     }
 
     p {
-        font-size: 15px;
+        font-size: 0.938rem;
         color: black;
         margin-top: 15px;
     }
@@ -140,60 +140,60 @@ if (isset($_POST['login'])) {
         font-weight: bold;
     }
 
-    /* Responsive Styles */
-    @media (max-width: 850px) {
-        .login-container {
-            flex-direction: column;
-            align-items: center;
-            width: 80%;
-            padding: 10px;
+    /* responsive design */
+        @media (max-width: 480px) {
+            .login-container {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                padding: 10px;
+            }
+
+            .plant-image {
+                width: 100%;
+                height: 200px;
+                min-height: 200px;
+                margin-bottom: 20px;
+            }
+
+            .login-form {
+                width: 100%;
+            }
         }
 
-        .plant-image {
-            width: 80%;
-            height: auto;
-            min-height: 350px;
-            margin-bottom: 20px;
+        @media (min-width: 481px) and (max-width: 1200px) {
+            .login-container {
+                flex-direction: row;
+                width: 90%;
+                padding: 15px;
+            }
+
+            .plant-image {
+                width: 50%;
+                min-height: 300px;
+            }
+
+            .login-form {
+                width: 50%;
+            }
         }
 
-        .login-form {
-            width: 90%;
-        }
-    }
+        @media (min-width: 1201px) {
+            .login-container {
+                flex-direction: row;
+                width: 70%;
+                gap: 30px;
+            }
 
-    @media (min-width: 850px) and (max-width: 1300px) {
-        .login-container {
-            flex-direction: row;
-            width: 90%;
-            padding: 15px;
-        }
+            .plant-image {
+                width: 45%;
+                min-height: 400px;
+            }
 
-        .plant-image {
-            width: 50%;
-            min-height: 300px;
+            .login-form {
+                width: 55%;
+            }
         }
-
-        .login-form {
-            width: 50%;
-        }
-    }
-
-    @media (min-width: 1301px) {
-        .login-container {
-            flex-direction: row;
-            width: 60%;
-            gap: 30px;
-        }
-
-        .plant-image {
-            width: 45%;
-            min-height: 400px;
-        }
-
-        .login-form {
-            width: 55%;
-        }
-    }
     </style>
 
 </head>
@@ -201,8 +201,8 @@ if (isset($_POST['login'])) {
 <body>
     <div class="wrapper">
         <div class="login-container">
-            <div class="card plant-image"></div>
-            <div class="card login-form">
+            <div class="plant-image"></div>
+            <div class="login-form">
                 <h2>Welcome Back</h2>
                 <form action="login.php" method="post">
                     <input type="email" name="email" placeholder="Email" required><br>
