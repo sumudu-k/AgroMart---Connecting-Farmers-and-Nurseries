@@ -30,123 +30,222 @@ $result = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Ads</title>
     <style>
-    /* Container width */
+        * {
+            box-sizing: border-box;
+        }
 
-    .title {
-        background-color: #dbffc7;
-        text-align: left;
-        text-transform: capitalize;
-        padding: 20px 12.5%;
-        font-size: 2.2rem;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
 
-    .container {
-        width: 75%;
-        /* Changed to 90% for better responsiveness */
-        margin: 0 auto;
-    }
+        .title {
+            background-color: #dbffc7;
+            text-align: left;
+            text-transform: capitalize;
+            padding: 20px 12.5%;
+            font-size: 2.2rem;
+            margin: 0;
+        }
 
-    /* Card layout for ads */
-    .ads-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        justify-content: center;
-        margin: 35px 0;
-    }
+        .container {
+            width: 75%;
+            margin: 0 auto;
+        }
 
-    .ad-card {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        text-align: center;
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        overflow: hidden;
-        width: calc(25% - 20px);
-        /* 4 cards per row with gap consideration */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s, box-shadow 0.2s;
-        padding: 15px;
-    }
+        /* Card layout for ads */
+        .ads-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 35px 0;
+        }
 
-    .ad-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    }
+        .ad-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            width: calc(25% - 20px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            padding: 15px;
+        }
 
-    .ad-card img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        mix-blend-mode: multiply;
-        border-radius: 8px;
-    }
+        .ad-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
 
-    .ad-card h4 {
-        font-size: 16px;
-        color: #333;
-        margin: 10px 0 5px 0;
-        font-weight: 600;
-        text-transform: capitalize;
-    }
+        .ad-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            mix-blend-mode: multiply;
+            border-radius: 8px;
+        }
 
-    .ad-card p {
-        line-height: 1.4;
-        font-size: 14px;
-        color: #555;
-        text-align: left;
-        display: -webkit-box;
-        -webkit-line-clamp: 4;
-        /* Limit to 10 lines */
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin: 10px 10px;
-    }
+        .ad-card h4 {
+            font-size: 16px;
+            color: #333;
+            margin: 10px 0 5px 0;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
 
-    .ad-card .price {
-        font-weight: 700;
-        color: #b03052;
-        margin: 10px 10px;
-    }
+        .ad-card p {
+            line-height: 1.4;
+            font-size: 14px;
+            color: #555;
+            text-align: left;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;/* Limit to 10 lines */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin: 10px 10px;
+        }
 
-    /* Button styles */
-    .ad-buttons {
-        display: flex;
-        justify-content: center;
-    }
+        .ad-card .price {
+            font-weight: 700;
+            color: #b03052;
+            margin: 10px 10px;
+            text-align: left;
+        }
 
-    .btn {
-        text-decoration: none;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 5px;
-        background-color: #28a745;
-        color: white;
-        cursor: pointer;
-        margin: 5px;
-        display: inline-block;
-    }
+        /* Button styles */
+        .ad-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
 
-    .btn:hover {
-        background-color: #218838;
-    }
+        .btn {
+            text-decoration: none;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
 
-    .btn-danger {
-        background-color: red;
-        cursor: pointer;
-    }
+        .btn:hover {
+            background-color: #218838;
+        }
 
-    .btn-danger:hover {
-        background-color: darkred;
-    }
+        .btn-danger {
+            background-color: red;
+            cursor: pointer;
+        }
 
-    .no-ads {
-        text-align: center;
-        font-size: 1.5rem;
-        margin-top: 50px;
-    }
+        .btn-danger:hover {
+            background-color: darkred;
+        }
+
+        .no-ads {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-top: 50px;
+        }
+
+        /* Mobile Devices */
+        @media screen and (max-width: 480px) {
+            .title {
+                padding: 15px 5%;
+                font-size: 1.5rem;
+            }
+
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+
+            .ads-container {
+                gap: 15px;
+                margin: 20px 0;
+            }
+
+            .ad-card {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .ad-card img {
+                height: 150px;
+            }
+
+            .ad-card h4 {
+                font-size: 14px;
+            }
+
+            .ad-card p {
+                font-size: 12px;
+                -webkit-line-clamp: 3;
+            }
+
+            .ad-card .price {
+                font-size: 12px;
+            }
+
+            .btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .no-ads {
+                font-size: 1.2rem;
+                margin-top: 30px;
+            }
+        }
+
+        /* Tablets*/
+        @media screen and (min-width: 481px) and (max-width: 1200px) {
+            .title {
+                padding: 20px 8%;
+                font-size: 1.8rem;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+            .ad-card {
+                width: calc(50% - 10px);
+            }
+
+            .ad-card img {
+                height: 180px;
+            }
+
+            .ad-card h4 {
+                font-size: 15px;
+            }
+
+            .ad-card p {
+                font-size: 13px;
+            }
+
+            .ad-card .price {
+                font-size: 13px;
+            }
+
+            .btn {
+                padding: 9px 13px;
+                font-size: 13px;
+            }
+        }
+
     </style>
 
     <script>
