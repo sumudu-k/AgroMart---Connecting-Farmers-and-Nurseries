@@ -55,22 +55,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-family: "Poppins", Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            /* Light gray from post_ad.php */
+            position: relative;
             overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("images/B1.jpg");
+            background-size: cover;
+            opacity: 0.5;
+            z-index: -1;
         }
 
         h1 {
             background-color: #dbffc7;
-            /* Light green from category ads */
             text-align: center;
-            padding: 20px;
-            font-size: 2.2rem;
-            color: #006400;
-            /* Dark green text */
-            margin: 0 0 30px 0;
-            text-transform: capitalize;
+            padding: 10px 12.5%;
+            font-size: 2rem;
+            margin-bottom: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative; 
+            z-index: 1;
+        }
+
+        .main-content {
+            flex: 1;
         }
 
         .container {
@@ -91,6 +108,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             max-width: 400px;
             width: 100%;
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         p {
@@ -224,20 +243,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    <h1>Delete My Account</h1>
-    <div class="container">
-        <form action="delete_account.php" method="post">
-            <p>This action cannot be undone. Please confirm your password to proceed.</p>
-            <div class="form-group">
-                <label for="password">Enter Password:</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password" required>
-            </div>
-            <button type="submit">Delete Account</button>
-        </form>
+<div class="main-content">
+        <h1>Delete My Account</h1>
+        <div class="container">
+            <form action="delete_account.php" method="post">
+                <p>This action cannot be undone. Please confirm your password to proceed.</p>
+                <div class="form-group">
+                    <label for="password">Enter Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit">Delete Account</button>
+            </form>
+        </div>
     </div>
+    <?php include 'footer.php'; ?>
 </body>
 
 </html>
-<?php
-include 'footer.php';
-?>
