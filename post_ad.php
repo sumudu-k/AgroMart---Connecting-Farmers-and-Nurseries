@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+ob_start();
 include 'config.php';
 include 'navbar.php';
 
@@ -45,207 +46,207 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+
+<head>
     <meta charset="UTF-8">
     <title>Post Ad</title>
 
     <style>
-        /* Styling for the form layout */
-        * {
-            box-sizing: border-box;
-        }
+    /* Styling for the form layout */
+    * {
+        box-sizing: border-box;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
 
+    h1 {
+        background-color: #dbffc7;
+        text-align: center;
+        text-transform: capitalize;
+        padding: 20px 12.5%;
+        margin: 0 0 20px 0;
+
+    }
+
+    /* Form container */
+    .ad-form {
+        max-width: 50%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #e1e1e1;
+        border-radius: 5px;
+    }
+
+    .form-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    label {
+        flex: 0.5;
+        font-size: 1rem;
+        text-align: right;
+        padding-right: 20px;
+        font-weight: bold;
+    }
+
+    input,
+    select,
+    textarea {
+        flex: 1.5;
+        font-size: 1rem;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+        outline: none;
+        border-color: #007a33;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 150px;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+        font-size: 1rem;
+        font-style: italic;
+        letter-spacing: 0.5px;
+        font-weight: 500;
+    }
+
+    button {
+        background-color: #007a33;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        display: block;
+        margin: 20px auto 0;
+        transition: background-color 0.2s;
+    }
+
+    button:hover {
+        background-color: #005922;
+    }
+
+    /* Mobile Devices*/
+    @media screen and (max-width: 480px) {
         h1 {
-            background-color: #dbffc7;
-            text-align: center;
-            text-transform: capitalize;
-            padding: 20px 12.5%;
-            margin: 0 0 20px 0;
-        
+            padding: 15px 5%;
+            font-size: 1.5rem;
         }
 
-        /* Form container */
         .ad-form {
-            max-width: 50%;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #e1e1e1;
-            border-radius: 5px;
+            padding: 15px;
+            max-width: 90%;
         }
 
         .form-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
+            flex-direction: column;
+            align-items: stretch;
+            margin-bottom: 10px;
         }
 
         label {
-            flex: 0.5;
-            font-size: 1rem;
-            text-align: right;
-            padding-right: 20px; 
-            font-weight: bold;
+            text-align: left;
+            padding-right: 0;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
         }
 
         input,
         select,
         textarea {
-            flex: 1.5;
-            font-size: 1rem;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            width: 100%;
-        }
-
-        input:focus,
-        select:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #007a33;
-        }   
-
-        textarea {
-            resize: vertical;
-            min-height: 150px;
+            font-size: 0.9rem;
+            padding: 6px;
+            margin-bottom: 10px;
         }
 
         input::placeholder,
         textarea::placeholder {
-            font-size: 1rem;
-            font-style: italic;
-            letter-spacing: 0.5px;
-            font-weight: 500;
+            font-size: 0.9rem;
         }
 
         button {
-            background-color: #007a33;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            display: block;
-            margin: 20px auto 0;
-            transition: background-color 0.2s;
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+    }
+
+    /* Tablets */
+    @media screen and (min-width: 481px) and (max-width: 1200px) {
+        h1 {
+            padding: 20px 8%;
+            font-size: 1.8rem;
         }
 
-        button:hover {
-            background-color: #005922;
+        .ad-form {
+            max-width: 80%;
         }
 
-        /* Mobile Devices*/
-        @media screen and (max-width: 480px) {
-            h1 {
-                padding: 15px 5%;
-                font-size: 1.5rem;
-            }
-
-            .ad-form {
-                padding: 15px;
-                max-width: 90%;
-            }
-
-            .form-group {
-                flex-direction: column;
-                align-items: stretch;
-                margin-bottom: 10px;
-            }
-
-            label {
-                text-align: left;
-                padding-right: 0;
-                margin-bottom: 5px;
-                font-size: 0.9rem;
-            }
-
-            input,
-            select,
-            textarea {
-                font-size: 0.9rem;
-                padding: 6px;
-                margin-bottom: 10px;
-            }
-
-            input::placeholder,
-            textarea::placeholder {
-                font-size: 0.9rem;
-            }
-
-            button {
-                padding: 8px 15px;
-                font-size: 14px;
-            }
+        .form-group {
+            flex-direction: column;
+            align-items: stretch;
+            margin-bottom: 20px;
         }
 
-        /* Tablets */
-        @media screen and (min-width: 481px) and (max-width: 1200px) {
-            h1 {
-                padding: 20px 8%;
-                font-size: 1.8rem;
-            }
-
-            .ad-form {
-                max-width: 80%;
-            }
-
-            .form-group {
-                flex-direction: column;
-                align-items: stretch;
-                margin-bottom: 20px;
-            }
-
-            label {
-                text-align: left;
-                padding-right: 0;
-                margin-bottom: 5px;
-                font-size: 0.95rem;
-            }
-
-            input,
-            select,
-            textarea {
-                font-size: 0.95rem;
-                padding: 7px;
-                margin-bottom: 10px;
-            }
-
-            button {
-                padding: 9px 18px;
-                font-size: 15px;
-            }
+        label {
+            text-align: left;
+            padding-right: 0;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
         }
 
+        input,
+        select,
+        textarea {
+            font-size: 0.95rem;
+            padding: 7px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 9px 18px;
+            font-size: 15px;
+        }
+    }
     </style>
 
-    </head>
+</head>
 
 
-    <body>
-        <h1>Post an Ad Totally Free</h1>
-        <form action="post_ad.php" method="POST" enctype="multipart/form-data"v class="ad-form">
-                <div class="form-group">
-                    <label for="title">Title</label>
-                    <input type="text" name="title" placeholder="Enter title here" required>
-                </div>
+<body>
+    <h1>Post an Ad Totally Free</h1>
+    <form action="post_ad.php" method="POST" enctype="multipart/form-data" v class="ad-form">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" name="title" placeholder="Enter title here" required>
+        </div>
 
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea name="description" placeholder="Describe your ad here" required></textarea>
-                </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea name="description" placeholder="Describe your ad here" required></textarea>
+        </div>
 
-                <div class="form-group">
-                    <label for="district">District</label>
-                    <select name="district" required>
-                    <option value="">Select District</option>
+        <div class="form-group">
+            <label for="district">District</label>
+            <select name="district" required>
+                <option value="">Select District</option>
                 <option value="Ampara">Ampara</option>
                 <option value="Anuradhapura">Anuradhapura</option>
                 <option value="Badulla">Badulla</option>
@@ -271,40 +272,40 @@ if (isset($_POST['submit'])) {
                 <option value="Ratnapura">Ratnapura</option>
                 <option value="Trincomalee">Trincomalee</option>
                 <option value="Vavuniya">Vavuniya</option>
-                    </select>
-                </div>
+            </select>
+        </div>
 
-                <div class="form-group">
-                    <label for="category">Category</label>
-                    <select name="category" required>
-                        <?php
-                        $categories = $conn->query("SELECT * FROM categories");
-                        while ($category = $categories->fetch_assoc()) {
-                            echo "<option value='{$category['category_id']}'>{$category['category_name']}</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select name="category" required>
+                <?php
+                $categories = $conn->query("SELECT * FROM categories");
+                while ($category = $categories->fetch_assoc()) {
+                    echo "<option value='{$category['category_id']}'>{$category['category_name']}</option>";
+                }
+                ?>
+            </select>
+        </div>
 
-                <div class="form-group">
-                    <label for="phone_number">Contact</label>
-                    <input type="text" name="phone_number" placeholder="Enter 10 digit number" required>
-                </div>
+        <div class="form-group">
+            <label for="phone_number">Contact</label>
+            <input type="text" name="phone_number" placeholder="Enter 10 digit number" required>
+        </div>
 
-                <div class="form-group">
-                    <label for="price">Price</label>
-                    <input type="number" name="price" placeholder="Rs" required>
-                </div>
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input type="number" name="price" placeholder="Rs" required>
+        </div>
 
-                <div class="form-group">
-                    <label for="images">Images</label>
-                    <input type="file" name="images[]" multiple required>
-                </div>
+        <div class="form-group">
+            <label for="images">Images</label>
+            <input type="file" name="images[]" multiple required>
+        </div>
 
-                <button type="submit" name="submit">Submit Ad</button>
-            </form>
-        
+        <button type="submit" name="submit">Submit Ad</button>
+    </form>
 
-    </body>
+
+</body>
 
 </html>
