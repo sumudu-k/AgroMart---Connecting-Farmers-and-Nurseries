@@ -55,16 +55,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-family: "Poppins", Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4; /* Light gray from post_ad.php */
+            background-color: #f4f4f4;
+            /* Light gray from post_ad.php */
             overflow-x: hidden;
         }
 
         h1 {
-            background-color: #dbffc7; /* Light green from category ads */
+            background-color: #dbffc7;
+            /* Light green from category ads */
             text-align: center;
             padding: 20px;
             font-size: 2.2rem;
-            color: #006400; /* Dark green text */
+            color: #006400;
+            /* Dark green text */
             margin: 0 0 30px 0;
             text-transform: capitalize;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -81,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         form {
-            background-color: #e1e1e1; 
+            background-color: #e1e1e1;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -94,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             font-size: 1.3rem;
             font-weight: bold;
-            color: #b03052; 
+            color: #b03052;
             margin-bottom: 20px;
         }
 
@@ -122,7 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .form-group input[type="password"]:focus {
-            border-color: #f09319; 
+            border-color: #f09319;
         }
 
         .form-group input[type="password"]::placeholder {
@@ -221,7 +224,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-<h1>Delete My Account</h1>
+    <h1>Delete My Account</h1>
     <div class="container">
         <form action="delete_account.php" method="post">
             <p>This action cannot be undone. Please confirm your password to proceed.</p>
@@ -233,4 +236,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
 </body>
+
 </html>
+<?php
+include 'footer.php';
+?>

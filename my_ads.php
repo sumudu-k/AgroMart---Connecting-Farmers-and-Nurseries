@@ -104,7 +104,8 @@ $result = $stmt->get_result();
             color: #555;
             text-align: left;
             display: -webkit-box;
-            -webkit-line-clamp: 4;/* Limit to 10 lines */
+            -webkit-line-clamp: 4;
+            /* Limit to 10 lines */
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -245,15 +246,14 @@ $result = $stmt->get_result();
                 font-size: 13px;
             }
         }
-
     </style>
 
     <script>
-    function confirmDelete(adId) {
-        if (confirm("Are you sure you want to delete this ad?")) {
-            window.location.href = "delete_ad.php?ad_id=" + adId;
+        function confirmDelete(adId) {
+            if (confirm("Are you sure you want to delete this ad?")) {
+                window.location.href = "delete_ad.php?ad_id=" + adId;
+            }
         }
-    }
     </script>
 </head>
 
@@ -265,29 +265,29 @@ $result = $stmt->get_result();
 
         <div class="ads-container">
             <?php if ($result->num_rows > 0): ?>
-            <?php while ($row = $result->fetch_assoc()):
+                <?php while ($row = $result->fetch_assoc()):
                     $images = explode(',', $row['images']);
                     $first_image = !empty($images[0]) ? $images[0] : 'default_image.jpg';
                 ?>
-            <div class="ad-card">
-                <div class="details">
-                    <img src="<?= htmlspecialchars($first_image) ?>" alt="Ad Image">
-                    <h4><?= htmlspecialchars($row['title']) ?></h4>
-                    <p><?= htmlspecialchars($row['description']) ?></p>
-                    <p class="price">Price: Rs <?= number_format($row['price'], 2) ?></p>
-                </div>
-                <div class="ad-buttons" style="margin-top: 10px;">
-                    <a href="view_ad.php?ad_id=<?= $row['ad_id'] ?>" class="btn">View Ad</a>
-                    <a href="edit_ad.php?ad_id=<?= $row['ad_id'] ?>" class="btn">Edit Ad</a>
-                    <button class="btn btn-danger" onclick="confirmDelete(<?= $row['ad_id'] ?>)">Delete Ad</button>
-                </div>
-            </div>
+                    <div class="ad-card">
+                        <div class="details">
+                            <img src="<?= htmlspecialchars($first_image) ?>" alt="Ad Image">
+                            <h4><?= htmlspecialchars($row['title']) ?></h4>
+                            <p><?= htmlspecialchars($row['description']) ?></p>
+                            <p class="price">Price: Rs <?= number_format($row['price'], 2) ?></p>
+                        </div>
+                        <div class="ad-buttons" style="margin-top: 10px;">
+                            <a href="view_ad.php?ad_id=<?= $row['ad_id'] ?>" class="btn">View Ad</a>
+                            <a href="edit_ad.php?ad_id=<?= $row['ad_id'] ?>" class="btn">Edit Ad</a>
+                            <button class="btn btn-danger" onclick="confirmDelete(<?= $row['ad_id'] ?>)">Delete Ad</button>
+                        </div>
+                    </div>
 
-            <!-- Buttons positioned inside the ad card, below the content -->
+                    <!-- Buttons positioned inside the ad card, below the content -->
 
-            <?php endwhile; ?>
+                <?php endwhile; ?>
             <?php else: ?>
-            <p class="no-ads">You haven't placed any ads yet!</p>
+                <p class="no-ads">You haven't placed any ads yet!</p>
             <?php endif; ?>
         </div>
 
@@ -299,4 +299,6 @@ $result = $stmt->get_result();
 <?php
 $stmt->close();
 $conn->close();
+
+include 'footer.php';
 ?>

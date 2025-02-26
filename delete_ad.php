@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'config.php'; 
+include 'config.php';
 
 
 if (!isset($_SESSION['user_id'])) {
@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 if (isset($_GET['ad_id'])) {
     $ad_id = $_GET['ad_id'];
 
-    
+
     $sql = "DELETE FROM ads WHERE ad_id = ? AND user_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $ad_id, $_SESSION['user_id']);
@@ -27,4 +27,5 @@ if (isset($_GET['ad_id'])) {
 } else {
     echo "Ad ID is missing!";
 }
-?>
+
+include 'footer.php';

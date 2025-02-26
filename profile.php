@@ -76,7 +76,7 @@ if (isset($_POST['update'])) {
             overflow-x: hidden;
         }
 
-        h1{
+        h1 {
             background-color: #dbffc7;
             text-align: center;
             padding: 20px;
@@ -143,7 +143,7 @@ if (isset($_POST['update'])) {
         }
 
         .updateBtn {
-            background-color: #f09319; 
+            background-color: #f09319;
             color: #fff;
             padding: 10px 20px;
             border: none;
@@ -156,7 +156,7 @@ if (isset($_POST['update'])) {
         }
 
         .updateBtn:hover {
-            background-color: #cb790d; 
+            background-color: #cb790d;
         }
 
         .accountSettings {
@@ -179,7 +179,7 @@ if (isset($_POST['update'])) {
 
         }
 
-        .accountSettingsBtn button { 
+        .accountSettingsBtn button {
             background-color: #28a745;
             padding: 10px 20px;
             border: none;
@@ -196,7 +196,7 @@ if (isset($_POST['update'])) {
         }
 
 
-    
+
 
         /* Responsive Styles */
         /* Mobile Devices */
@@ -274,36 +274,43 @@ if (isset($_POST['update'])) {
 <body>
     <h1>Edit Profile</h1>
     <div class="container">
-        
+
         <form action="profile.php" method="post">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" required name="username" value="<?= htmlspecialchars($userData['username']) ?>">
+                <input type="text" id="username" required name="username"
+                    value="<?= htmlspecialchars($userData['username']) ?>">
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" required name="email" value="<?= htmlspecialchars($userData['email']) ?>">
+                <input type="email" id="email" required name="email"
+                    value="<?= htmlspecialchars($userData['email']) ?>">
             </div>
             <div class="form-group">
                 <label for="contact_number">Contact Number</label>
-                <input type="number" id="contact_number" required name="contact_number" value="<?= htmlspecialchars($userData['contact_number']) ?>">
+                <input type="number" id="contact_number" required name="contact_number"
+                    value="<?= htmlspecialchars($userData['contact_number']) ?>">
             </div>
             <div class="form-group">
                 <label for="address">Address</label>
-                <input type="text" id="address" required name="address" value="<?= htmlspecialchars($userData['address']) ?>">
+                <input type="text" id="address" required name="address"
+                    value="<?= htmlspecialchars($userData['address']) ?>">
             </div>
             <button class="updateBtn" type="submit" name="update">Update</button>
         </form>
 
         <div class="accountSettings">
-                <h2>Account Settings</h2>
-                <div class="accountSettingsBtn">
-                    <button><a href="change_password.php">Change Password</a></button>
-                    <button><a href="delete_account.php">Delete My Account</a></button>
-                </div>
+            <h2>Account Settings</h2>
+            <div class="accountSettingsBtn">
+                <button><a href="change_password.php">Change Password</a></button>
+                <button><a href="delete_account.php">Delete My Account</a></button>
             </div>
-    
+        </div>
+
     </div>
 </body>
 
 </html>
+<?php
+include 'footer.php';
+?>
