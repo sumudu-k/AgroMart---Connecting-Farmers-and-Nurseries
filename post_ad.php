@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+ob_start();
 include 'config.php';
 include 'navbar.php';
 
@@ -45,7 +46,8 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+
+<head>
     <meta charset="UTF-8">
     <title>Post Ad</title>
 
@@ -68,7 +70,7 @@ if (isset($_POST['submit'])) {
             text-transform: capitalize;
             padding: 20px 12.5%;
             margin: 0 0 20px 0;
-        
+
         }
 
         /* Form container */
@@ -90,7 +92,7 @@ if (isset($_POST['submit'])) {
             flex: 0.5;
             font-size: 1rem;
             text-align: right;
-            padding-right: 20px; 
+            padding-right: 20px;
             font-weight: bold;
         }
 
@@ -110,7 +112,7 @@ if (isset($_POST['submit'])) {
         textarea:focus {
             outline: none;
             border-color: #007a33;
-        }   
+        }
 
         textarea {
             resize: vertical;
@@ -223,29 +225,28 @@ if (isset($_POST['submit'])) {
                 font-size: 15px;
             }
         }
-
     </style>
 
-    </head>
+</head>
 
 
-    <body>
-        <h1>Post an Ad Totally Free</h1>
-        <form action="post_ad.php" method="POST" enctype="multipart/form-data"v class="ad-form">
-                <div class="form-group">
-                    <label for="title">Title</label>
-                    <input type="text" name="title" placeholder="Enter title here" required>
-                </div>
+<body>
+    <h1>Post an Ad Totally Free</h1>
+    <form action="post_ad.php" method="POST" enctype="multipart/form-data" v class="ad-form">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" name="title" placeholder="Enter title here" required>
+        </div>
 
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea name="description" placeholder="Describe your ad here" required></textarea>
-                </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea name="description" placeholder="Describe your ad here" required></textarea>
+        </div>
 
-                <div class="form-group">
-                    <label for="district">District</label>
-                    <select name="district" required>
-                    <option value="">Select District</option>
+        <div class="form-group">
+            <label for="district">District</label>
+            <select name="district" required>
+                <option value="">Select District</option>
                 <option value="Ampara">Ampara</option>
                 <option value="Anuradhapura">Anuradhapura</option>
                 <option value="Badulla">Badulla</option>
@@ -271,40 +272,43 @@ if (isset($_POST['submit'])) {
                 <option value="Ratnapura">Ratnapura</option>
                 <option value="Trincomalee">Trincomalee</option>
                 <option value="Vavuniya">Vavuniya</option>
-                    </select>
-                </div>
+            </select>
+        </div>
 
-                <div class="form-group">
-                    <label for="category">Category</label>
-                    <select name="category" required>
-                        <?php
-                        $categories = $conn->query("SELECT * FROM categories");
-                        while ($category = $categories->fetch_assoc()) {
-                            echo "<option value='{$category['category_id']}'>{$category['category_name']}</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select name="category" required>
+                <?php
+                $categories = $conn->query("SELECT * FROM categories");
+                while ($category = $categories->fetch_assoc()) {
+                    echo "<option value='{$category['category_id']}'>{$category['category_name']}</option>";
+                }
+                ?>
+            </select>
+        </div>
 
-                <div class="form-group">
-                    <label for="phone_number">Contact</label>
-                    <input type="text" name="phone_number" placeholder="Enter 10 digit number" required>
-                </div>
+        <div class="form-group">
+            <label for="phone_number">Contact</label>
+            <input type="text" name="phone_number" placeholder="Enter 10 digit number" required>
+        </div>
 
-                <div class="form-group">
-                    <label for="price">Price</label>
-                    <input type="number" name="price" placeholder="Rs" required>
-                </div>
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input type="number" name="price" placeholder="Rs" required>
+        </div>
 
-                <div class="form-group">
-                    <label for="images">Images</label>
-                    <input type="file" name="images[]" multiple required>
-                </div>
+        <div class="form-group">
+            <label for="images">Images</label>
+            <input type="file" name="images[]" multiple required>
+        </div>
 
-                <button type="submit" name="submit">Submit Ad</button>
-            </form>
-        
+        <button type="submit" name="submit">Submit Ad</button>
+    </form>
 
-    </body>
+
+</body>
 
 </html>
+<?php
+include 'footer.php';
+?>

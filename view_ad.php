@@ -19,7 +19,7 @@ if (isset($_GET['ad_id'])) {
     $ad = $ad_result->fetch_assoc();
 
     if ($ad) {
-        $category_id = $ad['category_id']; 
+        $category_id = $ad['category_id'];
     } else {
         echo "Ad not found.";
         exit;
@@ -47,13 +47,15 @@ if (isset($_GET['ad_id'])) {
     $similar_stmt->bind_param("ii", $category_id, $ad_id);
     $similar_stmt->execute();
     $similar_ads_result = $similar_stmt->get_result();
+
+    $user_id = $_SESSION['user_id'] ?? null;
+    $is_wishlisted = false;
 } else {
     echo "No ad selected.";
     exit;
 }
 
-$user_id = $_SESSION['user_id'] ?? null;
-$is_wishlisted = false;
+
 
 if ($user_id) {
     $wishlist_check_sql = "SELECT * FROM wishlist WHERE user_id = ? AND ad_id = ?";
@@ -67,6 +69,7 @@ if ($user_id) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -208,7 +211,7 @@ if ($user_id) {
         }
 
         .more-item-card {
-            flex:1;
+            flex: 1;
             background-color: #ffffff;
             border: 1px solid #ddd;
             border-radius: 10px;
@@ -246,7 +249,6 @@ if ($user_id) {
             box-shadow: 0 8px 16px rgba(0, 100, 0, 0.2);
         }
 
-        /* Mobile Devices */
         @media screen and (max-width: 480px) {
             .container {
                 max-width: 95%;
@@ -254,7 +256,8 @@ if ($user_id) {
                 flex-direction: column;
             }
 
-            .ad-image, .ad-details {
+            .ad-image,
+            .ad-details {
                 flex: 1 1 100%;
                 min-width: 0;
                 padding: 10px 0;
@@ -316,14 +319,14 @@ if ($user_id) {
             }
         }
 
-        /* Tablets */
         @media screen and (min-width: 481px) and (max-width: 1200px) {
             .container {
                 max-width: 95%;
                 padding: 15px;
             }
 
-            .ad-image, .ad-details {
+            .ad-image,
+            .ad-details {
                 flex: 1 1 100%;
             }
 
@@ -362,61 +365,69 @@ if ($user_id) {
         }
     </style>
 </head>
+
 <body>
 
-<div class="container">
-    <div class="ad-image">
-        <div class="displayed-image">
-            <img id="displayedImage" src="<?= htmlspecialchars($images[0] ?? ''); ?>" alt="Main Product Image">
-        </div>
-        <div class="thumbnail-images">
-            <?php foreach ($images as $image): ?>
-                <img src="<?= htmlspecialchars($image); ?>" alt="Thumbnail" onclick="updateMainImage('<?= htmlspecialchars($image); ?>')">
-            <?php endforeach; ?>
-        </div>
-    </div>
-    <div class="ad-details">
-        <h1><?= htmlspecialchars($ad['title']); ?></h1>
-        <p class="ad-description"><?= htmlspecialchars($ad['description']); ?></p>
-        <p><strong>Price:</strong> <span class="price">Rs <?= htmlspecialchars($ad['price']); ?></span></p>
-        <p><strong>Contact Number:</strong> <?= htmlspecialchars($ad['phone_number']); ?></p>
-        <p><strong>Category:</strong> <?= htmlspecialchars($ad['category_name']); ?></p>
-        <p><strong>Posted On:</strong> <?= htmlspecialchars($ad['formatted_date']); ?></p>
-        <p><strong>District:</strong> <?= htmlspecialchars($ad['district']); ?></p>
-
-        <?php if ($user_id): ?>
-            <form method="post" action="wishlist.php">
-                <input type="hidden" name="ad_id" value="<?= $ad_id; ?>">
-                <button type="submit" class="wishlist-button">
-                    <?= $is_wishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'; ?>
-                </button>
-            </form>
-        <?php else: ?>
-            <p><a href="login.php">Log in</a> to add this ad to your wishlist.</p>
-        <?php endif; ?>
-        
-    </div>
-</div>
-
-<!-- Similar Products Section -->
-<div class="similar-products">
-    <h3>Similar Products</h3>
-    <div class="more-items-container">
-        <?php while ($similar_ad = $similar_ads_result->fetch_assoc()): ?>
-            <div class="more-item-card" onclick="window.location.href='view_ad.php?ad_id=<?= $similar_ad['ad_id']; ?>'">
-                <img src="<?= htmlspecialchars($similar_ad['image']); ?>" alt="Product Image">
-                <h4><?= htmlspecialchars($similar_ad['title']); ?></h4>
-                <p>Rs <?= htmlspecialchars($similar_ad['price']); ?></p>
+    <div class="container">
+        <div class="ad-image">
+            <div class="displayed-image">
+                <img id="displayedImage" src="<?= htmlspecialchars($images[0] ?? ''); ?>" alt="Main Product Image">
             </div>
-        <?php endwhile; ?>
-    </div>
-</div>
+            <div class="thumbnail-images">
+                <?php foreach ($images as $image): ?>
+                    <img src="<?= htmlspecialchars($image); ?>" alt="Thumbnail"
+                        onclick="updateMainImage('<?= htmlspecialchars($image); ?>')">
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <div class="ad-details">
+            <h1><?= htmlspecialchars($ad['title']); ?></h1>
+            <p class="ad-description"><?= htmlspecialchars($ad['description']); ?></p>
+            <p><strong>Price:</strong> <span class="price">Rs <?= htmlspecialchars($ad['price']); ?></span></p>
+            <p><strong>Contact Number:</strong> <?= htmlspecialchars($ad['phone_number']); ?></p>
+            <p><strong>Category:</strong> <?= htmlspecialchars($ad['category_name']); ?></p>
+            <p><strong>Posted On:</strong> <?= htmlspecialchars($ad['formatted_date']); ?></p>
+            <p><strong>District:</strong> <?= htmlspecialchars($ad['district']); ?></p>
 
-<script>
-    function updateMainImage(src) {
-        document.getElementById('displayedImage').src = src;
-    }
-</script>
+            <?php if ($user_id): ?>
+                <form method="post" action="wishlist.php">
+                    <input type="hidden" name="ad_id" value="<?= $ad_id; ?>">
+                    <button type="submit" class="wishlist-button">
+                        <?= $is_wishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'; ?>
+                    </button>
+                </form>
+            <?php else: ?>
+                <p><a href="login.php">Log in</a> to add this ad to your wishlist.</p>
+            <?php endif; ?>
+            </a>
+
+        </div>
+    </div>
+
+    <!-- Similar Products Section -->
+    <div class="similar-products">
+        <h3>Similar Products</h3>
+        <div class="more-items-container">
+            <?php while ($similar_ad = $similar_ads_result->fetch_assoc()): ?>
+                <div class="more-item-card" onclick="window.location.href='view_ad.php?ad_id=<?= $similar_ad['ad_id']; ?>'">
+                    <img src="<?= htmlspecialchars($similar_ad['image']); ?>" alt="Product Image">
+                    <h4><?= htmlspecialchars($similar_ad['title']); ?></h4>
+                    <p>Rs <?= htmlspecialchars($similar_ad['price']); ?></p>
+                </div>
+            <?php endwhile; ?>
+        </div>
+    </div>
+
+    <script>
+        function updateMainImage(src) {
+            document.getElementById('displayedImage').src = src;
+        }
+    </script>
 
 </body>
+
 </html>
+
+<?php
+include 'footer.php';
+?>

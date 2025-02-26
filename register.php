@@ -180,7 +180,7 @@ if (isset($_POST['register'])) {
             }
         }
 
-        
+
         @media (min-width: 481px) and (max-width: 1200px) {
             .register-container {
                 flex-direction: row;
@@ -198,7 +198,7 @@ if (isset($_POST['register'])) {
             }
         }
 
-        
+
         @media (min-width: 1201px) {
             .register-container {
                 flex-direction: row;
@@ -215,7 +215,6 @@ if (isset($_POST['register'])) {
                 width: 55%;
             }
         }
-
     </style>
 
 </head>
@@ -242,3 +241,7 @@ if (isset($_POST['register'])) {
 </body>
 
 </html>
+
+<?php
+include 'footer.php';
+?>

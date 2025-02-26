@@ -1,7 +1,6 @@
 <?php
 session_start();
 include 'config.php';
-include 'navbar.php';
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
@@ -23,23 +22,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = $result->fetch_assoc();
 
     if (!password_verify($current_password, $user['password'])) {
-        echo "Current password is incorrect.";
-        exit();
-    }
-
-    if ($new_password !== $confirm_password) {
-        echo "New passwords do not match.";
-        exit();
-    }
-
-    $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-    $update_stmt = $conn->prepare("UPDATE users SET password = ? WHERE user_id = ?");
-    $update_stmt->bind_param("si", $hashed_password, $user_id);
-
-    if ($update_stmt->execute()) {
-        echo "Password updated successfully!";
+        echo "<script>alert('Current password is incorrect.');</script>";
+    } elseif ($new_password !== $confirm_password) {
+        echo "<script>alert('New passwords do not match.');</script>";
     } else {
-        echo "Error updating password.";
+        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+        $update_stmt = $conn->prepare("UPDATE users SET password = ? WHERE user_id = ?");
+        $update_stmt->bind_param("si", $hashed_password, $user_id);
+
+        if ($update_stmt->execute()) {
+            echo "<script>alert('Password updated successfully!'); window.location.href='profile.php';</script>";
+        } else {
+            echo "<script>alert('Error updating password.');</script>";
+        }
     }
 }
 ?>
@@ -65,11 +60,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         h1 {
-            background-color: #dbffc7; 
+            background-color: #dbffc7;
             text-align: center;
             padding: 20px;
             font-size: 2.2rem;
-            color: #006400; 
+            color: #006400;
             margin: 0 0 30px 0;
             text-transform: capitalize;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -86,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         form {
-            background-color: #e1e1e1; 
+            background-color: #e1e1e1;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -209,12 +204,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-<h1>Change Password</h1>
+    <h1>Change Password</h1>
     <div class="container">
         <form action="change_password.php" method="post">
             <div class="form-group">
                 <label for="current_password">Current Password:</label>
-                <input type="password" id="current_password" name="current_password" placeholder="Enter current password" required>
+                <input type="password" id="current_password" name="current_password"
+                    placeholder="Enter current password" required>
             </div>
             <div class="form-group">
                 <label for="new_password">New Password:</label>
@@ -222,10 +218,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="form-group">
                 <label for="confirm_password">Confirm New Password:</label>
-                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm new password" required>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm new password"
+                    required>
             </div>
             <button type="submit">Change Password</button>
         </form>
     </div>
 </body>
+
 </html>
+<?php
+include 'footer.php';
+?>

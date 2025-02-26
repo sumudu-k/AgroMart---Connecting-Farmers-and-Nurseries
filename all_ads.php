@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'config.php';
-include 'navbar.php'; // Including the navbar
+include 'navbar.php';
 
 // Set the number of ads per page
 $ads_per_page = 16;
@@ -50,7 +50,6 @@ $result = $conn->query($ads_sql);
             margin: 0 auto;
         }
 
-        /* Card layout for ads */
         .ads-container {
             display: flex;
             flex-wrap: wrap;
@@ -65,7 +64,8 @@ $result = $conn->query($ads_sql);
             border: 1px solid #ddd;
             border-radius: 10px;
             overflow: hidden;
-            width: calc(25% - 20px); /* 4 cards per row with gap consideration */
+            width: calc(25% - 20px);
+            /* 4 cards per row with gap consideration */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s, box-shadow 0.2s;
             padding-bottom: 15px;
@@ -137,7 +137,7 @@ $result = $conn->query($ads_sql);
             bottom: 8px;
             font-size: 0.8rem;
             font-style: italic;
-            color: #666666 ;
+            color: #666666;
             padding: 0 10px;
             text-align: left;
         }
@@ -245,40 +245,45 @@ $result = $conn->query($ads_sql);
     <div class="container">
         <div class="ads-container" id="ads-container">
             <?php if ($result->num_rows > 0): ?>
-            <?php while ($ad = $result->fetch_assoc()): 
-                $description = $ad['description'];
-                if (strlen($description) > 200) {
-                    $description = substr($description, 0, 200) . '...';
-                }
-            ?>
-            <div class="ad-card" onclick="window.location.href='view_ad.php?ad_id=<?= $ad['ad_id']; ?>'">
-                <img src="<?= htmlspecialchars($ad['image'] ?? 'images/placeholder/no-image.jpg'); ?>" alt="Product Image">
-                <h4><?= htmlspecialchars($ad['title']); ?></h4>
-                <div class="ad-details">
-                    <p class="description"><?= htmlspecialchars($description); ?></p>
-                    <p class="price">Rs <?= htmlspecialchars($ad['price']); ?></p>
-                    <p class="district"><?= htmlspecialchars($ad['district']); ?></p>
-                    <p class="date"><?= date('F j, Y h:i A', strtotime($ad['created_at'])); ?></p>
-                </div>
+                <?php while ($ad = $result->fetch_assoc()):
+                    $description = $ad['description'];
+                    if (strlen($description) > 200) {
+                        $description = substr($description, 0, 200) . '...';
+                    }
+                ?>
+                    <div class="ad-card" onclick="window.location.href='view_ad.php?ad_id=<?= $ad['ad_id']; ?>'">
+                        <img src="<?= htmlspecialchars($ad['image'] ?? 'images/placeholder/no-image.jpg'); ?>"
+                            alt="Product Image">
+                        <h4><?= htmlspecialchars($ad['title']); ?></h4>
+                        <div class="ad-details">
+                            <p class="description"><?= htmlspecialchars($description); ?></p>
+                            <p class="price">Rs <?= htmlspecialchars($ad['price']); ?></p>
+                            <p class="district"><?= htmlspecialchars($ad['district']); ?></p>
+                            <p class="date"><?= date('F j, Y h:i A', strtotime($ad['created_at'])); ?></p>
+                        </div>
 
-                
-                
-            </div>
-            <?php endwhile; ?>
+
+
+                    </div>
+                <?php endwhile; ?>
             <?php else: ?>
-            <p>No ads found.</p>
+                <p>No ads found.</p>
             <?php endif; ?>
         </div>
 
         <!-- Pagination Links Below the Ads Container -->
         <div class="pagination">
             <?php for ($page = 1; $page <= $total_pages; $page++): ?>
-            <a href="?page=<?= $page; ?>" class="<?= $page == $current_page ? 'active' : ''; ?>">
-                <?= $page; ?>
-            </a>
+                <a href="?page=<?= $page; ?>" class="<?= $page == $current_page ? 'active' : ''; ?>">
+                    <?= $page; ?>
+                </a>
             <?php endfor; ?>
         </div>
     </div>
 
 </body>
+
 </html>
+<?php
+include 'footer.php';
+?>

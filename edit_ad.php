@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
     $price = $_POST['price'];
     $phone_number = $_POST['phone_number'];
     $category_id = $_POST['category'];
-    $district = $_POST['district'];  
+    $district = $_POST['district'];
 
     $update_sql = "UPDATE ads SET title = ?, description = ?, price = ?, phone_number = ?, category_id = ?, district = ? WHERE ad_id = ?";
     $stmt = $conn->prepare($update_sql);
@@ -90,7 +90,6 @@ if (isset($_POST['submit'])) {
     <title>Edit Ad</title>
 
     <style>
-
         * {
             margin: 0;
             padding: 0;
@@ -121,16 +120,18 @@ if (isset($_POST['submit'])) {
             margin-bottom: 15px;
         }
 
-        
+
         .form-group label {
             flex: 0.2;
-            width: 150px; 
+            width: 150px;
             text-align: right;
-            padding-right: 10px; 
+            padding-right: 10px;
             font-weight: bold;
         }
 
-        input, select, textarea {
+        input,
+        select,
+        textarea {
             flex: 0.8;
             padding: 8px;
             border: 1px solid #ccc;
@@ -148,8 +149,8 @@ if (isset($_POST['submit'])) {
             height: 200px;
         }
 
-        h3{
-            margin-bottom:10px;
+        h3 {
+            margin-bottom: 10px;
         }
 
         /* image section */
@@ -208,7 +209,6 @@ if (isset($_POST['submit'])) {
             cursor: pointer;
             font-size: 16px;
         }
-
     </style>
 
 </head>
@@ -240,10 +240,10 @@ if (isset($_POST['submit'])) {
             <label for="category">Category</label>
             <select name="category" required>
                 <?php while ($category = $categories_result->fetch_assoc()): ?>
-                <option value="<?= $category['category_id'] ?>"
-                    <?= $category['category_id'] == $ad['category_id'] ? 'selected' : '' ?>>
-                    <?= $category['category_name'] ?>
-                </option>
+                    <option value="<?= $category['category_id'] ?>"
+                        <?= $category['category_id'] == $ad['category_id'] ? 'selected' : '' ?>>
+                        <?= $category['category_name'] ?>
+                    </option>
                 <?php endwhile; ?>
             </select>
         </div>
@@ -287,15 +287,15 @@ if (isset($_POST['submit'])) {
         <h3>Current Images</h3>
 
         <?php while ($img_row = $img_result->fetch_assoc()): ?>
-        <div class="image-wrapper">
-            <img src="<?= $img_row['image_path'] ?>" alt="Ad Image">
-            <button type="button" onclick="removeImage(this)">X</button>
-            <input type="checkbox" name="delete_images[]" value="<?= $img_row['image_id'] ?>" class="hidden">
-        </div>
+            <div class="image-wrapper">
+                <img src="<?= $img_row['image_path'] ?>" alt="Ad Image">
+                <button type="button" onclick="removeImage(this)">X</button>
+                <input type="checkbox" name="delete_images[]" value="<?= $img_row['image_id'] ?>" class="hidden">
+            </div>
         <?php endwhile; ?>
 
         <h3>Add New Images</h3>
-        
+
         <div class="form-group">
             <input type="file" name="new_images[]" multiple>
         </div>
@@ -306,3 +306,6 @@ if (isset($_POST['submit'])) {
 </body>
 
 </html>
+<?php
+include 'footer.php';
+?>

@@ -24,10 +24,11 @@ $ads_result = $conn->query($ads_query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>AgroMart Home</title>
     <style>
-    
         * {
             box-sizing: border-box;
             font-family: Arial, sans-serif;
@@ -41,7 +42,7 @@ $ads_result = $conn->query($ads_query);
             height: 750px;
             overflow: hidden;
         }
-        
+
         .banner-slides {
             position: absolute;
             top: 0;
@@ -78,7 +79,7 @@ $ads_result = $conn->query($ads_query);
             background-color: #e9ecef;
         }
 
-        
+
         .category-title {
             text-align: center;
             width: 100%;
@@ -117,7 +118,7 @@ $ads_result = $conn->query($ads_query);
             object-fit: cover;
         }
 
-        
+
         .category-name {
             margin-top: 20px;
             font-size: 1.2rem;
@@ -125,7 +126,7 @@ $ads_result = $conn->query($ads_query);
             font-weight: bold;
         }
 
-        
+
         /* Welcome Section */
         .welcome-section {
             display: flex;
@@ -165,14 +166,14 @@ $ads_result = $conn->query($ads_query);
             font-size: 1.1rem;
             line-height: 1.5;
             display: -webkit-box;
-            -webkit-line-clamp: 15; /* set line limit to 15 */
+            -webkit-line-clamp: 15;
+            /* set line limit to 15 */
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
             margin-bottom: 20px;
         }
-        
-        /* Ads Section CSS */
+
         .ads-container {
             display: flex;
             flex-direction: column;
@@ -184,7 +185,7 @@ $ads_result = $conn->query($ads_query);
             margin: 30px 0;
         }
 
-    
+
         .ads-title {
             text-align: center;
             width: 100%;
@@ -203,7 +204,7 @@ $ads_result = $conn->query($ads_query);
         }
 
         .ad-card {
-            width: calc(20% - 25px); 
+            width: calc(20% - 25px);
             text-align: center;
             background-color: white;
             border: 1px solid #ddd;
@@ -240,7 +241,7 @@ $ads_result = $conn->query($ads_query);
             color: #555;
             text-align: left;
             display: -webkit-box;
-            -webkit-line-clamp: 3; /* set line limit to 3*/
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -251,14 +252,13 @@ $ads_result = $conn->query($ads_query);
             margin: 5px 15px 10px 15px;
             text-align: center;
         }
-        
+
         .ad-details p {
             line-height: 1.4;
             font-size: 14px;
             color: #555;
         }
 
-        /* View All Products Button */
         .view-all-btn {
             text-align: center;
             margin: 20px 0 30px 0;
@@ -279,7 +279,6 @@ $ads_result = $conn->query($ads_query);
             background-color: #cb790d;
         }
 
-        /* Contact Section */
         .contact-section {
             border-radius: 10px;
             padding: 50px 0;
@@ -435,125 +434,8 @@ $ads_result = $conn->query($ads_query);
             background-color: #cb790d;
         }
 
-        /* Footer */
-        footer {
-            height: 4%;
-            background-color: #006400;
-            padding: 40px 12.5%;
-            margin-top: 30px;
-        }
-
-        .footer-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        .footer-info h3 {
-            color: #1c1c1c;
-            text-align: center;
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-
-        .footer-info address {
-            text-align: center;
-            color: white;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-        }
-
-        .footer-info p {
-            font-weight: 600;
-            color: white;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-        }
-
-        .footer-links h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            text-align: center;
-            color: #d2d2d2;
-        }
-
-        .footer-links hr {
-            border: none;
-            width: 80px;
-            height: 3px;
-            background-color: #181c14;
-            border-radius: 10px;
-            margin: 5px 0 20px 15%;
-        }
-
-        .footer-links ul {
-            display: flex;
-            flex-direction: column;
-
-            list-style: none;
-        }
-
-        .footer-links ul li {
-            height: 40px;
-            width: 100px;
-            display: flex;
-            margin-bottom: 10px;
-        }
-
-        .footer-links ul li a {
-            width: 100%;
-            font-weight: 600;
-            color: white;
-            font-size: 0.9rem;
-            text-decoration: none;
-        }
-
-        .social-links {
-            width: 200px;
-        }
-
-        .social-links h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            text-align: center;
-            color: #d2d2d2;
-        }
-
-        .social-links hr {
-            border: none;
-            width: 80px;
-            height: 3px;
-            background-color: #181c14;
-            border-radius: 10px;
-            margin: 5px 0 20px 30%;
-        }
-
-        .social-links ul {
-            display: flex;
-            justify-content: space-evenly;
-            list-style: none;
-        }
-
-        .social-links i {
-            font-size: 25px;
-            color: white;
-            margin-right: 10px;
-            cursor: pointer;
-        }
-
-        .footer-links li:hover a {
-            color: #b7b7b7;
-            cursor: pointer;
-        }
-
-        .social-links li:hover i {
-            color: #b7b7b7;
-            cursor: pointer;
-        }
 
 
-
-        /* Responsive Design */
 
         /* For Mobile devices */
         @media screen and (max-width: 480px) {
@@ -631,7 +513,7 @@ $ads_result = $conn->query($ads_query);
                 width: 100%;
             }
 
-            .info-item p{
+            .info-item p {
                 font-size: 0.9rem;
             }
 
@@ -664,6 +546,7 @@ $ads_result = $conn->query($ads_query);
             .banner-image {
                 height: 400px;
             }
+
             .category-card {
                 width: 160px;
             }
@@ -732,7 +615,6 @@ $ads_result = $conn->query($ads_query);
                 font-size: 0.9rem;
             }
         }
-
     </style>
 </head>
 
@@ -741,7 +623,8 @@ $ads_result = $conn->query($ads_query);
     <!-- Home page banner slider -->
     <div class="banner-image">
         <img class="banner-slides active" src="images/cover.jpg" alt="Slide 1">
-        <img class="banner-slides" src="images/lettuce-plant-on-field-vegetable-and-agriculture-sunset-and-light-free-photo.jpg" alt="Slide 2">
+        <img class="banner-slides"
+            src="images/lettuce-plant-on-field-vegetable-and-agriculture-sunset-and-light-free-photo.jpg" alt="Slide 2">
         <img class="banner-slides" src="images/iStock-531690340_c_valentinrussanov.webp" alt="Slide 3">
     </div>
 
@@ -756,13 +639,14 @@ $ads_result = $conn->query($ads_query);
 
             slideIndex++;
 
-            if (slideIndex > slides.length) {slideIndex = 1}
+            if (slideIndex > slides.length) {
+                slideIndex = 1
+            }
             slides[slideIndex - 1].classList.add("active");
             setTimeout(showSlides, 3000);
         }
 
         showSlides(); // Start the slideshow
-
     </script>
 
     <div class="main-container">
@@ -774,7 +658,8 @@ $ads_result = $conn->query($ads_query);
             <?php while ($category = $result->fetch_assoc()): ?>
                 <div class="category-card">
                     <a href="category_ads.php?category_id_qp=<?php echo $category['category_id']; ?>">
-                        <img src="uploads/<?php echo $category['category_image']; ?>" alt="<?php echo $category['category_name']; ?>">
+                        <img src="uploads/<?php echo $category['category_image']; ?>"
+                            alt="<?php echo $category['category_name']; ?>">
                     </a>
                     <h3 class="category-name"><?php echo $category['category_name']; ?></h3>
                 </div>
@@ -788,7 +673,16 @@ $ads_result = $conn->query($ads_query);
             </div>
             <div class="welcome-text">
                 <h2>Nature In Your House</h2>
-                <p>AgroMart is an innovative online platform developed by Idea Innovators (Pvt) Ltd. that aims to revolutionize Sri Lanka's agricultural sector by creating a seamless connection between farmers and nurseries. The platform serves as a centralized marketplace where farmers can easily access detailed crop information, compare prices, and find quality agricultural resources, while nurseries can expand their customer reach through a user-friendly advertisement system. Through its robust search functionality and comprehensive product categorization, AgroMart eliminates the traditional challenges farmers face in finding suitable nurseries, while simultaneously providing nurseries with direct market access and simplified product promotion capabilities. This digital bridge between agricultural buyers and sellers not only streamlines the supply chain but also fosters a more efficient and transparent marketplace for Sri Lanka's farming community.</p>
+                <p>AgroMart is an innovative online platform developed by Idea Innovators (Pvt) Ltd. that aims to
+                    revolutionize Sri Lanka's agricultural sector by creating a seamless connection between farmers and
+                    nurseries. The platform serves as a centralized marketplace where farmers can easily access detailed
+                    crop information, compare prices, and find quality agricultural resources, while nurseries can
+                    expand their customer reach through a user-friendly advertisement system. Through its robust search
+                    functionality and comprehensive product categorization, AgroMart eliminates the traditional
+                    challenges farmers face in finding suitable nurseries, while simultaneously providing nurseries with
+                    direct market access and simplified product promotion capabilities. This digital bridge between
+                    agricultural buyers and sellers not only streamlines the supply chain but also fosters a more
+                    efficient and transparent marketplace for Sri Lanka's farming community.</p>
             </div>
         </section>
 
@@ -803,9 +697,10 @@ $ads_result = $conn->query($ads_query);
                             <h4><?= htmlspecialchars($ad['title']); ?></h4>
                             <p class="description"><?= htmlspecialchars(substr($ad['description'], 0, 100)) . '...'; ?></p>
                             <div class="ad-details">
-                              <p>Rs <?= htmlspecialchars($ad['price']); ?></p>
-                              <p><strong>District:</strong> <?= htmlspecialchars($ad['district']); ?></p>
-                              <p><strong>Posted on:</strong> <?= htmlspecialchars(date('Y-m-d', strtotime($ad['created_at']))); ?></p>
+                                <p>Rs <?= htmlspecialchars($ad['price']); ?></p>
+                                <p><strong>District:</strong> <?= htmlspecialchars($ad['district']); ?></p>
+                                <p><strong>Posted on:</strong>
+                                    <?= htmlspecialchars(date('Y-m-d', strtotime($ad['created_at']))); ?></p>
                             </div>
                         </div>
                     <?php endwhile; ?>
@@ -819,112 +714,63 @@ $ads_result = $conn->query($ads_query);
         </div>
 
         <section class="contact-section">
-          <h1>Contact</h1>
-             <div class="contact-container">
+            <h1>Contact</h1>
+            <div class="contact-container">
                 <!-- Contact Info -->
                 <div class="contact-info">
-                  <h2 class="contact-title">Contact Information</h2>
+                    <h2 class="contact-title">Contact Information</h2>
 
-                  <div class="info-item">
-                    <i class="fa-solid fa-location-dot"></i>
-                    <div>
-                      <h3>Our Location</h3>
-                      <hr />
-                      <p>
-                        No 15,<br />
-                        Haputhalegama,<br />
-                        Haputhale
-                      </p>
+                    <div class="info-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <div>
+                            <h3>Our Location</h3>
+                            <hr />
+                            <p>
+                                No 15,<br />
+                                Haputhalegama,<br />
+                                Haputhale
+                            </p>
+                        </div>
                     </div>
-                  </div>
 
-                  <div class="info-item">
-                    <i class="fa-solid fa-phone"></i>
-                    <div>
-                      <h3>Phone Number</h3>
-                      <hr />
-                      <p>057 2229534</p>
-                      <p>071 3864286</p>
+                    <div class="info-item">
+                        <i class="fa-solid fa-phone"></i>
+                        <div>
+                            <h3>Phone Number</h3>
+                            <hr />
+                            <p>057 2229534</p>
+                            <p>071 3864286</p>
+                        </div>
                     </div>
-                  </div>
 
-                  <div class="info-item">
-                    <i class="fa-solid fa-envelope"></i>
-                    <div>
-                      <h3>Email Address</h3>
-                      <hr />
-                      <p>info@agromt.com</p>
-                      <p>contact@agromt.com</p>
+                    <div class="info-item">
+                        <i class="fa-solid fa-envelope"></i>
+                        <div>
+                            <h3>Email Address</h3>
+                            <hr />
+                            <p>info@agromt.com</p>
+                            <p>contact@agromt.com</p>
+                        </div>
                     </div>
-                  </div>
                 </div>
 
                 <!-- Get in Touch Form -->
                 <div class="get-in-touch">
-                  <h2>Get In Touch</h2>
+                    <h2>Get In Touch</h2>
                     <form action="https://api.web3forms.com/submit" method="POST">
-                    <div class="form-row">
-                      <input
-                        type="hidden"
-                        name="access_key"
-                        value="83e39209-89c2-4845-b467-d7d03f3ba2dd"
-                      />
-                      <input type="text" name="name" placeholder="Your Name" required />
-                      <input
-                        type="email"
-                        name="email"
-                        placeholder="Your Email"
-                        required
-                      />
-                    </div>
-                    <input type="text" name="subject" placeholder="Subject" />
-                    <textarea placeholder="Message" name="message" required></textarea>
-                    <button type="submit">Send Message</button>
-                  </form>
+                        <div class="form-row">
+                            <input type="hidden" name="access_key" value="83e39209-89c2-4845-b467-d7d03f3ba2dd" />
+                            <input type="text" name="name" placeholder="Your Name" required />
+                            <input type="email" name="email" placeholder="Your Email" required />
+                        </div>
+                        <input type="text" name="subject" placeholder="Subject" />
+                        <textarea placeholder="Message" name="message" required></textarea>
+                        <button type="submit">Send Message</button>
+                    </form>
                 </div>
-              </div>
+            </div>
         </section>
     </div>
-
-    <!-- Footer -->
-    <footer>
-      <div class="footer-container">
-        <div class="footer-info">
-          <h3>AgroMart</h3>
-          <address>A108 Adam Street, New York, NY 535022</address>
-          <p>Phone: +1 5589 55488 5</p>
-          <p>Email: info@example.com</p>
-        </div>
-        <div class="footer-links">
-          <h3>Useful Links</h3>
-          <hr />
-          <ul>
-            <li><a href="home.php">Home</a></li>
-            <li><a href="post_ads.php">POST ADS</a></li>
-            <li><a href="categories.php">Categories</a></li>
-          </ul>
-        </div>
-        <div class="social-links">
-          <h3>Social Links</h3>
-          <hr />
-          <ul>
-            <li>
-              <a href="#"><i class="fa-brands fa-facebook"></i></a>
-            </li>
-            <li>
-              <a href="#"><i class="fa-brands fa-linkedin"></i></a>
-            </li>
-            <li>
-              <a href="#"><i class="fa-brands fa-tiktok"></i></a>
-            </li>
-            <li>
-              <a href="#"><i class="fa-brands fa-youtube"></i></a>
-            </li>
-          </ul>
-        </div>
-        
-      </div>
-    </footer>
     <?php
     $conn->close();
     ?>
@@ -932,3 +778,6 @@ $ads_result = $conn->query($ads_query);
 </body>
 
 </html>
+<?php
+include 'footer.php';
+?>

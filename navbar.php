@@ -16,7 +16,6 @@ if (session_status() === PHP_SESSION_NONE) {
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-    /* Navbar CSS */
     * {
         margin: 0;
         padding: 0;
@@ -280,21 +279,18 @@ if (session_status() === PHP_SESSION_NONE) {
         const searchInput = document.querySelector('.search-container input[type="text"]');
         const searchResults = document.getElementById('search-results');
 
-        // Only Show search results if there is  an input
         searchInput.addEventListener('focus', () => {
             if (searchInput.value.trim() !== '') {
                 searchResults.style.display = 'block';
             }
         });
 
-        // Hide search results when clicking outside the search container
         document.addEventListener('click', (event) => {
             if (!event.target.closest('.search-container')) {
                 searchResults.style.display = 'none';
             }
         });
 
-        // Show search results again if the input has text on focus
         searchInput.addEventListener('input', () => {
             if (searchInput.value.trim() !== '') {
                 searchResults.style.display = 'block';
@@ -305,25 +301,22 @@ if (session_status() === PHP_SESSION_NONE) {
     });
     </script>
 
-    <!-- Navbar -->
     <input type="checkbox" id="check">
     <nav>
 
-        <!-- logo -->
         <div class="logo"><a href="home.php">AgroMart</a></div>
 
-        <!-- Search Bar -->
         <div class="search-container">
             <input type="text" placeholder="Search what you want" onkeyup="searchProducts(this.value)"
                 aria-label="Search">
             <div class="search-results" id="search-results" aria-live="polite"></div>
         </div>
 
-        <!-- Navbar Right -->
         <ul>
             <li><a href="my_ads.php">My Ads</a></li>
             <li><a href="post_ad.php" class="place-ad">Post Ad</a></li>
-            <li><a href="wishlist.php">Wishlist</a></li>
+            <li><a href="wishlist.php"><img src='uploads/wishlist.png' style='width:24px'></a></li>
+
 
             <?php if (isset($_SESSION['username'])): ?>
             <!-- <li><a href="#">Welcome,<?= $_SESSION['username']; ?></a></li> -->

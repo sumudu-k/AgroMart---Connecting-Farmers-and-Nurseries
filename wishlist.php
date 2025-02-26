@@ -73,7 +73,7 @@ $wishlist_result = $stmt->get_result();
         }
 
         h1 {
-            background-color: #dbffc7; 
+            background-color: #dbffc7;
             text-align: center;
             padding: 20px;
             font-size: 2.2rem;
@@ -99,7 +99,8 @@ $wishlist_result = $stmt->get_result();
             background-color: #fff;
             border: 1px solid #ddd;
             border-radius: 10px;
-            width: calc(25% - 15px); /* 4 items per row on desktop */
+            width: calc(25% - 15px);
+            /* 4 items per row on desktop */
             padding: 15px;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -133,9 +134,9 @@ $wishlist_result = $stmt->get_result();
             margin: 5px 0;
         }
 
-        .wishlist-item p:nth-child(4) { 
+        .wishlist-item p:nth-child(4) {
             line-height: 2;
-            color: #b03052; 
+            color: #b03052;
             font-weight: 700;
         }
 
@@ -144,7 +145,7 @@ $wishlist_result = $stmt->get_result();
         }
 
         .wishlist-item button {
-            background-color: #28a745; 
+            background-color: #28a745;
             color: #fff;
             padding: 8px 15px;
             border: none;
@@ -156,7 +157,8 @@ $wishlist_result = $stmt->get_result();
         }
 
         .wishlist-item button:hover {
-            background-color: #cb790d; /* Darker orange */
+            background-color: #cb790d;
+            /* Darker orange */
         }
 
         .empty-message {
@@ -221,7 +223,8 @@ $wishlist_result = $stmt->get_result();
             }
 
             .wishlist-item {
-                width: calc(50% - 10px); /* 2 items per row */
+                width: calc(50% - 10px);
+                /* 2 items per row */
             }
 
             .wishlist-item img {
@@ -249,22 +252,26 @@ $wishlist_result = $stmt->get_result();
     <div class="container">
         <div class="wishlist-items">
             <?php if ($wishlist_result->num_rows > 0): ?>
-            <?php while ($item = $wishlist_result->fetch_assoc()): ?>
-            <div class="wishlist-item">
-                <img src="<?= htmlspecialchars($item['image'] ?? 'default.jpg'); ?>" alt="Product Image">
-                <h3><?= htmlspecialchars($item['title']); ?></h3>
-                <p>Category: <?= htmlspecialchars($item['category_name']); ?></p>
-                <p>Price: Rs <?= htmlspecialchars($item['price']); ?></p>
-                <form method="post">
-                    <input type="hidden" name="ad_id" value="<?= $item['ad_id']; ?>">
-                    <button type="submit">Remove from Wishlist</button>
-                </form>
-            </div>
-            <?php endwhile; ?>
+                <?php while ($item = $wishlist_result->fetch_assoc()): ?>
+                    <div class="wishlist-item">
+                        <img src="<?= htmlspecialchars($item['image'] ?? 'default.jpg'); ?>" alt="Product Image">
+                        <h3><?= htmlspecialchars($item['title']); ?></h3>
+                        <p>Category: <?= htmlspecialchars($item['category_name']); ?></p>
+                        <p>Price: Rs <?= htmlspecialchars($item['price']); ?></p>
+                        <form method="post">
+                            <input type="hidden" name="ad_id" value="<?= $item['ad_id']; ?>">
+                            <button type="submit">Remove from Wishlist</button>
+                        </form>
+                    </div>
+                <?php endwhile; ?>
             <?php else: ?>
-            <p class="empty-message">Your wishlist is empty.</p>
+                <p class="empty-message">Your wishlist is empty.</p>
             <?php endif; ?>
         </div>
     </div>
 </body>
+
 </html>
+<?php
+include 'footer.php';
+?>

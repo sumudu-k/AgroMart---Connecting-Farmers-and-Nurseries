@@ -44,103 +44,103 @@ if (isset($_POST['login'])) {
     <title>Login</title>
 
     <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Poppins', sans-serif;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-    body {
-        background-color: #f3f4f6;
-    }
+        body {
+            background-color: #f3f4f6;
+        }
 
-    /* Centered Wrapper */
-    .wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        padding: 20px;
-    }
+        /* Centered Wrapper */
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-    /* Login Container Styling */
-    .login-container {
-        display: flex;
-        background-color: #e2e6eb;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 1200px;
-    }
+        /* Login Container Styling */
+        .login-container {
+            display: flex;
+            background-color: #e2e6eb;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1200px;
+        }
 
-    .plant-image {
-        flex: 0.75;
-        background-image: url("images/login_image.png");
-        background-size: cover;
-        background-position: center;
-        border-radius: 10px;
-        min-height: 300px;
-    }
+        .plant-image {
+            flex: 0.75;
+            background-image: url("images/login_image.png");
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            min-height: 300px;
+        }
 
-    .login-form {
-        flex: 1.25;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+        .login-form {
+            flex: 1.25;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-    .login-form h2 {
-        font-size: 24px;
-        margin-bottom: 40px;
-    }
+        .login-form h2 {
+            font-size: 24px;
+            margin-bottom: 40px;
+        }
 
-    .login-form input {
-        width: 100%;
-        padding: 10px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        margin-bottom: 25px;
-    }
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 25px;
+        }
 
-    input:focus {
+        input:focus {
             outline: none;
             border-color: #007a33;
         }
 
-    .login-form button {
-        width: 100%;
-        background-color: #007a33;
-        color: #fff;
-        padding: 10px;
-        margin: 10px 0 10px;
-        font-size: 1.125rem;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
+        .login-form button {
+            width: 100%;
+            background-color: #007a33;
+            color: #fff;
+            padding: 10px;
+            margin: 10px 0 10px;
+            font-size: 1.125rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
-    .login-form button:hover {
-        background-color: #005922;
-    }
+        .login-form button:hover {
+            background-color: #005922;
+        }
 
-    p {
-        font-size: 0.938rem;
-        color: black;
-        margin-top: 15px;
-    }
+        p {
+            font-size: 0.938rem;
+            color: black;
+            margin-top: 15px;
+        }
 
-    .link {
-        text-decoration: none;
-        color: #0917ee;
-        font-weight: bold;
-    }
+        .link {
+            text-decoration: none;
+            color: #0917ee;
+            font-weight: bold;
+        }
 
-    /* responsive design */
+        /* responsive design */
         @media (max-width: 480px) {
             .login-container {
                 flex-direction: column;
@@ -218,3 +218,7 @@ if (isset($_POST['login'])) {
 </body>
 
 </html>
+
+<?php
+include 'footer.php';
+?>

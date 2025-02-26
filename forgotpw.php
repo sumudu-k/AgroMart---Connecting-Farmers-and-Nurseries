@@ -61,7 +61,8 @@ if (isset($_POST['reset_password'])) {
             font-family: "Poppins", Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4; /* Light gray background */
+            background-color: #f4f4f4;
+            /* Light gray background */
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
@@ -77,7 +78,8 @@ if (isset($_POST['reset_password'])) {
         }
 
         .login-box {
-            background-color: #fff; /* White form background */
+            background-color: #fff;
+            /* White form background */
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -87,7 +89,8 @@ if (isset($_POST['reset_password'])) {
         }
 
         .login-box h2 {
-            color: #006400; /* Dark green text */
+            color: #006400;
+            /* Dark green text */
             font-size: 1.5rem;
             margin-bottom: 20px;
             text-transform: capitalize;
@@ -119,7 +122,8 @@ if (isset($_POST['reset_password'])) {
 
         .form-group input[type="email"]:focus,
         .form-group input[type="password"]:focus {
-            border-color: #f09319; /* Orange focus */
+            border-color: #f09319;
+            /* Orange focus */
         }
 
         .form-group input[type="email"]::placeholder,
@@ -130,7 +134,8 @@ if (isset($_POST['reset_password'])) {
         }
 
         button {
-            background-color: #f09319; /* Orange button */
+            background-color: #f09319;
+            /* Orange button */
             color: #fff;
             padding: 10px 20px;
             border: none;
@@ -142,7 +147,8 @@ if (isset($_POST['reset_password'])) {
         }
 
         button:hover {
-            background-color: #cb790d; /* Darker orange */
+            background-color: #cb790d;
+            /* Darker orange */
         }
 
         .links {
@@ -152,14 +158,16 @@ if (isset($_POST['reset_password'])) {
         }
 
         .links a {
-            color: #006400; /* Dark green link */
+            color: #006400;
+            /* Dark green link */
             text-decoration: none;
             font-weight: 600;
             transition: color 0.3s ease;
         }
 
         .links a:hover {
-            color: #f09319; /* Orange on hover */
+            color: #f09319;
+            /* Orange on hover */
         }
 
         /* Mobile Devices (319px - 480px) */
@@ -238,29 +246,34 @@ if (isset($_POST['reset_password'])) {
         <div class="login-box">
             <h2>Forgot Password</h2>
             <?php if (!isset($_GET['reset_password'])): ?>
-            <form action="forgotpw.php" method="POST">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                </div>
-                <button type="submit" name="submit_email">Submit</button>
-                <div class="links">
-                    <p>Remembered your password? <a href="login.php">Login here</a></p>
-                </div>
-            </form>
+                <form action="forgotpw.php" method="POST">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <button type="submit" name="submit_email">Submit</button>
+                    <div class="links">
+                        <p>Remembered your password? <a href="login.php">Login here</a></p>
+                    </div>
+                </form>
             <?php else: ?>
-            <form action="forgotpw.php" method="POST">
-                <div class="form-group">
-                    <label for="new_password">New Password</label>
-                    <input type="password" id="new_password" name="new_password" placeholder="Enter new password" required>
-                </div>
-                <button type="submit" name="reset_password">Reset Password</button>
-                <div class="links">
-                    <p>Back to <a href="login.php">Login</a></p>
-                </div>
-            </form>
+                <form action="forgotpw.php" method="POST">
+                    <div class="form-group">
+                        <label for="new_password">New Password</label>
+                        <input type="password" id="new_password" name="new_password" placeholder="Enter new password"
+                            required>
+                    </div>
+                    <button type="submit" name="reset_password">Reset Password</button>
+                    <div class="links">
+                        <p>Back to <a href="login.php">Login</a></p>
+                    </div>
+                </form>
             <?php endif; ?>
         </div>
     </div>
 </body>
+
 </html>
+<?php
+include 'footer.php';
+?>
