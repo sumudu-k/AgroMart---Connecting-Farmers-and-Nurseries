@@ -51,6 +51,10 @@ if (isset($_POST['submit'])) {
 
     <style>
         /* Styling for the form layout */
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -63,7 +67,7 @@ if (isset($_POST['submit'])) {
             text-align: center;
             text-transform: capitalize;
             padding: 20px 12.5%;
-            margin-bottom: 20px;
+            margin: 0 0 20px 0;
         
         }
 
@@ -98,7 +102,7 @@ if (isset($_POST['submit'])) {
             padding: 8px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            box-sizing: border-box;
+            width: 100%;
         }
 
         input:focus,
@@ -109,7 +113,8 @@ if (isset($_POST['submit'])) {
         }   
 
         textarea {
-            height: 20vh;
+            resize: vertical;
+            min-height: 150px;
         }
 
         input::placeholder,
@@ -118,10 +123,9 @@ if (isset($_POST['submit'])) {
             font-style: italic;
             letter-spacing: 0.5px;
             font-weight: 500;
-    }
+        }
 
         button {
-            margin-left: 150px;
             background-color: #007a33;
             color: white;
             padding: 10px 20px;
@@ -129,10 +133,95 @@ if (isset($_POST['submit'])) {
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
+            display: block;
+            margin: 20px auto 0;
+            transition: background-color 0.2s;
         }
 
         button:hover {
             background-color: #005922;
+        }
+
+        /* Mobile Devices*/
+        @media screen and (max-width: 480px) {
+            h1 {
+                padding: 15px 5%;
+                font-size: 1.5rem;
+            }
+
+            .ad-form {
+                padding: 15px;
+                max-width: 90%;
+            }
+
+            .form-group {
+                flex-direction: column;
+                align-items: stretch;
+                margin-bottom: 10px;
+            }
+
+            label {
+                text-align: left;
+                padding-right: 0;
+                margin-bottom: 5px;
+                font-size: 0.9rem;
+            }
+
+            input,
+            select,
+            textarea {
+                font-size: 0.9rem;
+                padding: 6px;
+                margin-bottom: 10px;
+            }
+
+            input::placeholder,
+            textarea::placeholder {
+                font-size: 0.9rem;
+            }
+
+            button {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+        }
+
+        /* Tablets */
+        @media screen and (min-width: 481px) and (max-width: 1200px) {
+            h1 {
+                padding: 20px 8%;
+                font-size: 1.8rem;
+            }
+
+            .ad-form {
+                max-width: 80%;
+            }
+
+            .form-group {
+                flex-direction: column;
+                align-items: stretch;
+                margin-bottom: 20px;
+            }
+
+            label {
+                text-align: left;
+                padding-right: 0;
+                margin-bottom: 5px;
+                font-size: 0.95rem;
+            }
+
+            input,
+            select,
+            textarea {
+                font-size: 0.95rem;
+                padding: 7px;
+                margin-bottom: 10px;
+            }
+
+            button {
+                padding: 9px 18px;
+                font-size: 15px;
+            }
         }
 
     </style>
