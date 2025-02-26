@@ -15,6 +15,21 @@ include 'navbar.php';
             box-sizing: border-box;
         }
 
+        .aboutCover {
+            background-image: url("uploads/aboutus.jpg");
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
         body {
             font-family: "Poppins", Arial, sans-serif;
             margin: 0;
@@ -25,10 +40,10 @@ include 'navbar.php';
         }
 
         .container {
-            width: 90%;
+            width: 75%;
             margin: 0 auto;
             padding: 20px;
-            background-color: #fff; 
+            background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
@@ -36,7 +51,6 @@ include 'navbar.php';
         }
 
         h1 {
-            background-color: #dbffc7;
             text-align: center;
             padding: 20px;
             font-size: 2.2rem;
@@ -52,10 +66,11 @@ include 'navbar.php';
             text-transform: capitalize;
         }
 
-        p {
+        p li {
             font-size: 1rem;
             color: #555;
             margin-bottom: 20px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
         }
 
         .Why-list {
@@ -73,7 +88,7 @@ include 'navbar.php';
         }
 
         .Why-list li:before {
-            content: '\f058'; 
+            content: '\f058';
             font-family: "Font Awesome 6 Free";
             font-weight: 900;
             color: #f09319;
@@ -143,15 +158,27 @@ include 'navbar.php';
 </head>
 
 <body>
+    <div class="aboutCover">
+        <h1>Welcome to Our AgroMart Marketplace</h1>
+    </div>
+
+
     <div class="container">
-        <h1>Welcome to Our Plant Nursery Marketplace</h1>
-        <p>We are a dedicated online platform connecting farmers, nursery owners, and plant enthusiasts across Sri Lanka. Our mission is to bridge the gap between sellers and buyers, making it easier to access high-quality plants, seeds, and agricultural products at affordable prices.</p>
+
+
+        <p>We are a dedicated online platform connecting farmers, nursery owners, and plant enthusiasts across Sri
+            Lanka. Our mission is to bridge the gap between sellers and buyers, making it easier to access high-quality
+            plants, seeds, and agricultural products at affordable prices.</p>
 
         <h2>Our Mission</h2>
-        <p>We aim to be the leading provider of quality plants and agricultural products while offering expert guidance to support gardening and farming communities. Our platform enables sellers to showcase their products effortlessly and helps buyers find exactly what they need for their farms or home gardens.</p>
+        <p>We aim to be the leading provider of quality plants and agricultural products while offering expert guidance
+            to support gardening and farming communities. Our platform enables sellers to showcase their products
+            effortlessly and helps buyers find exactly what they need for their farms or home gardens.</p>
 
         <h2>Our Vision</h2>
-        <p>Our vision is to foster a sustainable and greener future by making agricultural trade more efficient, accessible, and affordable. We believe in the power of nature and strive to bring people closer to it through our platform.</p>
+        <p>Our vision is to foster a sustainable and greener future by making agricultural trade more efficient,
+            accessible, and affordable. We believe in the power of nature and strive to bring people closer to it
+            through our platform.</p>
 
         <h2>Why Choose Us?</h2>
         <ul class="Why-list">
@@ -163,10 +190,13 @@ include 'navbar.php';
         </ul>
 
         <h2>How It Works?</h2>
-        <p>Our platform allows users to register and post their products for sale. Whether you are a professional nursery owner or an individual looking to sell surplus plants, our website provides a convenient solution. Buyers can browse through categories, search for specific plants, and contact sellers directly.</p>
+        <p>Our platform allows users to register and post their products for sale. Whether you are a professional
+            nursery owner or an individual looking to sell surplus plants, our website provides a convenient solution.
+            Buyers can browse through categories, search for specific plants, and contact sellers directly.</p>
 
         <h2>Join Us Today</h2>
-        <p>Be a part of our growing community and contribute to the sustainable agricultural industry in Sri Lanka. Register now and start buying or selling with ease!</p>
+        <p>Be a part of our growing community and contribute to the sustainable agricultural industry in Sri Lanka.
+            Register now and start buying or selling with ease!</p>
     </div>
     <?php include 'footer.php'; ?>
 </body>
