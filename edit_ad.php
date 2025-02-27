@@ -74,7 +74,7 @@ if (isset($_POST['submit'])) {
         }
     }
 
-    header("Location: edit_ad.php?ad_id=" . $ad_id);
+    header("Location: my_ads.php?ad_id=" . $ad_id);
     exit();
 }
 ?>
@@ -117,13 +117,13 @@ if (isset($_POST['submit'])) {
             height: 100%;
             background-image: url("images/B1.jpg");
             background-size: cover;
-            opacity: 0.5; 
+            opacity: 0.5;
             z-index: -1;
         }
 
         /* Main content */
         .main-content {
-            flex: 1; 
+            flex: 1;
         }
 
         h2 {
@@ -133,7 +133,7 @@ if (isset($_POST['submit'])) {
             font-size: 2rem;
             margin-bottom: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            position: relative; 
+            position: relative;
             z-index: 1;
         }
 
@@ -142,11 +142,11 @@ if (isset($_POST['submit'])) {
             max-width: 50%;
             margin: 0 auto;
             padding: 20px;
-            background-color: rgba(225, 225, 225, 0.3); 
+            background-color: rgba(225, 225, 225, 0.3);
             backdrop-filter: blur(10px);
             border-radius: 5px;
             position: relative;
-            z-index: 1; 
+            z-index: 1;
         }
 
         .form-group {
@@ -370,29 +370,39 @@ if (isset($_POST['submit'])) {
                 <label for="district">District</label>
                 <select name="district" required>
                     <option value="Ampara" <?= $ad['district'] == 'Ampara' ? 'selected' : '' ?>>Ampara</option>
-                    <option value="Anuradhapura" <?= $ad['district'] == 'Anuradhapura' ? 'selected' : '' ?>>Anuradhapura</option>
+                    <option value="Anuradhapura" <?= $ad['district'] == 'Anuradhapura' ? 'selected' : '' ?>>Anuradhapura
+                    </option>
                     <option value="Badulla" <?= $ad['district'] == 'Badulla' ? 'selected' : '' ?>>Badulla</option>
-                    <option value="Batticaloa" <?= $ad['district'] == 'Batticaloa' ? 'selected' : '' ?>>Batticaloa</option>
+                    <option value="Batticaloa" <?= $ad['district'] == 'Batticaloa' ? 'selected' : '' ?>>Batticaloa
+                    </option>
                     <option value="Colombo" <?= $ad['district'] == 'Colombo' ? 'selected' : '' ?>>Colombo</option>
                     <option value="Galle" <?= $ad['district'] == 'Galle' ? 'selected' : '' ?>>Galle</option>
                     <option value="Gampaha" <?= $ad['district'] == 'Gampaha' ? 'selected' : '' ?>>Gampaha</option>
-                    <option value="Hambantota" <?= $ad['district'] == 'Hambantota' ? 'selected' : '' ?>>Hambantota</option>
+                    <option value="Hambantota" <?= $ad['district'] == 'Hambantota' ? 'selected' : '' ?>>Hambantota
+                    </option>
                     <option value="Jaffna" <?= $ad['district'] == 'Jaffna' ? 'selected' : '' ?>>Jaffna</option>
                     <option value="Kalutara" <?= $ad['district'] == 'Kalutara' ? 'selected' : '' ?>>Kalutara</option>
                     <option value="Kandy" <?= $ad['district'] == 'Kandy' ? 'selected' : '' ?>>Kandy</option>
                     <option value="Kegalle" <?= $ad['district'] == 'Kegalle' ? 'selected' : '' ?>>Kegalle</option>
-                    <option value="Kilinochchi" <?= $ad['district'] == 'Kilinochchi' ? 'selected' : '' ?>>Kilinochchi</option>
-                    <option value="Kurunegala" <?= $ad['district'] == 'Kurunegala' ? 'selected' : '' ?>>Kurunegala</option>
+                    <option value="Kilinochchi" <?= $ad['district'] == 'Kilinochchi' ? 'selected' : '' ?>>Kilinochchi
+                    </option>
+                    <option value="Kurunegala" <?= $ad['district'] == 'Kurunegala' ? 'selected' : '' ?>>Kurunegala
+                    </option>
                     <option value="Mannar" <?= $ad['district'] == 'Mannar' ? 'selected' : '' ?>>Mannar</option>
                     <option value="Matale" <?= $ad['district'] == 'Matale' ? 'selected' : '' ?>>Matale</option>
                     <option value="Matara" <?= $ad['district'] == 'Matara' ? 'selected' : '' ?>>Matara</option>
-                    <option value="Monaragala" <?= $ad['district'] == 'Monaragala' ? 'selected' : '' ?>>Monaragala</option>
-                    <option value="Mullaitivu" <?= $ad['district'] == 'Mullaitivu' ? 'selected' : '' ?>>Mullaitivu</option>
-                    <option value="Nuwara Eliya" <?= $ad['district'] == 'Nuwara Eliya' ? 'selected' : '' ?>>Nuwara Eliya</option>
-                    <option value="Polonnaruwa" <?= $ad['district'] == 'Polonnaruwa' ? 'selected' : '' ?>>Polonnaruwa</option>
+                    <option value="Monaragala" <?= $ad['district'] == 'Monaragala' ? 'selected' : '' ?>>Monaragala
+                    </option>
+                    <option value="Mullaitivu" <?= $ad['district'] == 'Mullaitivu' ? 'selected' : '' ?>>Mullaitivu
+                    </option>
+                    <option value="Nuwara Eliya" <?= $ad['district'] == 'Nuwara Eliya' ? 'selected' : '' ?>>Nuwara Eliya
+                    </option>
+                    <option value="Polonnaruwa" <?= $ad['district'] == 'Polonnaruwa' ? 'selected' : '' ?>>Polonnaruwa
+                    </option>
                     <option value="Puttalam" <?= $ad['district'] == 'Puttalam' ? 'selected' : '' ?>>Puttalam</option>
                     <option value="Ratnapura" <?= $ad['district'] == 'Ratnapura' ? 'selected' : '' ?>>Ratnapura</option>
-                    <option value="Trincomalee" <?= $ad['district'] == 'Trincomalee' ? 'selected' : '' ?>>Trincomalee</option>
+                    <option value="Trincomalee" <?= $ad['district'] == 'Trincomalee' ? 'selected' : '' ?>>Trincomalee
+                    </option>
                     <option value="Vavuniya" <?= $ad['district'] == 'Vavuniya' ? 'selected' : '' ?>>Vavuniya</option>
                 </select>
             </div>
