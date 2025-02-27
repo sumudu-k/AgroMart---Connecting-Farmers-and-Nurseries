@@ -55,19 +55,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-family: "Poppins", Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            position: relative;
             overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column; 
+        }
+
+        /* Background image */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("images/B1.jpg");
+            background-size: cover; 
+            opacity: 0.5; 
+            z-index: -1; 
         }
 
         h1 {
             background-color: #dbffc7;
             text-align: center;
-            padding: 20px;
-            font-size: 2.2rem;
-            color: #006400;
-            margin: 0 0 30px 0;
-            text-transform: capitalize;
+            padding: 10px 12.5%;
+            font-size: 2rem;
+            margin-bottom: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative; 
+            z-index: 1;
+        }
+
+        /* Main content */
+        .main-content {
+            flex: 1;
         }
 
         .container {
@@ -87,6 +109,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             max-width: 400px;
             width: 100%;
+            position: relative; 
+            z-index: 1;
         }
 
         .form-group {
@@ -170,7 +194,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        /* Tablets*/
+        /* Tablets */
         @media screen and (min-width: 481px) and (max-width: 1200px) {
             h1 {
                 font-size: 1.8rem;
@@ -204,29 +228,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    <h1>Change Password</h1>
-    <div class="container">
-        <form action="change_password.php" method="post">
-            <div class="form-group">
-                <label for="current_password">Current Password:</label>
-                <input type="password" id="current_password" name="current_password"
-                    placeholder="Enter current password" required>
-            </div>
-            <div class="form-group">
-                <label for="new_password">New Password:</label>
-                <input type="password" id="new_password" name="new_password" placeholder="Enter new password" required>
-            </div>
-            <div class="form-group">
-                <label for="confirm_password">Confirm New Password:</label>
-                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm new password"
-                    required>
-            </div>
-            <button type="submit">Change Password</button>
-        </form>
+    <?php include 'navbar.php'; ?>
+    <div class="main-content">
+        <h1>Change Password</h1>
+        <div class="container">
+            <form action="change_password.php" method="post">
+                <div class="form-group">
+                    <label for="current_password">Current Password:</label>
+                    <input type="password" id="current_password" name="current_password" placeholder="Enter current password" required>
+                </div>
+                <div class="form-group">
+                    <label for="new_password">New Password:</label>
+                    <input type="password" id="new_password" name="new_password" placeholder="Enter new password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">Confirm New Password:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm new password" required>
+                </div>
+                <button type="submit">Change Password</button>
+            </form>
+        </div>
     </div>
+    <?php include 'footer.php'; ?>
 </body>
 
 </html>
-<?php
-include 'footer.php';
-?>

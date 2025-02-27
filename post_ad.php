@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 ob_start();
 include 'config.php';
@@ -50,27 +49,49 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="UTF-8">
     <title>Post Ad</title>
-
     <style>
-        /* Styling for the form layout */
         * {
             box-sizing: border-box;
         }
 
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Background image */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("images/B1.jpg");
+            background-size: cover;
+            opacity: 0.5;
+            z-index: -1;
         }
 
         h1 {
             background-color: #dbffc7;
             text-align: center;
-            text-transform: capitalize;
-            padding: 20px 12.5%;
-            margin: 0 0 20px 0;
+            padding: 10px 12.5%;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative; 
+            z-index: 1;
+        }
 
+        /* Main content */
+        .main-content {
+            flex: 1; 
         }
 
         /* Form container */
@@ -80,6 +101,8 @@ if (isset($_POST['submit'])) {
             padding: 20px;
             background-color: #e1e1e1;
             border-radius: 5px;
+            position: relative; 
+            z-index: 1;
         }
 
         .form-group {
@@ -144,7 +167,7 @@ if (isset($_POST['submit'])) {
             background-color: #005922;
         }
 
-        /* Mobile Devices*/
+        /* Mobile Devices */
         @media screen and (max-width: 480px) {
             h1 {
                 padding: 15px 5%;
@@ -226,89 +249,85 @@ if (isset($_POST['submit'])) {
             }
         }
     </style>
-
 </head>
 
-
 <body>
-    <h1>Post an Ad Totally Free</h1>
-    <form action="post_ad.php" method="POST" enctype="multipart/form-data" v class="ad-form">
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" name="title" placeholder="Enter title here" required>
-        </div>
+    <div class="main-content">
+        <h1>Post an Ad Totally Free</h1>
+        <form action="post_ad.php" method="POST" enctype="multipart/form-data" class="ad-form">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" name="title" placeholder="Enter title here" required>
+            </div>
 
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea name="description" placeholder="Describe your ad here" required></textarea>
-        </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea name="description" placeholder="Describe your ad here" required></textarea>
+            </div>
 
-        <div class="form-group">
-            <label for="district">District</label>
-            <select name="district" required>
-                <option value="">Select District</option>
-                <option value="Ampara">Ampara</option>
-                <option value="Anuradhapura">Anuradhapura</option>
-                <option value="Badulla">Badulla</option>
-                <option value="Batticaloa">Batticaloa</option>
-                <option value="Colombo">Colombo</option>
-                <option value="Galle">Galle</option>
-                <option value="Gampaha">Gampaha</option>
-                <option value="Hambantota">Hambantota</option>
-                <option value="Jaffna">Jaffna</option>
-                <option value="Kalutara">Kalutara</option>
-                <option value="Kandy">Kandy</option>
-                <option value="Kegalle">Kegalle</option>
-                <option value="Kilinochchi">Kilinochchi</option>
-                <option value="Kurunegala">Kurunegala</option>
-                <option value="Mannar">Mannar</option>
-                <option value="Matale">Matale</option>
-                <option value="Matara">Matara</option>
-                <option value="Monaragala">Monaragala</option>
-                <option value="Mullaitivu">Mullaitivu</option>
-                <option value="Nuwara Eliya">Nuwara Eliya</option>
-                <option value="Polonnaruwa">Polonnaruwa</option>
-                <option value="Puttalam">Puttalam</option>
-                <option value="Ratnapura">Ratnapura</option>
-                <option value="Trincomalee">Trincomalee</option>
-                <option value="Vavuniya">Vavuniya</option>
-            </select>
-        </div>
+            <div class="form-group">
+                <label for="district">District</label>
+                <select name="district" required>
+                    <option value="">Select District</option>
+                    <option value="Ampara">Ampara</option>
+                    <option value="Anuradhapura">Anuradhapura</option>
+                    <option value="Badulla">Badulla</option>
+                    <option value="Batticaloa">Batticaloa</option>
+                    <option value="Colombo">Colombo</option>
+                    <option value="Galle">Galle</option>
+                    <option value="Gampaha">Gampaha</option>
+                    <option value="Hambantota">Hambantota</option>
+                    <option value="Jaffna">Jaffna</option>
+                    <option value="Kalutara">Kalutara</option>
+                    <option value="Kandy">Kandy</option>
+                    <option value="Kegalle">Kegalle</option>
+                    <option value="Kilinochchi">Kilinochchi</option>
+                    <option value="Kurunegala">Kurunegala</option>
+                    <option value="Mannar">Mannar</option>
+                    <option value="Matale">Matale</option>
+                    <option value="Matara">Matara</option>
+                    <option value="Monaragala">Monaragala</option>
+                    <option value="Mullaitivu">Mullaitivu</option>
+                    <option value="Nuwara Eliya">Nuwara Eliya</option>
+                    <option value="Polonnaruwa">Polonnaruwa</option>
+                    <option value="Puttalam">Puttalam</option>
+                    <option value="Ratnapura">Ratnapura</option>
+                    <option value="Trincomalee">Trincomalee</option>
+                    <option value="Vavuniya">Vavuniya</option>
+                </select>
+            </div>
 
-        <div class="form-group">
-            <label for="category">Category</label>
-            <select name="category" required>
-                <?php
-                $categories = $conn->query("SELECT * FROM categories");
-                while ($category = $categories->fetch_assoc()) {
-                    echo "<option value='{$category['category_id']}'>{$category['category_name']}</option>";
-                }
-                ?>
-            </select>
-        </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select name="category" required>
+                    <?php
+                    $categories = $conn->query("SELECT * FROM categories");
+                    while ($category = $categories->fetch_assoc()) {
+                        echo "<option value='{$category['category_id']}'>{$category['category_name']}</option>";
+                    }
+                    ?>
+                </select>
+            </div>
 
-        <div class="form-group">
-            <label for="phone_number">Contact</label>
-            <input type="text" name="phone_number" placeholder="Enter 10 digit number" required>
-        </div>
+            <div class="form-group">
+                <label for="phone_number">Contact</label>
+                <input type="text" name="phone_number" placeholder="Enter 10 digit number" required>
+            </div>
 
-        <div class="form-group">
-            <label for="price">Price</label>
-            <input type="number" name="price" placeholder="Rs" required>
-        </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="number" name="price" placeholder="Rs" required>
+            </div>
 
-        <div class="form-group">
-            <label for="images">Images</label>
-            <input type="file" name="images[]" multiple required>
-        </div>
+            <div class="form-group">
+                <label for="images">Images</label>
+                <input type="file" name="images[]" multiple required>
+            </div>
 
-        <button type="submit" name="submit">Submit Ad</button>
-    </form>
-
-
+            <button type="submit" name="submit">Submit Ad</button>
+        </form>
+    </div>
+    <?php include 'footer.php'; ?>
 </body>
 
 </html>
-<?php
-include 'footer.php';
-?>

@@ -47,10 +47,17 @@ $result = $stmt->get_result();
     }
 
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      overflow-x: hidden;
-    }
+            font-family: Arial, sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column; 
+            min-height: 100vh; 
+        }
+        
+        .main-content {
+            flex: 1;
+        }
 
     /* Title styles */
     .title {
@@ -231,54 +238,55 @@ $result = $stmt->get_result();
 </head>
 
 <body>
+  <div class="main-content">
+    <h2 class="title"> <?php echo $category_name; ?></h2>
 
-  <h2 class="title"> <?php echo $category_name; ?></h2>
+    <div class="container">
+      <div class="ads-container">
+        <?php
+          if ($result->num_rows > 0) {
+            while ($ad = $result->fetch_assoc()) {
+              $ad_id = $ad['ad_id'];
 
-  <div class="container">
-    <div class="ads-container">
-      <?php
-      if ($result->num_rows > 0) {
-        while ($ad = $result->fetch_assoc()) {
-          $ad_id = $ad['ad_id'];
+              // Fetch the first image of the ad from the ad_images table
+              $img_sql = "SELECT image_path FROM ad_images WHERE ad_id = ? LIMIT 1";
+              $stmt_img = $conn->prepare($img_sql);
+              $stmt_img->bind_param("i", $ad_id);
+              $stmt_img->execute();
+              $img_result = $stmt_img->get_result();
+              $image = $img_result->fetch_assoc();
 
-          // Fetch the first image of the ad from the ad_images table
-          $img_sql = "SELECT image_path FROM ad_images WHERE ad_id = ? LIMIT 1";
-          $stmt_img = $conn->prepare($img_sql);
-          $stmt_img->bind_param("i", $ad_id);
-          $stmt_img->execute();
-          $img_result = $stmt_img->get_result();
-          $image = $img_result->fetch_assoc();
-
-          // Limit the description to 100 characters
-          $description = substr(htmlspecialchars($ad['description']), 0, 100);
-          if (strlen($ad['description']) > 100) {
-            $description .= '...';
+              // Limit the description to 100 characters
+              $description = substr(htmlspecialchars($ad['description']), 0, 100);
+              if (strlen($ad['description']) > 100) {
+                $description .= '...';
+              }
+        ?>
+            <div class="ad-card">
+              <a href="view_ad.php?ad_id=<?= $ad_id; ?>">
+                <!-- Display the first image if available, else show a placeholder -->
+                <?php if ($image): ?>
+                  <img src="<?= htmlspecialchars($image['image_path']); ?>"
+                    alt="<?= htmlspecialchars($ad['title']); ?>">
+                <?php else: ?>
+                  <img src="placeholder.png" alt="No Image Available">
+                <?php endif; ?>
+                <h4><?= htmlspecialchars($ad['title']); ?></h4>
+                <p class="description"><?= $description; ?></p>
+                <p>Price: <span class="price"> Rs <?= htmlspecialchars($ad['price']); ?></span></p>
+                <p>District: <?= htmlspecialchars($ad['district']); ?></p>
+                <p>Posted on: <?= date('F j, Y', strtotime($ad['created_at'])); ?></p>
+              </a>
+            </div>
+        <?php
           }
-      ?>
-          <div class="ad-card">
-            <a href="view_ad.php?ad_id=<?= $ad_id; ?>">
-              <!-- Display the first image if available, else show a placeholder -->
-              <?php if ($image): ?>
-                <img src="<?= htmlspecialchars($image['image_path']); ?>"
-                  alt="<?= htmlspecialchars($ad['title']); ?>">
-              <?php else: ?>
-                <img src="placeholder.png" alt="No Image Available">
-              <?php endif; ?>
-              <h4><?= htmlspecialchars($ad['title']); ?></h4>
-              <p class="description"><?= $description; ?></p>
-              <p>Price: <span class="price"> Rs <?= htmlspecialchars($ad['price']); ?></span></p>
-              <p>District: <?= htmlspecialchars($ad['district']); ?></p>
-              <p>Posted on: <?= date('F j, Y', strtotime($ad['created_at'])); ?></p>
-            </a>
-          </div>
-      <?php
+        } else {
+          echo "<p>No ads found in this category.</p>";
         }
-      } else {
-        echo "<p>No ads found in this category.</p>";
-      }
-
-      ?>
+        ?>
+      </div>
     </div>
+
   </div>
 </body>
 

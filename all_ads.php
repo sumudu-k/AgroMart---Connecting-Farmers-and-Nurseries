@@ -65,7 +65,6 @@ $result = $conn->query($ads_sql);
             border-radius: 10px;
             overflow: hidden;
             width: calc(25% - 20px);
-            /* 4 cards per row with gap consideration */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s, box-shadow 0.2s;
             padding-bottom: 15px;
@@ -96,7 +95,7 @@ $result = $conn->query($ads_sql);
         }
 
         .ad-details {
-            margin: 10px 8px;
+            padding: 5px 10px;
         }
 
         .ad-details .description {
@@ -109,15 +108,13 @@ $result = $conn->query($ads_sql);
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin: 0 10px 10px;
         }
 
         .ad-details .price {
             font-size: 1rem;
             color: #d84400;
             font-weight: bolder;
-            margin-top: 5px;
-            padding: 0 10px;
+            margin-top: 10px;
             text-align: left;
             line-height: 2;
         }
@@ -125,11 +122,9 @@ $result = $conn->query($ads_sql);
         .ad-details .district {
             font-size: 0.9rem;
             color: #000000;
-            margin-top: 5px;
-            padding: 0 10px;
             text-align: left;
+            padding: 0 0 10px 0;
             font-weight: bolder;
-            line-height: 2;
         }
 
         .date {
@@ -138,7 +133,6 @@ $result = $conn->query($ads_sql);
             font-size: 0.8rem;
             font-style: italic;
             color: #666666;
-            padding: 0 10px;
             text-align: left;
         }
 
@@ -169,7 +163,7 @@ $result = $conn->query($ads_sql);
             color: #fff;
         }
 
-        /* Mobile Devices (319px - 480px) - 8 rows × 1 column = 8 items */
+        /* Mobile Devices */
         @media screen and (max-width: 480px) {
             .container {
                 width: 95%;
@@ -216,7 +210,7 @@ $result = $conn->query($ads_sql);
             }
         }
 
-        /* Tablets (481px - 1200px) - 6 rows × 2 columns = 12 items */
+        /* Tablets */
         @media screen and (min-width: 481px) and (max-width: 1200px) {
             .container {
                 width: 95%;

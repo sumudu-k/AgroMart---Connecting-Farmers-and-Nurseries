@@ -388,6 +388,9 @@ if ($user_id) {
             <p><strong>Category:</strong> <?= htmlspecialchars($ad['category_name']); ?></p>
             <p><strong>Posted On:</strong> <?= htmlspecialchars($ad['formatted_date']); ?></p>
             <p><strong>District:</strong> <?= htmlspecialchars($ad['district']); ?></p>
+            <p><strong>Connect:</strong> <a href="https://wa.me/+94<?= htmlspecialchars($ad['phone_number']); ?>"
+                    target="_blank">
+                    <img src="uploads/whatsapp.gif" /></a></p>
 
             <?php if ($user_id): ?>
                 <form method="post" action="wishlist.php">

@@ -1,11 +1,10 @@
 <?php
-
 ?>
 <footer>
     <div class="footer-container">
         <div class="footer-info">
             <h3>AgroMart</h3>
-            <address>No 15, Haputhalegama, Haputhale </address>
+            <address>No 15, Haputhalegama, Haputhale</address>
             <p>Phone: 071 3864286</p>
             <p>Email: info@agromart.com</p>
         </div>
@@ -22,30 +21,21 @@
             <h3>Social Links</h3>
             <hr />
             <ul>
-                <li>
-                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa-brands fa-linkedin"></i></a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
-                </li>
+                <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
+                <li><a href="#"><i class="fa-brands fa-tiktok"></i></a></li>
+                <li><a href="#"><i class="fa-brands fa-youtube"></i></a></li>
             </ul>
         </div>
-
     </div>
 </footer>
 <style>
     /* Footer */
     footer {
-        height: 4%;
         background-color: #006400;
         padding: 40px 12.5%;
         margin-top: 30px;
+        width: 100%;
     }
 
     .footer-container {
@@ -94,7 +84,6 @@
     .footer-links ul {
         display: flex;
         flex-direction: column;
-
         list-style: none;
     }
 
@@ -154,5 +143,50 @@
     .social-links li:hover i {
         color: #b7b7b7;
         cursor: pointer;
+    }
+
+    /* Responsive Footer Styles */
+    @media screen and (max-width: 480px) {
+        footer {
+            padding: 20px 5%;
+        }
+
+        .footer-container {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .footer-links ul {
+            align-items: center;
+        }
+
+        .social-links {
+            width: 100%;
+        }
+
+        .social-links hr {
+            margin: 5px auto 20px auto;
+        }
+    }
+
+    @media screen and (min-width: 481px) and (max-width: 1200px) {
+        footer {
+            padding: 30px 8%;
+        }
+
+        .footer-container {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .footer-links ul {
+            align-items: center;
+        }
+
+        .social-links {
+            width: 100%;
+        }
     }
 </style>
