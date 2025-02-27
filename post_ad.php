@@ -82,7 +82,7 @@ if (isset($_POST['submit'])) {
             background-color: #dbffc7;
             text-align: center;
             padding: 10px 12.5%;
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-bottom: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             position: relative; 
