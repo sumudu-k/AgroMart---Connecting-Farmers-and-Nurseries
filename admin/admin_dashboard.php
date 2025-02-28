@@ -57,6 +57,8 @@ include '../config.php';
         <a href="delete_category.php">Delete Category</a>
         <a href="view_users.php">Manage Users</a>
         <a href="view_ads.php">View & Delete Ads</a>
+        <a href="admin_send_notification.php">Send Push Notifications</a>
+        <a href="admin_manage_notifications.php">Delete Push Notifications</a>
     </div>
 
     <!-- Main Content -->

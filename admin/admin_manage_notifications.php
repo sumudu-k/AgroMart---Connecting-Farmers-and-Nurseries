@@ -11,7 +11,7 @@ if (isset($_GET['delete_created_at'])) {
     $stmt_delete->bind_param("s", $created_at);
     $stmt_delete->execute();
 
-    echo "<script>alert('Notification deleted! All notifications with the same timestamp have been removed.'); window.location='admin_manage_notifications.php';</script>";
+    echo "<script>alert('Notification deleted!'); window.location='admin_manage_notifications.php';</script>";
 }
 
 // Fetch unique notifications
