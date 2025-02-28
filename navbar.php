@@ -34,69 +34,13 @@ if (session_status() === PHP_SESSION_NONE) {
         }
 
         /* Logo */
-
         nav .logo a {
             color: #f2f2f2;
-            font-size: 35px;
+            font-size: 2.2rem;
             font-weight: 800;
             text-decoration: none;
             cursor: pointer;
         }
-
-        .logo a span {
-            opacity: 0;
-            animation: letter-fade 10s infinite;
-            display: inline-block;
-        }
-
-        @keyframes letter-fade {
-            0% {
-                opacity: 0;
-                transform: translateY(0);
-            }
-
-            50% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-
-            100% {
-                opacity: 0;
-            }
-        }
-
-        .logo a span:nth-child(1) {
-            animation-delay: 0s;
-        }
-
-        .logo a span:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .logo a span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        .logo a span:nth-child(4) {
-            animation-delay: 0.6s;
-        }
-
-        .logo a span:nth-child(5) {
-            animation-delay: 0.8s;
-        }
-
-        .logo a span:nth-child(6) {
-            animation-delay: 1s;
-        }
-
-        .logo a span:nth-child(7) {
-            animation-delay: 1.2s;
-        }
-
-        .logo a span:nth-child(8) {
-            animation-delay: 1.4s;
-        }
-
 
         /* Search Bar */
         nav .search-container {
@@ -106,7 +50,7 @@ if (session_status() === PHP_SESSION_NONE) {
             line-height: 35px;
         }
 
-        nav .search-container input[type="text"] {
+        nav .search-container input {
             border: 2px solid #adb5bd;
             outline: none;
             border-radius: 5px;
@@ -114,7 +58,7 @@ if (session_status() === PHP_SESSION_NONE) {
             height: 100%;
             padding: 0 10px;
             font-size: 16px;
-            width: 300px;
+            width: 25rem;
         }
 
         /* Search Results */
@@ -123,7 +67,7 @@ if (session_status() === PHP_SESSION_NONE) {
             background-color: #e9ecef;
             border-radius: 5px;
             box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.2);
-            width: 300px;
+            width: 25rem;
             margin-top: 40px;
             overflow-y: auto;
             z-index: 1000;
@@ -146,15 +90,16 @@ if (session_status() === PHP_SESSION_NONE) {
             border-radius: 5px;
         }
 
-        /* Navebar Right */
+        /* Navbar Right */
         nav ul {
             display: flex;
+            align-items: center;
             list-style: none;
             margin: auto 0;
         }
 
         nav ul li {
-            border-right: 1px solid white;
+            border-right: 1px solid rgb(161, 161, 161);
             margin: 0 6px;
         }
 
@@ -164,134 +109,140 @@ if (session_status() === PHP_SESSION_NONE) {
 
         nav ul li a {
             color: white;
-            font-size: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
             text-decoration: none;
-            text-transform: capitalize;
-            letter-spacing: 1px;
             border-radius: 5px;
             padding: 5px 10px;
             margin-right: 10px;
             transition: 0.3s;
-
         }
 
-        nav a.place-ad {
-            background-color: #ffd700;
+        .place-ad {
+            background-color:rgb(255, 243, 174);
             padding: 5px 10px;
             color: black;
-            animation: blink 1s infinite;
+            animation: blink 2.5s infinite;
         }
 
         @keyframes blink {
-            0% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.9;
-                background-color: rgb(255, 153, 0);
-            }
-
-            100% {
-                opacity: 1;
-            }
+            0% { opacity: 1; }
+            50% { opacity: 0.9; background-color: rgb(255, 153, 0); }
+            100% { opacity: 1; }
         }
 
-        nav ul li:hover a {
+        nav ul li a i {
+            color: white;
+            vertical-align: middle;
+        }
+
+        nav ul li:hover a,
+        nav ul li:hover a i {
             background-color: #e9ecef;
             border-radius: 5px;
             color: black;
         }
 
-        /* Responsive Navbar */
-        nav .bar {
-            position: relative;
-            margin: auto;
-            display: none;
+         {
+            color: black;
         }
 
-        nav .bar span {
-            position: absolute;
-            color: #f2f2f2;
+        /* Hamburger Menu Icon */
+        .hamburger {
+            display: none;
+            font-size: 2rem;
+            color: white;
             cursor: pointer;
+            margin: auto 0;
         }
 
-        input[type="checkbox"] {
-            -webkit-appearance: none;
-            display: none;
-        }
-
-        @media screen and (max-width: 1500px) {
+        /* Responsive Design */
+        @media (max-width: 1500px) {
             nav {
-                display: block;
-                margin: 0;
-                padding: 0;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 15px 10%;
             }
 
             nav .logo {
-                display: inline-block;
-                padding: 15px 30px;
+                width: 100%;
+                text-align: left;
+                margin-bottom: 10px;
             }
 
             nav .search-container {
                 width: 100%;
-                display: inline-flex;
-                justify-content: center;
-                border: none;
-                margin-bottom: 15px;
+                align-self: center;
+                margin: 10px 0;
             }
 
             nav .search-container input {
-                width: 400px;
+                width: 100%;
+            }
+
+            nav .search-results {
+                width: 100%;
             }
 
             nav ul {
-                display: flex;
+                display: none;
                 flex-direction: column;
+                width: 100%;
                 background-color: #006400;
-                max-height: 0;
-                visibility: hidden;
-                overflow: hidden;
-                transform: translateY(-15px);
-                transition: max-height 0.3s ease, visibility 0s 0.3s, transform 0.3s ease;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                z-index: 1000;
+            }
+
+            nav ul.active {
+                display: flex;
             }
 
             nav ul li {
-                text-align: center;
+                width: 40%;
+                text-align: left;
                 border-right: none;
-                margin-bottom: 10px;
+                border-bottom: 1px solid white;
+                margin: 0;
+                padding: 15px 10%;
             }
 
             nav ul li a {
-                font-size: 20px;
                 display: block;
+                text-align: center;
+                width: 100%;
             }
 
-            nav .bar {
+            nav ul li:last-child {
+                border-bottom: none;
+            }
+
+            .hamburger {
                 display: block;
                 position: absolute;
-                top: 30px;
-                right: 90px;
-                cursor: pointer;
+                right: 10%;
+                top: 15px;
+            }
+        }
+
+        /* Mobile Devices (319px–480px) */
+        @media (max-width: 480px) {
+            nav .logo a {
+                font-size: 28px;
             }
 
-            nav .bar #times {
-                display: none;
+            nav .search-container input {
+                font-size: 14px;
             }
 
-            #check:checked~nav .bar #times {
-                display: block;
+            nav ul li a {
+                font-size: 18px;
             }
 
-            #check:checked~nav .bar #bars {
-                display: none;
-            }
-
-            #check:checked~nav ul {
-                visibility: visible;
-                max-height: 230px;
-                transform: translateY(0);
-                transition: max-height 0.3s ease, transform 0.3s ease;
+            .hamburger {
+                font-size: 24px;
             }
         }
     </style>
@@ -308,27 +259,7 @@ if (session_status() === PHP_SESSION_NONE) {
         }
 
         function searchProducts(query) {
-            if (query.length == 0) {
-                document.getElementById("search-results").style.display = "none";
-                results.innerHTML = "";
-                return;
-            }
-
-            const xhr = new XMLHttpRequest();
-            xhr.open("GET", "search_products.php?q=" + query, true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    const results = document.getElementById("search-results");
-                    results.innerHTML = xhr.responseText;
-                    results.style.display = "block";
-                }
-            };
-            xhr.send();
-        }
-
-        function searchProducts(query) {
             const results = document.getElementById("search-results");
-
             if (query.length === 0) {
                 results.style.display = "none";
                 results.innerHTML = "";
@@ -346,11 +277,13 @@ if (session_status() === PHP_SESSION_NONE) {
             xhr.send();
         }
 
-
         document.addEventListener('DOMContentLoaded', function() {
             const searchInput = document.querySelector('.search-container input[type="text"]');
             const searchResults = document.getElementById('search-results');
+            const hamburger = document.querySelector('.hamburger');
+            const navRight = document.querySelector('.nav-right');
 
+            // Search functionality
             searchInput.addEventListener('focus', () => {
                 if (searchInput.value.trim() !== '') {
                     searchResults.style.display = 'block';
@@ -370,16 +303,17 @@ if (session_status() === PHP_SESSION_NONE) {
                     searchResults.style.display = 'none';
                 }
             });
+
+            // Hamburger menu toggle
+            hamburger.addEventListener('click', () => {
+                navRight.classList.toggle('active');
+            });
         });
     </script>
 
-    <input type="checkbox" id="check">
     <nav>
-
         <div class="logo">
-            <a href="home.php">
-                <span>A</span><span>g</span><span>r</span><span>o</span><span>M</span><span>a</span><span>r</span><span>t</span>
-            </a>
+            <a href="home.php">AgroMart</a>
         </div>
 
         <div class="search-container">
@@ -388,25 +322,22 @@ if (session_status() === PHP_SESSION_NONE) {
             <div class="search-results" id="search-results" aria-live="polite"></div>
         </div>
 
-        <ul>
-            <li><a href="my_ads.php">My Ads</a></li>
-            <li><a href="post_ad.php" class="place-ad">Post Ad</a></li>
-            <li><a href="wishlist.php"><img src='uploads/wishlist.png' style='width:24px'></a></li>
-
-
+        <ul class="nav-right">
+            <li><a href="my_ads.php">MY ADS</a></li>
+            <li><a href="post_ad.php" class="place-ad">POST ADS</a></li>
+            <li><a href="wishlist.php"><i class="fas fa-heart"></i></a></li>
             <?php if (isset($_SESSION['username'])): ?>
-                <!-- <li><a href="#">Welcome,<?= $_SESSION['username']; ?></a></li> -->
-                <li><a href="profile.php"><img src='uploads/user.png'></a></li>
-                <li><a href="#" onclick="confirmLogout(); return false;">Log Out</a></li>
+                <li><a href="profile.php"><i class="fas fa-user"></i></a></li>
+                <li><a href="#" onclick="confirmLogout(); return false;">LOGOUT</a></li>
             <?php else: ?>
-                <li><a href="login.php">Login</a></li>
-                <li><a href="register.php">Register</a></li>
+                <li><a href="login.php">LOGIN</a></li>
+                <li><a href="register.php">REGISTER</a></li>
             <?php endif; ?>
         </ul>
-        <label for="check" class="bar">
-            <span id="bars"><i class="fa fa-bars fa-2x" aria-hidden="true"></i></span>
-            <span id="times"><i class="fa fa-times fa-2x" aria-hidden="true"></i></span>
-        </label>
+
+        <div class="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
     </nav>
 
 </body>
