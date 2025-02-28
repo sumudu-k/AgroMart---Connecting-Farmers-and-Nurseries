@@ -2,6 +2,25 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+} else {
+    $user_id = null;
+}
+
+
+
+
+// Query to count unread notifications
+$sql = "SELECT COUNT(*) AS unread_count FROM notifications WHERE user_id = ? AND status = 'unread'";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$unread_count = $row['unread_count'];
+
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +33,6 @@ if (session_status() === PHP_SESSION_NONE) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
     <style>
         * {
             margin: 0;
@@ -197,6 +215,30 @@ if (session_status() === PHP_SESSION_NONE) {
             }
         }
 
+        #notif_count {
+            animation: textScale 1s infinite alternate ease-in-out;
+            position: fixed;
+
+        }
+
+        @keyframes textScale {
+            0% {
+                font-size: 16px;
+            }
+
+            /* Start size */
+            50% {
+                font-size: 17px;
+            }
+
+            /* Bigger */
+            100% {
+                font-size: 16px;
+            }
+
+            /* Back to normal */
+        }
+
         nav ul li:hover a {
             background-color: #e9ecef;
             border-radius: 5px;
@@ -326,27 +368,6 @@ if (session_status() === PHP_SESSION_NONE) {
             xhr.send();
         }
 
-        function searchProducts(query) {
-            const results = document.getElementById("search-results");
-
-            if (query.length === 0) {
-                results.style.display = "none";
-                results.innerHTML = "";
-                return;
-            }
-
-            const xhr = new XMLHttpRequest();
-            xhr.open("GET", "search_products.php?q=" + query, true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    results.innerHTML = xhr.responseText;
-                    results.style.display = "block";
-                }
-            };
-            xhr.send();
-        }
-
-
         document.addEventListener('DOMContentLoaded', function() {
             const searchInput = document.querySelector('.search-container input[type="text"]');
             const searchResults = document.getElementById('search-results');
@@ -375,7 +396,6 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <input type="checkbox" id="check">
     <nav>
-
         <div class="logo">
             <a href="home.php">
                 <span>A</span><span>g</span><span>r</span><span>o</span><span>M</span><span>a</span><span>r</span><span>t</span>
@@ -392,10 +412,13 @@ if (session_status() === PHP_SESSION_NONE) {
             <li><a href="my_ads.php">My Ads</a></li>
             <li><a href="post_ad.php" class="place-ad">Post Ad</a></li>
             <li><a href="wishlist.php"><img src='uploads/wishlist.png' style='width:24px'></a></li>
-
+            <li><a href="notifications.php"> <img src='uploads/bell.png' style='width:24px'>
+                    <?php if ($unread_count > 0): ?>
+                        <span class="badge" id="notif_count"><?= $unread_count ?></span>
+                    <?php endif; ?>
+                </a></li>
 
             <?php if (isset($_SESSION['username'])): ?>
-                <!-- <li><a href="#">Welcome,<?= $_SESSION['username']; ?></a></li> -->
                 <li><a href="profile.php"><img src='uploads/user.png'></a></li>
                 <li><a href="#" onclick="confirmLogout(); return false;">Log Out</a></li>
             <?php else: ?>
