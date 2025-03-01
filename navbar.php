@@ -2,6 +2,24 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+} else {
+    $user_id = null;
+}
+
+
+
+
+// Query to count unread notifications
+$sql = "SELECT COUNT(*) AS unread_count FROM notifications WHERE user_id = ? AND status = 'unread'";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$unread_count = $row['unread_count'];
 ?>
 
 <!DOCTYPE html>
@@ -120,16 +138,25 @@ if (session_status() === PHP_SESSION_NONE) {
         }
 
         .place-ad {
-            background-color:rgb(255, 243, 174);
+            background-color: rgb(255, 243, 174);
             padding: 5px 10px;
             color: black;
             animation: blink 2.5s infinite;
         }
 
         @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0.9; background-color: rgb(255, 153, 0); }
-            100% { opacity: 1; }
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.9;
+                background-color: rgb(255, 153, 0);
+            }
+
+            100% {
+                opacity: 1;
+            }
         }
 
         nav ul li a i {
@@ -144,9 +171,7 @@ if (session_status() === PHP_SESSION_NONE) {
             color: black;
         }
 
-         {
-            color: black;
-        }
+
 
         /* Hamburger Menu Icon */
         .hamburger {
@@ -217,6 +242,26 @@ if (session_status() === PHP_SESSION_NONE) {
 
             nav ul li:last-child {
                 border-bottom: none;
+            }
+
+            #notif_count {
+                animation: textScale 1s infinite alternate ease-in-out;
+                position: fixed;
+
+            }
+
+            @keyframes textScale {
+                0% {
+                    font-size: 16px;
+                }
+
+                50% {
+                    font-size: 17px;
+                }
+
+                100% {
+                    font-size: 16px;
+                }
             }
 
             .hamburger {
@@ -326,6 +371,11 @@ if (session_status() === PHP_SESSION_NONE) {
             <li><a href="my_ads.php">MY ADS</a></li>
             <li><a href="post_ad.php" class="place-ad">POST ADS</a></li>
             <li><a href="wishlist.php"><i class="fas fa-heart"></i></a></li>
+            <li><a href="notifications.php"> <img src='uploads/bell.png' style='width:24px'>
+                    <?php if ($unread_count > 0): ?>
+                        <span class="badge" id="notif_count"><?= $unread_count ?></span>
+                    <?php endif; ?>
+                </a></li>
             <?php if (isset($_SESSION['username'])): ?>
                 <li><a href="profile.php"><i class="fas fa-user"></i></a></li>
                 <li><a href="#" onclick="confirmLogout(); return false;">LOGOUT</a></li>
