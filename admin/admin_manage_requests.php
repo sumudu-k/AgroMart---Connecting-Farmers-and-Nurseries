@@ -27,3 +27,37 @@ $result = $conn->query($sql);
 
 echo "<h2>All Plant Requests</h2>";
 ?>
+<table class="request-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Subject</th>
+            <th>Username</th>
+            <th>Description</th>
+            <th>Contact</th>
+            <th>District</th>
+            <th>Posted On</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php while ($row = $result->fetch_assoc()) { ?>
+        <tr>
+            <td><?= htmlspecialchars($row['request_id']); ?></td>
+            <td><?= htmlspecialchars($row['subject']); ?></td>
+            <td><?= htmlspecialchars($row['username']); ?></td>
+            <td><?= htmlspecialchars($row['description']); ?></td>
+            <td><?= htmlspecialchars($row['contact']); ?></td>
+            <td><?= htmlspecialchars($row['district']); ?></td>
+            <td><?= htmlspecialchars($row['created_at']); ?></td>
+            <td>
+                <a href="admin_manage_requests.php?delete=<?= htmlspecialchars($row['request_id']); ?>"
+                    onclick="return confirm('Are you sure you want to delete this request?')">Delete</a>
+            </td>
+        </tr>
+        <?php } ?>
+    </tbody>
+</table>
+
+<?php
+?>
