@@ -27,6 +27,62 @@ $result = $conn->query($sql);
 
 echo "<h2>All Plant Requests</h2>";
 ?>
+
+
+<style>
+.request-table {
+    width: 90%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.request-table th,
+.request-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.request-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: #333;
+}
+
+.request-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.request-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.request-table a {
+    color: red;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.request-table a:hover {
+    text-decoration: underline;
+}
+
+.request-table td a {
+    margin-right: 10px;
+}
+
+.request-table thead {
+    background-color: #f5f5f5;
+    font-size: 16px;
+    color: #444;
+}
+
+.request-table td.empty {
+    color: #888;
+}
+</style>
+
 <table class="request-table">
     <thead>
         <tr>
