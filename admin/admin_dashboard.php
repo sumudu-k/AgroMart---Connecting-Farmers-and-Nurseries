@@ -59,6 +59,7 @@ include '../config.php';
         <a href="view_ads.php">View & Delete Ads</a>
         <a href="admin_send_notification.php">Send Push Notifications</a>
         <a href="admin_manage_notifications.php">Delete Push Notifications</a>
+        <a href="admin_manage_requests.php">Manage Requests</a>
     </div>
 
     <!-- Main Content -->
