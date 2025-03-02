@@ -39,3 +39,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
+<form method="post">
+    <label>Subject:</label>
+    <input type="text" name="subject" value="<?= $row['subject'] ?>" required><br>
+
+    <label>Description:</label>
+    <textarea name="description" required><?= $row['description'] ?></textarea><br>
+
+    <label>Contact:</label>
+    <input type="text" name="contact" value="<?= $row['contact'] ?>" required><br>
+
+    <label>District:</label>
+    <select name="district">
+        <?php
+        $districts = [
+            "Colombo",
+            "Gampaha",
+            "Kalutara",
+            "Kandy",
+            "Matale",
+            "Nuwara Eliya",
+            "Galle",
+            "Matara",
+            "Hambantota",
+            "Jaffna",
+            "Kilinochchi",
+            "Mannar",
+            "Mullaitivu",
+            "Vavuniya",
+            "Trincomalee",
+            "Batticaloa",
+            "Ampara",
+            "Kurunegala",
+            "Puttalam",
+            "Anuradhapura",
+            "Polonnaruwa",
+            "Badulla",
+            "Monaragala",
+            "Ratnapura",
+            "Kegalle"
+        ];
+        foreach ($districts as $district) {
+            $selected = ($district == $row['district']) ? "selected" : "";
+            echo "<option value='$district' $selected>$district</option>";
+        }
+        ?>
+    </select><br>
+
+    <button type="submit">Update Request</button>
+</form>
