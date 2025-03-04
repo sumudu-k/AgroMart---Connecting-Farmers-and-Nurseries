@@ -2,8 +2,9 @@
 session_start();
 ob_start();
 include 'config.php';
+include 'alertFunction.php';
 
-// Check if the token is valid
+// check if the token is valid
 if (isset($_GET['token'])) {
     $token = $_GET['token'];
 
@@ -16,26 +17,26 @@ if (isset($_GET['token'])) {
 
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
-        // Proceed with password reset
+        // proceed with password reset
         if (isset($_POST['reset'])) {
             $new_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
             $email = $user['email'];
 
-            // Update the new password in the database
+            //update the new password in the database
             $sql = "UPDATE users SET password = ?, reset_token = NULL, reset_expiry = NULL WHERE email = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ss", $new_password, $email);
             $stmt->execute();
 
-            echo "Password has been reset. <a href='login.php'>Login here</a>";
+            showAlert('Password has been reset.', 'success', '#008000', 'login.php');
             exit;
         }
     } else {
-        echo "Invalid or expired token!";
+        showAlert('Invalid or expired token!', 'error', '#ff0000', 'forgotpw.php');
         exit;
     }
 } else {
-    echo "No token provided!";
+    showAlert('No token provided!', 'error', '#ff0000', 'forgotpw.php');
     exit;
 }
 ?>
