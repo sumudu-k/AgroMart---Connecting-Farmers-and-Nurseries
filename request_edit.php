@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'config.php';
+include 'alertFunction.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -16,7 +17,7 @@ if (isset($_GET['id'])) {
     $row = $result->fetch_assoc();
 
     if (!$row) {
-        echo "Invalid request!";
+        showAlert("Invalid request!", "error", "#ff0000", "my_requests.php");
         exit();
     }
 }
@@ -33,9 +34,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     WHERE request_id='$request_id' AND user_id='$user_id'";
 
     if ($conn->query($update_sql) === TRUE) {
-        header("Location: my_requests.php");
+        showAlert("Request updated successfully!", "success", "#008000", "my_requests.php");
     } else {
-        echo "Error updating request: " . $conn->error;
+        showAlert("Error updating request", "error", "#ff0000", "request_edit.php?id=$request_id");
     }
 }
 ?>

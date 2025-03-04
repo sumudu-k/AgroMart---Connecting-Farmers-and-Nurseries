@@ -6,7 +6,7 @@ include 'navbar.php';
 include 'alertFunction.php';
 
 if (!isset($_SESSION['user_id'])) {
-    showAlert('Please login to see listed ads', 'error', 'login.php');
+    showAlert('Please log in to access your ads.', 'error', '#ff0000', 'login.php');
     exit();
 }
 
