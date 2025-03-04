@@ -103,8 +103,7 @@ if (isset($_POST['reset_password'])) {
         font-weight: 600;
     }
 
-        .form-group input[type="email"],
-        .form-group input[type="password"] {
+        .form-group input {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -114,13 +113,11 @@ if (isset($_POST['reset_password'])) {
             transition: border-color 0.3s ease;
         }
 
-        .form-group input[type="email"]:focus,
-        .form-group input[type="password"]:focus {
+        .form-group input {
             border-color: #f09319;
         }
 
-        .form-group input[type="email"]::placeholder,
-        .form-group input[type="password"]::placeholder {
+        .form-group input {
             color: #888;
             font-style: italic;
             font-size: 0.9rem;
@@ -148,7 +145,6 @@ if (isset($_POST['reset_password'])) {
         font-size: 0.9rem;
         color: #666;
     }
-<<<<<<< HEAD
 
     .links a {
         color: #006400;
@@ -166,29 +162,6 @@ if (isset($_POST['reset_password'])) {
         .container {
             padding: 10px;
         }
-=======
-
-    .links a {
-        color: #006400;
-        text-decoration: none;
-        font-weight: 600;
-        transition: color 0.3s ease;
-    }
-
-    .links a:hover {
-        color: #f09319;
-    }
-
-    /* mobile Devices (319px - 480px) */
-    @media screen and (max-width: 480px) {
-        .container {
-            padding: 10px;
-        }
-
-            .login-box {
-                padding: 20px;
-            }
->>>>>>> 00d6aa47b45bc0d3acec12b3a2411b1beb496e36
 
             .login-box h2 {
                 font-size: 1.2rem;
@@ -214,11 +187,7 @@ if (isset($_POST['reset_password'])) {
         }
     }
 
-<<<<<<< HEAD
         /* tablets */
-=======
-        /* tablets (481px - 1200px) */
->>>>>>> 00d6aa47b45bc0d3acec12b3a2411b1beb496e36
         @media screen and (min-width: 481px) and (max-width: 1200px) {
             .container {
                 padding: 15px;
