@@ -70,16 +70,18 @@ if (isset($_POST['register'])) {
     /* Centered Wrapper */
     .wrapper {
         display: flex;
-        width: 100%;
         justify-content: center;
         align-items: center;
         min-height: 80vh;
         padding: 20px;
+        width: 75%; 
+        margin: 0 auto;
     }
 
     /* Register Container Styling */
     .register-container {
         display: flex;
+        width: 100%;
         gap: 20px;
         background-color: #e2e6eb;
         padding: 20px;
@@ -89,13 +91,15 @@ if (isset($_POST['register'])) {
 
     .plant-image {
         flex: 1;
+        min-height: 300px;
+        max-width: 1000px;
         background-image: url("images/register image.jpg");
         mix-blend-mode:multiply;
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
         border-radius: 10px;
-        min-height: 300px;
+        
     }
 
     .register-form {
@@ -166,6 +170,11 @@ if (isset($_POST['register'])) {
 
     /* responsive design */
     @media (max-width: 480px) {
+        .wrapper {
+            width: 95%;
+            padding: 10px;
+        }
+
         .register-container {
             flex-direction: column;
             align-items: center;
@@ -197,13 +206,12 @@ if (isset($_POST['register'])) {
 
 
     @media (min-width: 481px) and (max-width: 1200px) {
+        
         .wrapper {
-            display: flex;
-            width: 100%;
-            justify-content: center;
-            align-items: center;
+            width: 85%;
             min-height: 60vh;
         }
+        
         .register-container {
             width: 90%;
             padding: 15px;
