@@ -320,6 +320,12 @@ if (isset($_POST['submit'])) {
         }
     }
     </style>
+    <script>
+    function removeImage(button) {
+        button.parentElement.classList.add('hidden');
+        button.nextElementSibling.checked = true;
+    }
+    </script>
 </head>
 
 <body>
