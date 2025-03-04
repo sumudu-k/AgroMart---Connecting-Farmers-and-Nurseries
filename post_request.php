@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'config.php';
+include 'alertFunction.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -18,9 +19,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$user_id', '$subject', '$description', '$contact', '$district')";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Request submitted successfully!";
+        showAlert('Request submitted successfully!', 'success', '#008000', 'my_requests.php');
     } else {
-        echo "Error: " . $conn->error;
+        showAlert('Error submitting request', 'error', '#ff0000', 'post_request.php');
     }
 }
 ?>

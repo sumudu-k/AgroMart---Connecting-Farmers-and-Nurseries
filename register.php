@@ -3,23 +3,22 @@
 ob_start();
 include 'config.php';
 include 'navbar.php';
+include 'alertFunction.php';
 
-
-// Check if the form is submitted
 if (isset($_POST['register'])) {
     $username = $_POST['username'];
     $email = $_POST['email'];
-    $confirm_email = $_POST['confirm_email'];
     $contact_number = $_POST['contact'];
     $address = $_POST['address'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    // Validate email confirmation
-    if ($email != $confirm_email) {
-        echo "Emails do not match!";
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
+
+    if ($password != $confirm_password) {
+        showAlert('Password do not match!', 'error', '#ff0000', 'register.php');
         exit;
     }
+    $hashpassword =  password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    // Check if the user already exists
     $user_check_sql = "SELECT * FROM users WHERE email = ?";
     $stmt = $conn->prepare($user_check_sql);
     $stmt->bind_param("s", $email);
@@ -27,27 +26,26 @@ if (isset($_POST['register'])) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        echo "Email already registered!";
+
+        showAlert('Email already registered!', 'error', '#ff0000', 'register.php');
     } else {
-        // Insert the new user into the database
         $sql = "INSERT INTO users (username, email, password, contact_number, address) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssss", $username, $email, $password, $contact_number, $address);
+        $stmt->bind_param("sssss", $username, $email, $hashpassword, $contact_number, $address);
 
         if ($stmt->execute()) {
-            // Get the inserted user's ID
             $user_id = $stmt->insert_id;
 
-            // Set session variables to log the user in
             $_SESSION['username'] = $username;
             $_SESSION['user_id'] = $user_id;
-            header("Location: home.php");
+            showAlert('User registered successfully!', 'success', '#008000', 'home.php');
             exit;
         } else {
-            echo "Error registering user.";
+            showAlert('Error registering user.', 'error', '#ff0000', 'register.php');
         }
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -93,7 +91,7 @@ if (isset($_POST['register'])) {
     .plant-image {
         flex: 1;
         background-image: url("images/register image.jpg");
-        mix-blend-mode:multiply;
+        mix-blend-mode: multiply;
         background-size: cover;
         background-position: center;
         border-radius: 10px;
@@ -229,10 +227,10 @@ if (isset($_POST['register'])) {
                 <form action="register.php" method="POST">
                     <input type="text" name="username" placeholder="Username" required><br>
                     <input type="email" name="email" placeholder="Email" required><br>
-                    <input type="email" name="confirm_email" placeholder="Confirm Email" required><br>
+                    <input type="password" name="password" placeholder="Password" required><br>
+                    <input type="password" name="confirm_password" placeholder="Confirm Password" required><br>
                     <input type="text" name="contact" placeholder="Contact Number" required><br>
                     <input type="text" name="address" placeholder="Address" required><br>
-                    <input type="password" name="password" placeholder="Password" required><br>
                     <button type="submit" name="register">Register</button>
                 </form>
                 <p class="p1">Already have an account? &ensp; <a class="link" href="login.php">Login here</a>.</p>
