@@ -7,9 +7,9 @@ include 'alertFunction.php';
 
 
 
-// Check if the user is logged in
+//check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    showAlert('Please login to post an ad', 'error', 'login.php');
+    showAlert('Please login to post an ad', 'error', '#ff0000', 'login.php');
     exit();
 }
 
@@ -23,7 +23,7 @@ if (isset($_POST['submit'])) {
     $user_id = $_SESSION['user_id'];
     $category_id = $_POST['category'];
 
-    // Insert ad details into the ads table
+    // insert ad details into the ads table
     $ad_sql = "INSERT INTO ads (title, description, price, phone_number, user_id, category_id, district) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($ad_sql);
     $stmt->bind_param("ssdsiss", $title, $description, $price, $phone_number, $user_id, $category_id, $district);
@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
             }
         }
     }
-    showAlert('Your ad has posted successfully', 'success', 'my_ads.php');
+    showAlert('Your ad has posted successfully', 'success', '#008000', 'my_ads.php');
 }
 ?>
 
@@ -67,9 +67,10 @@ if (isset($_POST['submit'])) {
         min-height: 100vh;
         display: flex;
         flex-direction: column;
+        background-color: rgb(85, 189, 0);
     }
 
-    /* Background image */
+    /* background image */
     body::before {
         content: '';
         position: absolute;
@@ -94,12 +95,11 @@ if (isset($_POST['submit'])) {
         z-index: 1;
     }
 
-    /* Main content */
     .main-content {
         flex: 1;
     }
 
-    /* Form container */
+    /* form container */
     .ad-form {
         max-width: 50%;
         margin: 0 auto;
@@ -172,7 +172,7 @@ if (isset($_POST['submit'])) {
         background-color: #005922;
     }
 
-    /* Mobile Devices */
+    /* mobile Devices */
     @media screen and (max-width: 480px) {
         h1 {
             padding: 15px 5%;
@@ -216,7 +216,7 @@ if (isset($_POST['submit'])) {
         }
     }
 
-    /* Tablets */
+    /* tablets */
     @media screen and (min-width: 481px) and (max-width: 1200px) {
         h1 {
             padding: 20px 8%;
@@ -333,18 +333,6 @@ if (isset($_POST['submit'])) {
         </form>
     </div>
     <?php include 'footer.php'; ?>
-    <script>
-    <?php if (!$loggedIn) { ?>
-    Swal.fire({
-        toast: true,
-        position: 'center',
-        icon: 'error',
-        title: 'Please login to post an ad',
-        showConfirmButton: false,
-        timer: 6000
-    });
-    <?php } ?>
-    </script>
 </body>
 
 </html>

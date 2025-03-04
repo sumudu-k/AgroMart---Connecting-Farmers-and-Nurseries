@@ -650,8 +650,9 @@ $ads_result = $conn->query($ads_query);
     </script>
 
     <div class="main-container">
-        <a href="post_request.php "><button> Requests</button></a>
-        <a href="my_requests.php "><button> My Requests</button></a>
+        <a href="post_request.php "><button> Post request</button></a>
+        <a href="my_requests.php "><button> My request</button></a>
+        <a href="requests.php "><button> Requests</button></a>
 
         <!-- category section -->
         <div class="category-container">

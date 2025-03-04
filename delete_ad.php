@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'config.php';
-
+include 'alertFunction.php';
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
@@ -22,10 +22,10 @@ if (isset($_GET['ad_id'])) {
     $stmt_img->bind_param("i", $ad_id);
     $stmt_img->execute();
 
-    header("Location: my_ads.php");
+    showAlert('Ad deleted successfully!', 'success', '#008000', 'my_ads.php');
     exit();
 } else {
-    echo "Ad ID is missing!";
+    showAlert('Ad ID is missing', 'error', '#ff0000', 'delete_ad.php');
 }
 
 include 'footer.php';
