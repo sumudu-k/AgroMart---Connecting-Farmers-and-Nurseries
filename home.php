@@ -3,7 +3,6 @@ session_start();
 include 'config.php';
 include 'navbar.php';
 
-// Fetch categories from the database
 $query = "SELECT * FROM categories";
 $result = $conn->query($query);
 
@@ -35,7 +34,7 @@ $ads_result = $conn->query($ads_query);
         margin: 0;
     }
 
-    /* Banner Image */
+    /* banner Image */
     .banner-image {
         position: relative;
         width: 100%;
@@ -66,7 +65,7 @@ $ads_result = $conn->query($ads_query);
     }
 
 
-    /* Category Section */
+    /*category Section */
     /* all categories Container */
     .category-container {
         display: flex;
@@ -88,7 +87,7 @@ $ads_result = $conn->query($ads_query);
         margin-bottom: 20px;
     }
 
-    /* For category card */
+    /*  category card */
     .category-card {
         display: flex;
         flex-direction: column;
@@ -127,7 +126,7 @@ $ads_result = $conn->query($ads_query);
     }
 
 
-    /* Welcome Section */
+    /* welcome Section */
     .welcome-section {
         display: flex;
         align-items: center;
@@ -437,7 +436,7 @@ $ads_result = $conn->query($ads_query);
 
 
 
-    /* For Mobile devices */
+    /*  Mobile devices */
     @media screen and (max-width: 480px) {
         .main-container {
             width: 95%;
@@ -620,9 +619,9 @@ $ads_result = $conn->query($ads_query);
 
 <body>
 
-    <!-- Home page banner slider -->
+    <!-- home page banner slider -->
     <div class="banner-image">
-        <img class="banner-slides active" src="images/cover.jpg" alt="Slide 1">
+        <img class="banner-slides active" src="images/cover.png" alt="Slide 1">
         <img class="banner-slides"
             src="images/lettuce-plant-on-field-vegetable-and-agriculture-sunset-and-light-free-photo.jpg" alt="Slide 2">
         <img class="banner-slides" src="images/iStock-531690340_c_valentinrussanov.webp" alt="Slide 3">
@@ -646,12 +645,13 @@ $ads_result = $conn->query($ads_query);
         setTimeout(showSlides, 3000);
     }
 
-    showSlides(); // Start the slideshow
+    showSlides();
     </script>
 
     <div class="main-container">
-        <a href="post_request.php "><button> Requests</button></a>
-        <a href="my_requests.php "><button> My Requests</button></a>
+        <a href="post_request.php "><button> Post request</button></a>
+        <a href="my_requests.php "><button> My request</button></a>
+        <a href="requests.php "><button> Requests</button></a>
 
         <!-- category section -->
         <div class="category-container">
@@ -668,7 +668,7 @@ $ads_result = $conn->query($ads_query);
             <?php endwhile; ?>
         </div>
 
-        <!-- Welcome section -->
+        <!-- welcome section -->
         <section class="welcome-section">
             <div class="welcome-image">
                 <img src="images/inner_home_05-1024x768.jpg" alt="Gardening Image">
@@ -688,7 +688,6 @@ $ads_result = $conn->query($ads_query);
             </div>
         </section>
 
-        <!-- Ads area HTML -->
         <div class="ads-container">
             <h1 class="ads-title">Find What You Want Here</h1>
             <div class="sugestion-ads">
@@ -718,7 +717,6 @@ $ads_result = $conn->query($ads_query);
         <section class="contact-section">
             <h1>Contact</h1>
             <div class="contact-container">
-                <!-- Contact Info -->
                 <div class="contact-info">
                     <h2 class="contact-title">Contact Information</h2>
 

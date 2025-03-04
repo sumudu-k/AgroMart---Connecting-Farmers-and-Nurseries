@@ -3,23 +3,22 @@
 ob_start();
 include 'config.php';
 include 'navbar.php';
+include 'alertFunction.php';
 
-
-// Check if the form is submitted
 if (isset($_POST['register'])) {
     $username = $_POST['username'];
     $email = $_POST['email'];
-    $confirm_email = $_POST['confirm_email'];
     $contact_number = $_POST['contact'];
     $address = $_POST['address'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    // Validate email confirmation
-    if ($email != $confirm_email) {
-        echo "Emails do not match!";
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
+
+    if ($password != $confirm_password) {
+        showAlert('Password do not match!', 'error', '#ff0000', 'register.php');
         exit;
     }
+    $hashpassword =  password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    // Check if the user already exists
     $user_check_sql = "SELECT * FROM users WHERE email = ?";
     $stmt = $conn->prepare($user_check_sql);
     $stmt->bind_param("s", $email);
@@ -27,27 +26,26 @@ if (isset($_POST['register'])) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        echo "Email already registered!";
+
+        showAlert('Email already registered!', 'error', '#ff0000', 'register.php');
     } else {
-        // Insert the new user into the database
         $sql = "INSERT INTO users (username, email, password, contact_number, address) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssss", $username, $email, $password, $contact_number, $address);
+        $stmt->bind_param("sssss", $username, $email, $hashpassword, $contact_number, $address);
 
         if ($stmt->execute()) {
-            // Get the inserted user's ID
             $user_id = $stmt->insert_id;
 
-            // Set session variables to log the user in
             $_SESSION['username'] = $username;
             $_SESSION['user_id'] = $user_id;
-            header("Location: home.php");
+            showAlert('User registered successfully!', 'success', '#008000', 'home.php');
             exit;
         } else {
-            echo "Error registering user.";
+            showAlert('Error registering user.', 'error', '#ff0000', 'register.php');
         }
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -58,163 +56,188 @@ if (isset($_POST['register'])) {
     <title>Register</title>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
 
-        body {
-            background-color: #f3f4f6;
-        }
+    body {
+        background-color: #f3f4f6;
+    }
 
-        /* Centered Wrapper */
-        .wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+    /* Centered Wrapper */
+    .wrapper {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
 
-        /* Register Container Styling */
+    /* Register Container Styling */
+    .register-container {
+        display: flex;
+        gap: 20px;
+        background-color: #e2e6eb;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .plant-image {
+        flex: 1;
+        background-image: url("images/register image.jpg");
+        mix-blend-mode:multiply;
+        background-size: cover;
+        background-position: center;
+        border-radius: 10px;
+        min-height: 300px;
+    }
+
+    .register-form {
+        flex: 1;
+        padding: 1.25rem;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .register-form form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .register-form h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .register-form input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: #007a33;
+    }
+
+    .register-form button {
+        width: 200px;
+        background-color: #007a33;
+        color: #fff;
+        padding: 10px;
+        margin: 10px 0 10px;
+        font-size: 18px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .register-form button:hover {
+        background-color: #005922;
+    }
+
+    .p1 {
+        font-size: 0.875rem;
+        color: black;
+        margin: 10px 0;
+    }
+
+    .link {
+        text-decoration: none;
+        color: #0917ee;
+        font-weight: bold;
+    }
+
+    .link:hover {
+        text-decoration: underline;
+    }
+
+    /* responsive design */
+    @media (max-width: 480px) {
         .register-container {
-            display: flex;
-            gap: 20px;
-            background-color: #e2e6eb;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex-direction: column;
+            align-items: center;
             width: 100%;
-            max-width: 1200px;
+            padding: 10px;
         }
 
         .plant-image {
-            flex: 1;
-            background-image: url("images/register_image.png");
-            background-size: cover;
-            background-position: center;
-            border-radius: 10px;
-            min-height: 300px;
+            width: 100%;
+            margin-bottom: 20px;
+            background-size: contain; 
+            background-repeat: no-repeat;
+            height: 250px;
         }
 
         .register-form {
-            flex: 1;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .register-form h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
+            width: 100%;
         }
 
         .register-form input {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #007a33;
+            font-size: 14px;
+            padding: 8px;
         }
 
         .register-form button {
+            width: 150px;
+            padding: 8px;
+            font-size: 16px;   
+        }
+    }
+
+
+    @media (min-width: 481px) and (max-width: 1200px) {
+        .wrapper {
+            display: flex;
             width: 100%;
-            background-color: #007a33;
-            color: #fff;
-            padding: 10px;
-            margin: 20px 0 10px;
-            font-size: 18px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .register-container {
+            width: 90%;
+            padding: 15px;
         }
 
-        .register-form button:hover {
-            background-color: #005922;
+        .plant-image {
+            width: 50%;
+            min-height: 300px;
+            background-size: contain;
+            background-repeat: no-repeat;
         }
 
-        .p1 {
-            font-size: 14px;
-            color: black;
-            margin: 10px 0;
+        .register-form {
+            width: 50%;
+        }
+    }
+
+
+    @media (min-width: 1201px) {
+        .register-container {
+            flex-direction: row;
+            width: 70%;
+            gap: 30px;
         }
 
-        .link {
-            text-decoration: none;
-            color: #0917ee;
-            font-weight: bold;
+        .plant-image {
+            width: 45%;
+            min-height: 400px;
         }
 
-        .link:hover {
-            text-decoration: underline;
+        .register-form {
+            width: 55%;
         }
-
-        /* responsive design */
-        @media (max-width: 480px) {
-            .register-container {
-                flex-direction: column;
-                align-items: center;
-                width: 100%;
-                padding: 10px;
-            }
-
-            .plant-image {
-                width: 100%;
-                height: 200px;
-                min-height: 200px;
-                margin-bottom: 20px;
-            }
-
-            .register-form {
-                width: 100%;
-            }
-        }
-
-
-        @media (min-width: 481px) and (max-width: 1200px) {
-            .register-container {
-                flex-direction: row;
-                width: 90%;
-                padding: 15px;
-            }
-
-            .plant-image {
-                width: 50%;
-                min-height: 300px;
-            }
-
-            .register-form {
-                width: 50%;
-            }
-        }
-
-
-        @media (min-width: 1201px) {
-            .register-container {
-                flex-direction: row;
-                width: 70%;
-                gap: 30px;
-            }
-
-            .plant-image {
-                width: 45%;
-                min-height: 400px;
-            }
-
-            .register-form {
-                width: 55%;
-            }
-        }
+    }
     </style>
 
 </head>
