@@ -41,6 +41,7 @@ if (isset($_POST['login'])) {
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 
     <style>
@@ -140,26 +141,50 @@ if (isset($_POST['login'])) {
             font-weight: bold;
         }
 
+        
         /* responsive design */
         @media (max-width: 480px) {
+            .wrapper {
+                padding: 10px;
+            }
+
             .login-container {
                 flex-direction: column;
-                align-items: center;
-                width: 100%;
                 padding: 10px;
+                width: 100%;
             }
 
             .plant-image {
                 width: 100%;
-                height: 200px;
-                min-height: 200px;
-                margin-bottom: 20px;
+                margin-bottom: 15px;
             }
 
             .login-form {
                 width: 100%;
+                padding: 15px;
+            }
+
+            .login-form h2 {
+                font-size: 1.25rem;
+                margin-bottom: 20px;
+            }
+
+            .login-form input {
+                font-size: 14px;
+                padding: 8px;
+                margin-bottom: 15px;
+            }
+
+            .login-form button {
+                font-size: 1rem;
+                padding: 8px;
+            }
+
+            p {
+                font-size: 0.875rem;
             }
         }
+
 
         @media (min-width: 481px) and (max-width: 1200px) {
             .login-container {
@@ -175,23 +200,6 @@ if (isset($_POST['login'])) {
 
             .login-form {
                 width: 50%;
-            }
-        }
-
-        @media (min-width: 1201px) {
-            .login-container {
-                flex-direction: row;
-                width: 70%;
-                gap: 30px;
-            }
-
-            .plant-image {
-                width: 45%;
-                min-height: 400px;
-            }
-
-            .login-form {
-                width: 55%;
             }
         }
     </style>
@@ -210,7 +218,6 @@ if (isset($_POST['login'])) {
                     <button type="submit" name="login">Login</button>
                 </form>
                 <p> Forgot Password? &ensp; <a class="link" href="forgotpw.php">Reset here</a>.</p>
-                </p>
                 <p> Haven't an account yet? &ensp; <a class="link" href="register.php">Register here</a>.</p>
             </div>
         </div>

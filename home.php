@@ -622,7 +622,7 @@ $ads_result = $conn->query($ads_query);
 
     <!-- Home page banner slider -->
     <div class="banner-image">
-        <img class="banner-slides active" src="images/cover.jpg" alt="Slide 1">
+        <img class="banner-slides active" src="images/cover.png" alt="Slide 1">
         <img class="banner-slides"
             src="images/lettuce-plant-on-field-vegetable-and-agriculture-sunset-and-light-free-photo.jpg" alt="Slide 2">
         <img class="banner-slides" src="images/iStock-531690340_c_valentinrussanov.webp" alt="Slide 3">
@@ -650,8 +650,9 @@ $ads_result = $conn->query($ads_query);
     </script>
 
     <div class="main-container">
-        <a href="post_request.php "><button> Requests</button></a>
-        <a href="my_requests.php "><button> My Requests</button></a>
+        <a href="post_request.php "><button> Post request</button></a>
+        <a href="my_requests.php "><button> My request</button></a>
+        <a href="requests.php "><button> Requests</button></a>
 
         <!-- category section -->
         <div class="category-container">
