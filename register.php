@@ -70,10 +70,10 @@ if (isset($_POST['register'])) {
     /* Centered Wrapper */
     .wrapper {
         display: flex;
+        width: 100%;
         justify-content: center;
         align-items: center;
-        min-height: 70vh;
-        padding: 20px;
+        min-height: 100vh;
     }
 
     /* Register Container Styling */
@@ -84,14 +84,12 @@ if (isset($_POST['register'])) {
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 1200px;
     }
 
     .plant-image {
         flex: 1;
         background-image: url("images/register image.jpg");
-        mix-blend-mode: multiply;
+        mix-blend-mode:multiply;
         background-size: cover;
         background-position: center;
         border-radius: 10px;
@@ -100,10 +98,16 @@ if (isset($_POST['register'])) {
 
     .register-form {
         flex: 1;
-        padding: 20px;
+        padding: 1.25rem;
         background-color: #fff;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .register-form form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .register-form h2 {
@@ -126,11 +130,11 @@ if (isset($_POST['register'])) {
     }
 
     .register-form button {
-        width: 100%;
+        width: 200px;
         background-color: #007a33;
         color: #fff;
         padding: 10px;
-        margin: 20px 0 10px;
+        margin: 10px 0 10px;
         font-size: 18px;
         border: none;
         border-radius: 5px;
@@ -143,7 +147,7 @@ if (isset($_POST['register'])) {
     }
 
     .p1 {
-        font-size: 14px;
+        font-size: 0.875rem;
         color: black;
         margin: 10px 0;
     }
@@ -169,20 +173,38 @@ if (isset($_POST['register'])) {
 
         .plant-image {
             width: 100%;
-            height: 200px;
-            min-height: 200px;
             margin-bottom: 20px;
+            background-size: contain; 
+            background-repeat: no-repeat;
+            height: 250px;
         }
 
         .register-form {
             width: 100%;
         }
+
+        .register-form input {
+            font-size: 14px;
+            padding: 8px;
+        }
+
+        .register-form button {
+            width: 150px;
+            padding: 8px;
+            font-size: 16px;   
+        }
     }
 
 
     @media (min-width: 481px) and (max-width: 1200px) {
+        .wrapper {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
         .register-container {
-            flex-direction: row;
             width: 90%;
             padding: 15px;
         }
@@ -190,6 +212,8 @@ if (isset($_POST['register'])) {
         .plant-image {
             width: 50%;
             min-height: 300px;
+            background-size: contain;
+            background-repeat: no-repeat;
         }
 
         .register-form {
@@ -227,10 +251,10 @@ if (isset($_POST['register'])) {
                 <form action="register.php" method="POST">
                     <input type="text" name="username" placeholder="Username" required><br>
                     <input type="email" name="email" placeholder="Email" required><br>
-                    <input type="password" name="password" placeholder="Password" required><br>
-                    <input type="password" name="confirm_password" placeholder="Confirm Password" required><br>
+                    <input type="email" name="confirm_email" placeholder="Confirm Email" required><br>
                     <input type="text" name="contact" placeholder="Contact Number" required><br>
                     <input type="text" name="address" placeholder="Address" required><br>
+                    <input type="password" name="password" placeholder="Password" required><br>
                     <button type="submit" name="register">Register</button>
                 </form>
                 <p class="p1">Already have an account? &ensp; <a class="link" href="login.php">Login here</a>.</p>
