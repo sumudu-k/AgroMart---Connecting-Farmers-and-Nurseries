@@ -33,9 +33,8 @@
     /* Footer */
     footer {
         background-color: #006400;
-        padding: 40px 12.5%;
-        margin-top: 30px;
         width: 100%;
+        padding: 5vh 12.5%;
     }
 
     .footer-container {

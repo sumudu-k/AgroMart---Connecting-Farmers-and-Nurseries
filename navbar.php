@@ -47,6 +47,7 @@ $unread_count = $row['unread_count'];
         background-color: #006400;
         position: relative;
         justify-content: space-between;
+        align-items: center;
         text-align: center;
         padding: 15px 12.5%;
     }
@@ -54,7 +55,7 @@ $unread_count = $row['unread_count'];
     /* Logo */
     nav .logo a {
         color: #f2f2f2;
-        font-size: 2.2rem;
+        font-size: 2.1rem;
         font-weight: 800;
         text-decoration: none;
         cursor: pointer;

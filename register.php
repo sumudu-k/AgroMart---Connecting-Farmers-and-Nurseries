@@ -74,7 +74,7 @@ if (isset($_POST['register'])) {
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 100vh;
+        min-height: 70vh;
         padding: 20px;
     }
 
@@ -93,6 +93,7 @@ if (isset($_POST['register'])) {
     .plant-image {
         flex: 1;
         background-image: url("images/register image.jpg");
+        mix-blend-mode:multiply;
         background-size: cover;
         background-position: center;
         border-radius: 10px;
