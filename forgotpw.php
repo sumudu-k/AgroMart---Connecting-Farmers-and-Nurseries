@@ -3,11 +3,11 @@ session_start();
 ob_start();
 include 'config.php';
 include 'navbar.php';
+include 'alertFunction.php';
 
 if (isset($_POST['submit_email'])) {
     $email = $_POST['email'];
 
-    // Check if email exists in the database
     $sql = "SELECT * FROM users WHERE email = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $email);
@@ -15,12 +15,11 @@ if (isset($_POST['submit_email'])) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // email found, set a session to allow password reset
         $_SESSION['reset_email'] = $email;
         header("Location: forgotpw.php?reset_password=true");
         exit;
     } else {
-        echo "<script>alert('Email not found!');</script>";
+        showAlert('Email not found!', 'error', '#ff0000', 'forgotpw.php');
     }
 }
 
@@ -35,10 +34,10 @@ if (isset($_POST['reset_password'])) {
         $stmt->execute();
 
         unset($_SESSION['reset_email']);
-        echo "<script>alert('Password has been reset.'); window.location.href='login.php';</script>";
+        showAlert('Password has been reset', 'success', '#008000', 'login.php');
         exit;
     } else {
-        echo "<script>alert('Session expired or no reset request found!');</script>";
+        showAlert('Session expired or no reset request found', 'warning', '#ff0000', 'forgotpw.php');
     }
 }
 ?>
@@ -51,9 +50,9 @@ if (isset($_POST['reset_password'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgot Password - AgroMart</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
+    * {
+        box-sizing: border-box;
+    }
 
         body {
             display: flex;
@@ -92,18 +91,18 @@ if (isset($_POST['reset_password'])) {
             margin-bottom: 20px;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
+    .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
 
-        .form-group label {
-            display: block;
-            font-size: 1rem;
-            color: #333;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
+    .form-group label {
+        display: block;
+        font-size: 1rem;
+        color: #333;
+        margin-bottom: 5px;
+        font-weight: 600;
+    }
 
         .form-group input {
             width: 100%;
@@ -125,44 +124,44 @@ if (isset($_POST['reset_password'])) {
             font-size: 0.9rem;
         }
 
-        button {
-            background-color: #f09319;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            cursor: pointer;
-            width: 100%;
-            transition: background-color 0.2s ease;
-        }
+    button {
+        background-color: #f09319;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        width: 100%;
+        transition: background-color 0.2s ease;
+    }
 
         button:hover {
             background-color: #cb790d;
         }
 
-        .links {
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: #666;
-        }
+    .links {
+        margin-top: 20px;
+        font-size: 0.9rem;
+        color: #666;
+    }
 
-        .links a {
-            color: #006400;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
+    .links a {
+        color: #006400;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+    }
 
-        .links a:hover {
-            color: #f09319;
-        }
+    .links a:hover {
+        color: #f09319;
+    }
 
-        /* mobile Devices (319px - 480px) */
-        @media screen and (max-width: 480px) {
-            .container {
-                padding: 10px;
-            }
+    /* mobile Devices (319px - 480px) */
+    @media screen and (max-width: 480px) {
+        .container {
+            padding: 10px;
+        }
 
             .container-box {
                 padding: 10px;
@@ -172,24 +171,24 @@ if (isset($_POST['reset_password'])) {
                 font-size: 1.2rem;
             }
 
-            .form-group label {
-                font-size: 0.9rem;
-            }
+        .form-group label {
+            font-size: 0.9rem;
+        }
 
             .form-group input {
                 font-size: 0.9rem;
                 padding: 8px;
             }
 
-            button {
-                font-size: 0.9rem;
-                padding: 8px 15px;
-            }
-
-            .links {
-                font-size: 0.85rem;
-            }
+        button {
+            font-size: 0.9rem;
+            padding: 8px 15px;
         }
+
+        .links {
+            font-size: 0.85rem;
+        }
+    }
 
         /* tablets */
         @media screen and (min-width: 481px) and (max-width: 1200px) {
@@ -205,9 +204,9 @@ if (isset($_POST['reset_password'])) {
                 font-size: 1.4rem;
             }
 
-            .form-group label {
-                font-size: 0.95rem;
-            }
+        .form-group label {
+            font-size: 0.95rem;
+        }
 
             .form-group input {
                 font-size: 0.95rem;
@@ -246,7 +245,7 @@ if (isset($_POST['reset_password'])) {
                     </div>
                     <button type="submit" name="reset_password">Reset Password</button>
                     <div class="links">
-                        <p>Back to &nbsp;<a href="login.php">Login</a></p>
+                        <p>Back to <a href="login.php">Login</a></p>
                     </div>
                 </form>
             <?php endif; ?>
