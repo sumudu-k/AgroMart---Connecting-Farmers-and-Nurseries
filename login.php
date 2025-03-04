@@ -145,9 +145,14 @@ if (isset($_POST['login'])) {
         }
 
         .link {
+            color: #006400;
             text-decoration: none;
-            color: #0917ee;
-            font-weight: bold;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .link:hover {
+            color: #f09319;
         }
 
 

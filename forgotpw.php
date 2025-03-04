@@ -125,7 +125,7 @@ if (isset($_POST['reset_password'])) {
     }
 
     button {
-        background-color: #f09319;
+        background-color: #007a33;
         color: #fff;
         padding: 10px 20px;
         border: none;
@@ -137,7 +137,7 @@ if (isset($_POST['reset_password'])) {
     }
 
     button:hover {
-        background-color: #cb790d;
+        background-color: #005922;
     }
 
     .links {
