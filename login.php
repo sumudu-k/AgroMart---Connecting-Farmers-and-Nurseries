@@ -196,6 +196,10 @@ if (isset($_POST['login'])) {
 
     
     @media (min-width: 481px) and (max-width: 1200px) {
+        .wrapper {
+            min-height: 50vh;
+            
+        }
         .login-container {
             flex-direction: row;
             width: 90%;

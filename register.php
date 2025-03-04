@@ -73,7 +73,8 @@ if (isset($_POST['register'])) {
         width: 100%;
         justify-content: center;
         align-items: center;
-        min-height: 100vh;
+        min-height: 80vh;
+        padding: 20px;
     }
 
     /* Register Container Styling */
@@ -90,7 +91,8 @@ if (isset($_POST['register'])) {
         flex: 1;
         background-image: url("images/register image.jpg");
         mix-blend-mode:multiply;
-        background-size: cover;
+        background-size: contain;
+        background-repeat: no-repeat;
         background-position: center;
         border-radius: 10px;
         min-height: 300px;
@@ -174,8 +176,6 @@ if (isset($_POST['register'])) {
         .plant-image {
             width: 100%;
             margin-bottom: 20px;
-            background-size: contain; 
-            background-repeat: no-repeat;
             height: 250px;
         }
 
@@ -202,7 +202,7 @@ if (isset($_POST['register'])) {
             width: 100%;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            min-height: 60vh;
         }
         .register-container {
             width: 90%;
@@ -221,23 +221,6 @@ if (isset($_POST['register'])) {
         }
     }
 
-
-    @media (min-width: 1201px) {
-        .register-container {
-            flex-direction: row;
-            width: 70%;
-            gap: 30px;
-        }
-
-        .plant-image {
-            width: 45%;
-            min-height: 400px;
-        }
-
-        .register-form {
-            width: 55%;
-        }
-    }
     </style>
 
 </head>
@@ -249,12 +232,12 @@ if (isset($_POST['register'])) {
             <div class="register-form">
                 <h2>Register</h2>
                 <form action="register.php" method="POST">
-                    <input type="text" name="username" placeholder="Username" required><br>
-                    <input type="email" name="email" placeholder="Email" required><br>
-                    <input type="email" name="confirm_email" placeholder="Confirm Email" required><br>
-                    <input type="text" name="contact" placeholder="Contact Number" required><br>
-                    <input type="text" name="address" placeholder="Address" required><br>
-                    <input type="password" name="password" placeholder="Password" required><br>
+                    <input type="text" name="username" placeholder="Username" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="email" name="confirm_email" placeholder="Confirm Email" required>
+                    <input type="text" name="contact" placeholder="Contact Number" required>
+                    <input type="text" name="address" placeholder="Address" required>
+                    <input type="password" name="password" placeholder="Password" required>
                     <button type="submit" name="register">Register</button>
                 </form>
                 <p class="p1">Already have an account? &ensp; <a class="link" href="login.php">Login here</a>.</p>
