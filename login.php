@@ -61,7 +61,7 @@ if (isset($_POST['login'])) {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            min-height: 70vh;
             padding: 20px;
         }
 
@@ -79,7 +79,9 @@ if (isset($_POST['login'])) {
         .plant-image {
             flex: 0.75;
             background-image: url("images/login_image.png");
-            background-size: cover;
+            background-size: contain;
+            background-repeat: no-repeat;
+            mix-blend-mode:multiply;
             background-position: center;
             border-radius: 10px;
             min-height: 300px;
@@ -93,18 +95,25 @@ if (isset($_POST['login'])) {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
+        .login-form form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
         .login-form h2 {
             font-size: 24px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .login-form input {
             width: 100%;
             padding: 10px;
+            margin-bottom: 15px;
             font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            margin-bottom: 25px;
         }
 
         input:focus {
@@ -112,12 +121,11 @@ if (isset($_POST['login'])) {
             border-color: #007a33;
         }
 
-        .login-form button {
-            width: 100%;
+        .login-form form button {
+            width: 200px;
             background-color: #007a33;
             color: #fff;
             padding: 10px;
-            margin: 10px 0 10px;
             font-size: 1.125rem;
             border: none;
             border-radius: 5px;
@@ -156,7 +164,6 @@ if (isset($_POST['login'])) {
 
             .plant-image {
                 width: 100%;
-                margin-bottom: 15px;
             }
 
             .login-form {
@@ -172,7 +179,6 @@ if (isset($_POST['login'])) {
             .login-form input {
                 font-size: 14px;
                 padding: 8px;
-                margin-bottom: 15px;
             }
 
             .login-form button {
@@ -213,8 +219,8 @@ if (isset($_POST['login'])) {
             <div class="login-form">
                 <h2>Welcome Back</h2>
                 <form action="login.php" method="post">
-                    <input type="email" name="email" placeholder="Email" required><br>
-                    <input type="password" name="password" placeholder="Password" required><br>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="password" name="password" placeholder="Password" required>
                     <button type="submit" name="login">Login</button>
                 </form>
                 <p> Forgot Password? &ensp; <a class="link" href="forgotpw.php">Reset here</a>.</p>
