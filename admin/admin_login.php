@@ -6,7 +6,7 @@ if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT * FROM admins WHERE email = ?");
+    $stmt = $conn->prepare("SELECT * FROM admins WHERE email = ? and STATUS = 'approved'");
     $stmt->bind_param('s', $email);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -15,7 +15,7 @@ if (isset($_POST['login'])) {
     if ($admin && password_verify($password, $admin['password'])) {
         $_SESSION['admin_logged_in'] = true;
         $_SESSION['admin_id'] = $admin['admin_id'];
-        $_SESSION['admin_username'] = $admin['username'];  
+        $_SESSION['admin_username'] = $admin['username'];
         header("Location: admin_dashboard.php");
         exit();
     } else {
@@ -26,11 +26,13 @@ if (isset($_POST['login'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
 </head>
+
 <body>
     <h2>Admin Login</h2>
     <?php if (isset($error)) echo "<p>$error</p>"; ?>
@@ -41,4 +43,5 @@ if (isset($_POST['login'])) {
     </form>
     <p><a href="admin_forgotpw.php">Forgot Password?</a></p>
 </body>
+
 </html>
