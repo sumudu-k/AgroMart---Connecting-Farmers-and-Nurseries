@@ -40,11 +40,11 @@ $unread_count = $row['unread_count'];
 
     nav {
         display: flex;
+        justify-content: space-between;
+        align-items: center;
         width: 100%;
         background-color: #006400;
         position: relative;
-        justify-content: space-between;
-        align-items: center;
         min-height: 60px;
         padding: 15px 12.5%;
     }
@@ -102,6 +102,7 @@ $unread_count = $row['unread_count'];
     }
 
     .search-results a {
+        text-align: center;
         height: 40px;
         padding-top: 5px;
         display: block;
@@ -180,11 +181,11 @@ $unread_count = $row['unread_count'];
     .hamburger-menu {
         display: none;
         flex-direction: column;
-        width: 20%;
+        width: 100%;
         background-color:rgb(118, 175, 115);
         position: absolute;
         top: 100%;
-        right: 12.5%;
+        right: 0;
         z-index: 1000;
     }
 
@@ -198,7 +199,7 @@ $unread_count = $row['unread_count'];
         text-align: left;
         border-bottom: 1px solid white;
         margin: 0;
-        padding: 15px 10%;
+        padding: 15px 5%;
     }
 
     .hamburger-menu li a {
@@ -227,15 +228,13 @@ $unread_count = $row['unread_count'];
         font-size: 1.5rem;
         color: white;
         cursor: pointer;
-        margin: auto 10px auto 10px;
+        margin: auto 0 auto 10px;
     }
 
-
     /* Tablets */
-
     @media (min-width: 481px) and (max-width: 1200px) {
         nav {
-            padding: 10px 10%;
+            padding: 15px 10%;
         }
 
         .nav-right .visible-items {
@@ -251,8 +250,8 @@ $unread_count = $row['unread_count'];
         }
 
         .search-container {
-            width: 100%;
-            max-width: 20rem;
+            width: 100%; 
+            max-width: 10rem; 
         }
 
         .search-results {
@@ -261,37 +260,17 @@ $unread_count = $row['unread_count'];
             left: 50%;
             transform: translateX(-50%);
         }
-
-        .visible-items li a {
-            font-size: 1rem;
-        }
     }
 
-    /* Mobile (max-width: 480px) */
+    /* Mobile */
     @media (max-width: 480px) {
-        nav {
-            flex-direction: column;
-            align-items: flex-start;
-            padding: 10px 5%;
-            min-height: auto;
-        }
-
-        nav .logo {
-            margin-bottom: 10px;
-        }
-
         nav .logo a {
-        font-size: 1.7rem;
-        
-    }
+            font-size: 28px;
+        }
 
         .search-container {
-            position: relative;
-            left: auto;
-            transform: none;
             width: 100%;
-            max-width: 100%;
-            margin: 10px 0;
+            max-width: 15rem; /* Adjust max width for mobile */
         }
 
         .search-container input {
@@ -300,34 +279,17 @@ $unread_count = $row['unread_count'];
 
         .search-results {
             width: 100%;
-            max-width: 100%;
-            left: 0;
-            transform: none;
-            margin-top: 45px;
-        }
-
-        .nav-right {
-            width: 100%;
-            justify-content: flex-end;
-            margin-top: 10px;
-        }
-
-        .visible-items {
-            display: none;
-        }
-
-        .hamburger {
-
-            position: absolute;
-            top: 0;
-            right: 0;
-            transform: translateY(-50%);
-            display:flex;
-            margin: 0 10px;
+            max-width: 15rem;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .hamburger-menu li a {
-            font-size: 16px;
+            font-size: 18px;
+        }
+
+        .hamburger {
+            font-size: 24px;
         }
     }
     </style>
