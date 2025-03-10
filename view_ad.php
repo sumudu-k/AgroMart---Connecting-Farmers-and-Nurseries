@@ -90,7 +90,7 @@ if ($user_id) {
     .container {
         max-width: 75%;
         margin: auto;
-        padding: 20px;
+        padding: 20px 0;
         display: flex;
         gap: 20px;
         flex-wrap: wrap;
@@ -99,7 +99,6 @@ if ($user_id) {
     .ad-image {
         flex: 1 1 45%;
         min-width: 300px;
-        padding: 20px 0;
     }
 
     .displayed-image {
@@ -116,7 +115,6 @@ if ($user_id) {
         max-height: 100%;
         object-fit: cover;
         mix-blend-mode: multiply;
-        transition: transform 0.2s;
     }
 
     .thumbnail-images {
@@ -150,68 +148,67 @@ if ($user_id) {
     }
 
     .ad-details h1 {
-        font-size: 40px;
+        font-size: 2rem;
         color: #ff8c00;
         margin: 10px 0 20px 0;
     }
 
     .ad-details .ad-description {
-        font-size: 20px;
-        color: #444;
         margin: 10px 0 30px 0;
         line-height: 1.3;
     }
 
     .ad-details .price {
+        font-weight: bold;
         color: #b03052;
     }
 
     .ad-details p {
-        font-size: 20px;
+        font-size: 1.1rem;
         color: #444;
         margin: 10px 0;
     }
 
-    .wishlist-button {
-        background-color: #f09319;
-        color: white;
-        font-size: 16px;
-        cursor: pointer;
-        border: none;
-        border-radius: 5px;
-        padding: 10px 15px;
-        margin-top: 10px;
-        transition: background-color 0.2s;
+    .ad-details p img {
+        width: 24px;
+        height: 24px;
     }
 
-    .wishlist-button:hover {
-        background-color: #cb790d;
+    .ad-details p a {
+        text-decoration: underline;
+        color: #325;
+        transition: color 0.2s;
     }
 
-    .similar-products {
-        max-width: 90%;
+    .ad-details p a:hover {
+        color: #ff8c00;
+    }
+
+    
+    .similarProducts {
+        max-width: 75%;
         background-color: #f0ffe8;
-        margin: 30px auto;
+        margin: 20px auto 30px auto;
         padding: 20px;
         border-radius: 10px;
     }
 
-    .similar-products h3 {
+    .similarProducts h3 {
         text-align: center;
         font-size: 1.8rem;
         color: #333;
         margin-bottom: 30px;
     }
 
-    .more-items-container {
+    .moreItemsContainer {
         display: flex;
         flex-wrap: wrap;
-        gap: 20px;
+        gap: 10px;
         justify-content: center;
     }
 
-    .more-item-card {
-        flex: 1;
+    .moreItemCard {
+        flex: 1 1 18%;
         background-color: #ffffff;
         border: 1px solid #ddd;
         border-radius: 10px;
@@ -223,7 +220,7 @@ if ($user_id) {
         transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    .more-item-card img {
+    .moreItemCard img {
         width: 100%;
         height: 200px;
         object-fit: cover;
@@ -231,20 +228,20 @@ if ($user_id) {
         border-bottom: 4px solid #a9e6a9;
     }
 
-    .more-item-card h4 {
-        font-size: 1.5rem;
+    .moreItemCard h4 {
+        font-size: 1.3rem;
         color: #006400;
         margin: 10px 0 5px 0;
         font-weight: 600;
     }
 
-    .more-item-card p {
+    .moreItemCard p {
         font-size: 1.2rem;
         color: #f95454;
         font-weight: 600;
     }
 
-    .more-item-card:hover {
+    .moreItemCard:hover {
         transform: translateY(-5px);
         box-shadow: 0 8px 16px rgba(0, 100, 0, 0.2);
     }
@@ -277,44 +274,49 @@ if ($user_id) {
         }
 
         .ad-details h1 {
-            font-size: 24px;
+            font-size: 1.5rem;
         }
 
         .ad-details .ad-description {
-            font-size: 16px;
+            font-size: 1rem;
         }
 
         .ad-details p {
-            font-size: 16px;
+            font-size: 1rem;
         }
 
         .wishlist-button {
-            font-size: 14px;
+            font-size: 1rem;
             padding: 8px 12px;
         }
 
-        .similar-products {
+        .similarProducts {
             max-width: 95%;
             padding: 15px;
         }
 
-        .similar-products h3 {
+        .moreItemsContainer {
+            gap: 5px;
+            flex-direction: column;
+        }
+
+        .similarProducts h3 {
             font-size: 1.5rem;
         }
 
-        .more-item-card {
+        .moreItemCard {
             width: 100%;
         }
 
-        .more-item-card img {
+        .moreItemCard img {
             height: 150px;
         }
 
-        .more-item-card h4 {
+        .moreItemCard h4 {
             font-size: 1.2rem;
         }
 
-        .more-item-card p {
+        .moreItemCard p {
             font-size: 1rem;
         }
     }
@@ -347,19 +349,26 @@ if ($user_id) {
             font-size: 18px;
         }
 
+
         .ad-details p {
             font-size: 18px;
         }
 
-        .similar-products {
+        .similarProducts {
             max-width: 95%;
+            
         }
 
-        .more-item-card {
-            width: calc(50% - 10px);
+        .moreItemsContainer {
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
-        .more-item-card img {
+        .moreItemCard {
+            /* width: calc(50% - 10px); */
+        }
+
+        .moreItemCard img {
             height: 180px;
         }
     }
@@ -384,13 +393,11 @@ if ($user_id) {
             <h1><?= htmlspecialchars($ad['title']); ?></h1>
             <p class="ad-description"><?= htmlspecialchars($ad['description']); ?></p>
             <p><strong>Price:</strong> <span class="price">Rs <?= htmlspecialchars($ad['price']); ?></span></p>
-            <p><strong>Contact Number:</strong> <?= htmlspecialchars($ad['phone_number']); ?></p>
+            <p><strong>Contact Number:</strong> <a href="https://wa.me/+94<?= htmlspecialchars($ad['phone_number']); ?>"><?= htmlspecialchars($ad['phone_number']); ?></a></p>
             <p><strong>Category:</strong> <?= htmlspecialchars($ad['category_name']); ?></p>
             <p><strong>Posted On:</strong> <?= htmlspecialchars($ad['formatted_date']); ?></p>
             <p><strong>District:</strong> <?= htmlspecialchars($ad['district']); ?></p>
-            <p><strong>Connect:</strong> <a href="https://wa.me/+94<?= htmlspecialchars($ad['phone_number']); ?>"
-                    target="_blank">
-                    <img src="uploads/whatsapp.gif" /></a></p>
+            
 
             <?php if ($user_id): ?>
             <form method="post" action="wishlist.php">
@@ -408,11 +415,11 @@ if ($user_id) {
     </div>
 
     <!-- similar Products Section -->
-    <div class="similar-products">
+    <div class="similarProducts">
         <h3>Similar Products</h3>
-        <div class="more-items-container">
+        <div class="moreItemsContainer">
             <?php while ($similar_ad = $similar_ads_result->fetch_assoc()): ?>
-            <div class="more-item-card" onclick="window.location.href='view_ad.php?ad_id=<?= $similar_ad['ad_id']; ?>'">
+            <div class="moreItemCard" onclick="window.location.href='view_ad.php?ad_id=<?= $similar_ad['ad_id']; ?>'">
                 <img src="<?= htmlspecialchars($similar_ad['image']); ?>" alt="Product Image">
                 <h4><?= htmlspecialchars($similar_ad['title']); ?></h4>
                 <p>Rs <?= htmlspecialchars($similar_ad['price']); ?></p>
