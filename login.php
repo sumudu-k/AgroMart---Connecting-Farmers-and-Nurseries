@@ -43,36 +43,39 @@ if (isset($_POST['login'])) {
     <title>Login</title>
 
     <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Poppins', sans-serif;
-    }
 
-    body {
-        background-color: #f3f4f6;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-    /* Centered Wrapper */
-    .wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 70vh;
-        padding: 20px;
-    }
+        body {
+            background-color: #f3f4f6;
+        }
 
-    /* login Container Styling */
-    .login-container {
-        display: flex;
-        background-color: #e2e6eb;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 1200px;
-    }
+        /* Centered Wrapper */
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 70vh;
+            padding: 20px;
+            width: 75%; 
+            margin: 0 auto; 
+        }
+
+        /* login Container Styling */
+        .login-container {
+            display: flex;
+            background-color: #e2e6eb;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1200px;
+        }
 
         .plant-image {
             flex: 0.75;
@@ -114,10 +117,10 @@ if (isset($_POST['login'])) {
             border-radius: 5px;
         }
 
-    input:focus {
-        outline: none;
-        border-color: #007a33;
-    }
+        input:focus {
+            outline: none;
+            border-color: #007a33;
+        }
 
         .login-form form button {
             width: 200px;
@@ -131,27 +134,33 @@ if (isset($_POST['login'])) {
             transition: background-color 0.3s;
         }
 
-    .login-form button:hover {
-        background-color: #005922;
-    }
+        .login-form button:hover {
+            background-color: #005922;
+        }
 
-    p {
-        font-size: 0.938rem;
-        color: black;
-        margin-top: 15px;
-    }
+        p {
+            font-size: 0.938rem;
+            color: black;
+            margin-top: 15px;
+        }
 
-    .link {
-        text-decoration: none;
-        color: #0917ee;
-        font-weight: bold;
-    }
+        .link {
+            color: #006400;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .link:hover {
+            color: #f09319;
+        }
 
 
     /* responsive design */
     @media (max-width: 480px) {
         .wrapper {
             padding: 10px;
+            width: 90%;
         }
 
         .login-container {
@@ -160,9 +169,9 @@ if (isset($_POST['login'])) {
             width: 100%;
         }
 
-            .plant-image {
-                width: 100%;
-            }
+        .plant-image {
+            width: 100%;
+        }
 
         .login-form {
             width: 100%;
@@ -174,10 +183,10 @@ if (isset($_POST['login'])) {
             margin-bottom: 20px;
         }
 
-            .login-form input {
-                font-size: 14px;
-                padding: 8px;
-            }
+        .login-form input {
+            font-size: 14px;
+            padding: 8px;
+        }
 
         .login-form button {
             font-size: 1rem;
@@ -190,7 +199,12 @@ if (isset($_POST['login'])) {
     }
 
 
+    
     @media (min-width: 481px) and (max-width: 1200px) {
+        .wrapper {
+            min-height: 50vh;
+            
+        }
         .login-container {
             flex-direction: row;
             width: 90%;

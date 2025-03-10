@@ -70,15 +70,18 @@ if (isset($_POST['register'])) {
     /* Centered Wrapper */
     .wrapper {
         display: flex;
-        width: 100%;
         justify-content: center;
         align-items: center;
-        min-height: 100vh;
+        min-height: 80vh;
+        padding: 20px;
+        width: 75%; 
+        margin: 0 auto;
     }
 
     /* Register Container Styling */
     .register-container {
         display: flex;
+        width: 100%;
         gap: 20px;
         background-color: #e2e6eb;
         padding: 20px;
@@ -88,12 +91,15 @@ if (isset($_POST['register'])) {
 
     .plant-image {
         flex: 1;
+        min-height: 300px;
+        max-width: 1000px;
         background-image: url("images/register image.jpg");
         mix-blend-mode:multiply;
-        background-size: cover;
+        background-size: contain;
+        background-repeat: no-repeat;
         background-position: center;
         border-radius: 10px;
-        min-height: 300px;
+        
     }
 
     .register-form {
@@ -164,6 +170,11 @@ if (isset($_POST['register'])) {
 
     /* responsive design */
     @media (max-width: 480px) {
+        .wrapper {
+            width: 95%;
+            padding: 10px;
+        }
+
         .register-container {
             flex-direction: column;
             align-items: center;
@@ -174,8 +185,6 @@ if (isset($_POST['register'])) {
         .plant-image {
             width: 100%;
             margin-bottom: 20px;
-            background-size: contain; 
-            background-repeat: no-repeat;
             height: 250px;
         }
 
@@ -197,13 +206,12 @@ if (isset($_POST['register'])) {
 
 
     @media (min-width: 481px) and (max-width: 1200px) {
+        
         .wrapper {
-            display: flex;
-            width: 100%;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            width: 85%;
+            min-height: 60vh;
         }
+        
         .register-container {
             width: 90%;
             padding: 15px;
@@ -221,23 +229,6 @@ if (isset($_POST['register'])) {
         }
     }
 
-
-    @media (min-width: 1201px) {
-        .register-container {
-            flex-direction: row;
-            width: 70%;
-            gap: 30px;
-        }
-
-        .plant-image {
-            width: 45%;
-            min-height: 400px;
-        }
-
-        .register-form {
-            width: 55%;
-        }
-    }
     </style>
 
 </head>
@@ -249,12 +240,12 @@ if (isset($_POST['register'])) {
             <div class="register-form">
                 <h2>Register</h2>
                 <form action="register.php" method="POST">
-                    <input type="text" name="username" placeholder="Username" required><br>
-                    <input type="email" name="email" placeholder="Email" required><br>
-                    <input type="email" name="confirm_email" placeholder="Confirm Email" required><br>
-                    <input type="text" name="contact" placeholder="Contact Number" required><br>
-                    <input type="text" name="address" placeholder="Address" required><br>
-                    <input type="password" name="password" placeholder="Password" required><br>
+                    <input type="text" name="username" placeholder="Username" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="email" name="confirm_email" placeholder="Confirm Email" required>
+                    <input type="text" name="contact" placeholder="Contact Number" required>
+                    <input type="text" name="address" placeholder="Address" required>
+                    <input type="password" name="password" placeholder="Password" required>
                     <button type="submit" name="register">Register</button>
                 </form>
                 <p class="p1">Already have an account? &ensp; <a class="link" href="login.php">Login here</a>.</p>

@@ -4,13 +4,12 @@
     <div class="footer-container">
         <div class="footer-info">
             <h3>AgroMart</h3>
-            <address>No 15, Haputhalegama, Haputhale</address>
+            <p class="address">No 15, Haputhalegama, Haputhale</p>
             <p>Phone: 071 3864286</p>
             <p>Email: info@agromart.com</p>
         </div>
         <div class="footer-links">
             <h3>Useful Links</h3>
-            <hr />
             <ul>
                 <li><a href="home.php">Home</a></li>
                 <li><a href="post_ad.php">Post an Ad</a></li>
@@ -19,10 +18,9 @@
         </div>
         <div class="social-links">
             <h3>Social Links</h3>
-            <hr />
             <ul>
-                <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
                 <li><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
+                <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
                 <li><a href="#"><i class="fa-brands fa-tiktok"></i></a></li>
                 <li><a href="#"><i class="fa-brands fa-youtube"></i></a></li>
             </ul>
@@ -43,18 +41,15 @@
         align-items: flex-start;
     }
 
+    .footer-info { 
+        width: 30%;
+    }
+
     .footer-info h3 {
-        color: #1c1c1c;
+        color: #d2d2d2;
         text-align: center;
         font-size: 1.5rem;
         margin-bottom: 15px;
-    }
-
-    .footer-info address {
-        text-align: center;
-        color: white;
-        font-size: 0.9rem;
-        margin-bottom: 20px;
     }
 
     .footer-info p {
@@ -64,37 +59,54 @@
         margin-bottom: 20px;
     }
 
+    .footer-info .address {
+        text-transform: capitalize;
+        text-align: center;
+    }
+
+    .footer-links {
+        width: 20%;
+    }
+
     .footer-links h3 {
         font-size: 1.2rem;
         font-weight: 600;
         text-align: center;
         color: #d2d2d2;
+        position: relative;
+        margin-bottom: 20px;
     }
 
-    .footer-links hr {
-        border: none;
-        width: 80px;
+    .footer-links h3::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -8px;
+        width: 100px;
         height: 3px;
         background-color: #181c14;
         border-radius: 10px;
-        margin: 5px 0 20px 15%;
+        transform: translateX(-50%);
     }
 
     .footer-links ul {
         display: flex;
         flex-direction: column;
+        align-items: center;
         list-style: none;
     }
 
     .footer-links ul li {
-        height: 40px;
         width: 100px;
-        display: flex;
-        margin-bottom: 10px;
+        height: 40px;
     }
 
     .footer-links ul li a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 100%;
+        height: 100%;
         font-weight: 600;
         color: white;
         font-size: 0.9rem;
@@ -102,7 +114,7 @@
     }
 
     .social-links {
-        width: 200px;
+        width: 20%;
     }
 
     .social-links h3 {
@@ -110,27 +122,33 @@
         font-weight: 600;
         text-align: center;
         color: #d2d2d2;
+        position: relative;
+        margin-bottom: 20px;
     }
 
-    .social-links hr {
-        border: none;
-        width: 80px;
+    /* Create underline using ::after */
+    .social-links h3::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -8px;
+        width: 100px;
         height: 3px;
         background-color: #181c14;
         border-radius: 10px;
-        margin: 5px 0 20px 30%;
+        transform: translateX(-50%);
     }
 
     .social-links ul {
         display: flex;
         justify-content: space-evenly;
         list-style: none;
+        align-items: center;
     }
 
     .social-links i {
         font-size: 25px;
         color: white;
-        margin-right: 10px;
         cursor: pointer;
     }
 
@@ -147,7 +165,7 @@
     /* Responsive Footer Styles */
     @media screen and (max-width: 480px) {
         footer {
-            padding: 20px 5%;
+            padding: 30px 8%;
         }
 
         .footer-container {
@@ -156,16 +174,85 @@
             text-align: center;
         }
 
+        .footer-info {
+            width: 90%;
+            margin-bottom: 20px;
+        }
+
+        .footer-info h3 {
+        position: relative;
+        margin-bottom: 20px;
+        
+        }
+
+        .footer-info h3::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -8px;
+            width: 100px;
+            height: 3px;
+            background-color: #181c14;
+            border-radius: 10px;
+            transform: translateX(-50%);
+        }
+
+        .footer-info p {
+            color: white;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+
+        .footer-links h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            color: #d2d2d2;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            width: 90%;
+        }
+
         .footer-links ul {
-            align-items: center;
+            flex-direction: row;
+            /* align-items: center; */
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .footer-links ul li {
+            width: 100px;
+            height: unset;
+            padding: 10px 0;
+        }
+
+        .footer-links ul li a {
+            font-size: 0.9rem;
         }
 
         .social-links {
-            width: 100%;
+            width: 90%;
         }
 
-        .social-links hr {
-            margin: 5px auto 20px auto;
+        .social-links h3 {
+            margin-bottom: 20px;
+        }
+
+        .social-links ul {
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .social-links li {
+            margin: 0 10px;
+        }
+
+        .social-links i {
+            font-size: 20px;
         }
     }
 
@@ -180,12 +267,85 @@
             text-align: center;
         }
 
+        .footer-info {
+            width: 50%;
+            margin-bottom: 20px;
+        }
+
+        .footer-info h3 {
+        position: relative;
+        margin-bottom: 20px;
+        
+        }
+
+        .footer-info h3::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -8px;
+            width: 100px;
+            height: 3px;
+            background-color: #181c14;
+            border-radius: 10px;
+            transform: translateX(-50%);
+        }
+
+        .footer-info p {
+            color: white;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+
+        .footer-links h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            color: #d2d2d2;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            width: 75%;
+        }
+
         .footer-links ul {
-            align-items: center;
+            flex-direction: row;
+            /* align-items: center; */
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .footer-links ul li {
+            width: 100px;
+            height: unset;
+            padding: 10px 0;
+        }
+
+        .footer-links ul li a {
+            font-size: 1.2rem;
         }
 
         .social-links {
-            width: 100%;
+            width: 75%;
+        }
+
+        .social-links h3 {
+            margin-bottom: 20px;
+        }
+
+        .social-links ul {
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .social-links li {
+            margin: 0 10px;
+        }
+
+        .social-links i {
+            font-size: 30px;
         }
     }
 </style>
