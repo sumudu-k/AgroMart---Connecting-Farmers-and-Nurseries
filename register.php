@@ -74,7 +74,7 @@ if (isset($_POST['register'])) {
         align-items: center;
         min-height: 80vh;
         padding: 20px;
-        width: 75%; 
+        width: 75%;
         margin: 0 auto;
     }
 
@@ -94,12 +94,12 @@ if (isset($_POST['register'])) {
         min-height: 300px;
         max-width: 1000px;
         background-image: url("images/register image.jpg");
-        mix-blend-mode:multiply;
+        mix-blend-mode: multiply;
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
         border-radius: 10px;
-        
+
     }
 
     .register-form {
@@ -200,18 +200,18 @@ if (isset($_POST['register'])) {
         .register-form button {
             width: 150px;
             padding: 8px;
-            font-size: 16px;   
+            font-size: 16px;
         }
     }
 
 
     @media (min-width: 481px) and (max-width: 1200px) {
-        
+
         .wrapper {
             width: 85%;
             min-height: 60vh;
         }
-        
+
         .register-container {
             width: 90%;
             padding: 15px;
@@ -228,7 +228,6 @@ if (isset($_POST['register'])) {
             width: 50%;
         }
     }
-
     </style>
 
 </head>
@@ -242,10 +241,10 @@ if (isset($_POST['register'])) {
                 <form action="register.php" method="POST">
                     <input type="text" name="username" placeholder="Username" required>
                     <input type="email" name="email" placeholder="Email" required>
-                    <input type="email" name="confirm_email" placeholder="Confirm Email" required>
                     <input type="text" name="contact" placeholder="Contact Number" required>
                     <input type="text" name="address" placeholder="Address" required>
                     <input type="password" name="password" placeholder="Password" required>
+                    <input type="password" name="confirm_password" placeholder="Confirm_Password" required>
                     <button type="submit" name="register">Register</button>
                 </form>
                 <p class="p1">Already have an account? &ensp; <a class="link" href="login.php">Login here</a>.</p>
