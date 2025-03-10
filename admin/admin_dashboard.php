@@ -50,7 +50,6 @@ include '../config.php';
 </head>
 
 <body>
-    <!-- Left Sidebar Menu -->
     <div class="sidebar">
         <h2>Admin Menu</h2>
         <a href="add_category.php">Add Category</a>
@@ -60,9 +59,9 @@ include '../config.php';
         <a href="admin_send_notification.php">Send Push Notifications</a>
         <a href="admin_manage_notifications.php">Delete Push Notifications</a>
         <a href="admin_manage_requests.php">Manage Requests</a>
+        <a href="admin_approval.php">Admin Approval</a>
     </div>
 
-    <!-- Main Content -->
     <div class="content">
         <?php include 'admin_navbar.php'; ?>
         <h1>Welcome to Admin Dashboard</h1>

@@ -9,9 +9,6 @@ if (isset($_SESSION['user_id'])) {
     $user_id = null;
 }
 
-
-
-
 // Query to count unread notifications
 $sql = "SELECT COUNT(*) AS unread_count FROM notifications WHERE user_id = ? AND status = 'unread'";
 $stmt = $conn->prepare($sql);
@@ -43,16 +40,21 @@ $unread_count = $row['unread_count'];
 
     nav {
         display: flex;
+        justify-content: space-between;
+        align-items: center;
         width: 100%;
         background-color: #006400;
         position: relative;
-        justify-content: space-between;
-        align-items: center;
-        text-align: center;
+        min-height: 60px;
         padding: 15px 12.5%;
     }
 
     /* Logo */
+    nav .logo {
+        flex-shrink: 0; 
+        position: relative;
+        z-index: 2;
+    }
     nav .logo a {
         color: #f2f2f2;
         font-size: 2.1rem;
@@ -62,14 +64,18 @@ $unread_count = $row['unread_count'];
     }
 
     /* Search Bar */
-    nav .search-container {
+    .search-container {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
         display: flex;
-        margin: auto 0;
         height: 40px;
         line-height: 35px;
+        width: 25rem;
+        z-index: 1;
     }
 
-    nav .search-container input {
+    .search-container input {
         border: 2px solid #adb5bd;
         outline: none;
         border-radius: 5px;
@@ -77,7 +83,7 @@ $unread_count = $row['unread_count'];
         height: 100%;
         padding: 0 10px;
         font-size: 16px;
-        width: 25rem;
+        width: 100%;
     }
 
     /* Search Results */
@@ -91,9 +97,12 @@ $unread_count = $row['unread_count'];
         overflow-y: auto;
         z-index: 1000;
         display: none;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .search-results a {
+        text-align: center;
         height: 40px;
         padding-top: 5px;
         display: block;
@@ -109,181 +118,173 @@ $unread_count = $row['unread_count'];
         border-radius: 5px;
     }
 
-    /* Navbar Right */
-    nav ul {
+    /* Navbar Right (Visible items on large screens) */
+    .nav-right {
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        gap: 10px;
         list-style: none;
         margin: auto 0;
+        flex-shrink: 0; 
+        position: relative;
+        z-index: 2;
     }
 
-    nav ul li {
-        border-right: 1px solid rgb(161, 161, 161);
-        margin: 0 6px;
+    .visible-items {
+        display: flex;
+        align-items: center;
     }
 
-    nav ul li:last-child {
-        border-right: none;
+    .visible-items li {
+        list-style: none;
+        display: inline-block;
+        padding: 5px 10px;
     }
 
-    nav ul li a {
+    .visible-items li a {
         color: white;
+        font-weight: 600;
         display: flex;
         align-items: center;
         font-size: 1.1rem;
         text-decoration: none;
         border-radius: 5px;
         padding: 5px 10px;
-        margin-right: 10px;
         transition: 0.3s;
     }
 
     .place-ad {
-        background-color: rgb(255, 243, 174);
-        padding: 5px 10px;
-        color: black;
+        background-color: #006400;
         animation: blink 2.5s infinite;
     }
 
     @keyframes blink {
-        0% {
-            opacity: 1;
-        }
-
-        50% {
-            opacity: 0.9;
-            background-color: rgb(255, 153, 0);
-        }
-
-        100% {
-            opacity: 1;
-        }
+        0% { opacity: 1; }
+        50% { opacity: 0.9; background-color: rgb(255, 153, 0); }
+        100% { opacity: 1; }
     }
 
-    nav ul li a i {
+    .nav-right .visible-items li a i {
+        font-size: 1.1rem;
         color: white;
         vertical-align: middle;
     }
 
-    nav ul li:hover a,
-    nav ul li:hover a i {
-        background-color: #e9ecef;
-        border-radius: 5px;
+    .nav-right .visible-items li:hover a,
+    .nav-right .visible-items li:hover a i {
+        background-color:rgb(239, 236, 233);
         color: black;
     }
 
+    /* Hamburger Menu */
+    .hamburger-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color:rgb(118, 175, 115);
+        position: absolute;
+        top: 100%;
+        right: 0;
+        z-index: 1000;
+    }
 
+    .hamburger-menu.active {
+        display: flex;
+    }
+
+    .hamburger-menu li {
+        list-style: none;
+        width: 100%;
+        text-align: left;
+        border-bottom: 1px solid white;
+        margin: 0;
+        padding: 15px 5%;
+    }
+
+    .hamburger-menu li a {
+        display: block;
+        text-align: center;
+        width: 100%;
+        color: black;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .hamburger-menu li:hover{
+        border: 1px solid black;
+        border-radius: 5px;
+        background-color:rgba(233, 236, 239, 0.77);
+    }
+
+    .hamburger-menu li:last-child {
+        border-bottom: none;
+    }
 
     /* Hamburger Menu Icon */
     .hamburger {
-        display: none;
-        font-size: 2rem;
+        font-size: 1.5rem;
         color: white;
         cursor: pointer;
-        margin: auto 0;
+        margin: auto 0 auto 10px;
     }
 
-    /* Responsive Design */
-    @media (max-width: 1500px) {
+    /* Tablets */
+    @media (min-width: 481px) and (max-width: 1200px) {
         nav {
-            flex-direction: column;
-            align-items: flex-start;
             padding: 15px 10%;
         }
 
-        nav .logo {
-            width: 100%;
-            text-align: left;
-            margin-bottom: 10px;
-        }
-
-        nav .search-container {
-            width: 100%;
-            align-self: center;
-            margin: 10px 0;
-        }
-
-        nav .search-container input {
-            width: 100%;
-        }
-
-        nav .search-results {
-            width: 100%;
-        }
-
-        nav ul {
+        .nav-right .visible-items {
             display: none;
-            flex-direction: column;
-            width: 100%;
-            background-color: #006400;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            z-index: 1000;
-        }
-
-        nav ul.active {
-            display: flex;
-        }
-
-        nav ul li {
-            width: 40%;
-            text-align: left;
-            border-right: none;
-            border-bottom: 1px solid white;
-            margin: 0;
-            padding: 15px 10%;
-        }
-
-        nav ul li a {
-            display: block;
-            text-align: center;
-            width: 100%;
-        }
-
-        nav ul li:last-child {
-            border-bottom: none;
-        }
-
-        #notif_count {
-            animation: textScale 1s infinite alternate ease-in-out;
-            position: fixed;
-
-        }
-
-        @keyframes textScale {
-            0% {
-                font-size: 16px;
-            }
-
-            50% {
-                font-size: 17px;
-            }
-
-            100% {
-                font-size: 16px;
-            }
         }
 
         .hamburger {
             display: block;
-            position: absolute;
-            right: 10%;
-            top: 15px;
+        }
+
+        .hamburger-menu {
+            display: none;
+        }
+
+        .search-container {
+            width: 100%; 
+            max-width: 10rem; 
+        }
+
+        .search-results {
+            width: 100%;
+            max-width: 20rem;
+            left: 50%;
+            transform: translateX(-50%);
         }
     }
 
-    /* Mobile Devices (319px–480px) */
+    /* Mobile */
     @media (max-width: 480px) {
         nav .logo a {
             font-size: 28px;
         }
 
-        nav .search-container input {
+        .search-container {
+            width: 100%;
+            max-width: 15rem; /* Adjust max width for mobile */
+        }
+
+        .search-container input {
             font-size: 14px;
         }
 
-        nav ul li a {
+        .search-results {
+            width: 100%;
+            max-width: 15rem;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .hamburger-menu li a {
             font-size: 18px;
         }
 
@@ -295,7 +296,6 @@ $unread_count = $row['unread_count'];
 </head>
 
 <body>
-
     <script>
     function confirmLogout() {
         var confirmAction = confirm("Are you sure you want to log out?");
@@ -327,7 +327,7 @@ $unread_count = $row['unread_count'];
         const searchInput = document.querySelector('.search-container input[type="text"]');
         const searchResults = document.getElementById('search-results');
         const hamburger = document.querySelector('.hamburger');
-        const navRight = document.querySelector('.nav-right');
+        const hamburgerMenu = document.querySelector('.hamburger-menu');
 
         // Search functionality
         searchInput.addEventListener('focus', () => {
@@ -352,7 +352,14 @@ $unread_count = $row['unread_count'];
 
         // Hamburger menu toggle
         hamburger.addEventListener('click', () => {
-            navRight.classList.toggle('active');
+            hamburgerMenu.classList.toggle('active');
+        });
+
+        // Close hamburger menu when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('.hamburger') && !event.target.closest('.hamburger-menu')) {
+                hamburgerMenu.classList.remove('active');
+            }
         });
     });
     </script>
@@ -368,29 +375,36 @@ $unread_count = $row['unread_count'];
             <div class="search-results" id="search-results" aria-live="polite"></div>
         </div>
 
-        <ul class="nav-right">
-            <li><a href="my_ads.php">MY ADS</a></li>
-            <li><a href="post_ad.php" class="place-ad">POST ADS</a></li>
-            <li><a href="wishlist.php"><i class="fas fa-heart" title="Wishlist"></i></a></li>
-            <li><a href="notifications.php"> <img src='uploads/bell.png' style='width:24px' title="Notifications">
-                    <?php if ($unread_count > 0): ?>
-                    <span class="badge" id="notif_count"><?= $unread_count ?></span>
+        <div class="nav-right">
+            <div class="visible-items">
+                <ul>
+                    <li><a href="my_ads.php">MY ADS</a></li>
+                    <li><a href="post_ad.php" class="place-ad">POST ADS</a></li>
+                </ul>
+            </div>
+            <div class="hamburger-menu">
+                <ul>
+                    <li><a href="wishlist.php"><i class="fas fa-heart" title="Wishlist"></i></a></li>
+                    
+                    <li><a href="notifications.php"> <i class="fa fa-bell" aria-hidden="true"  title="Notifications"></i>
+                            <?php if ($unread_count > 0): ?>
+                            <span class="badge" id="notif_count"><?= $unread_count ?></span>
+                            <?php endif; ?>
+                        </a></li>
+                    <?php if (isset($_SESSION['username'])): ?>
+                    <li><a href="profile.php"><i class="fas fa-user" title="Profile"></i></a></li>
+                    <li><a href="#" onclick="confirmLogout(); return false;">LOGOUT</a></li>
+                    <?php else: ?>
+                    <li><a href="login.php">LOGIN</a></li>
+                    <li><a href="register.php">REGISTER</a></li>
                     <?php endif; ?>
-                </a></li>
-            <?php if (isset($_SESSION['username'])): ?>
-            <li><a href="profile.php"><i class="fas fa-user" title="Profile"></i></a></li>
-            <li><a href="#" onclick="confirmLogout(); return false;">LOGOUT</a></li>
-            <?php else: ?>
-            <li><a href="login.php">LOGIN</a></li>
-            <li><a href="register.php">REGISTER</a></li>
-            <?php endif; ?>
-        </ul>
-
-        <div class="hamburger">
-            <i class="fas fa-bars"></i>
+                </ul>
+            </div>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
         </div>
     </nav>
-
 </body>
 
 </html>
