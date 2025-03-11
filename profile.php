@@ -196,10 +196,34 @@ if (isset($_POST['update'])) {
         font-size: 1rem;
     }
 
+    .accountSettingsBtn button.delete {
+        background-color: #dc3545;
+    }
+
+    .accountFunctionBtn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .accountFunctionBtn button {
+        background-color: rgb(0, 128, 30);
+        padding: 10px 20px;
+        border: none;
+        border-radius: 10px;
+        margin: 10px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .accountFunctionBtn button a {
+        text-decoration: none;
+        font-size: 1.3rem;
+        color: #fff;
+    }
 
 
 
-    /* Responsive Styles */
     /* Mobile Devices */
     @media screen and (max-width: 480px) {
         h1 {
@@ -273,9 +297,18 @@ if (isset($_POST['update'])) {
 </head>
 
 <body>
-    <h1>Edit Profile</h1>
-    <div class="container">
+    <h1>My Account</h1>
+    <div class='accountFunctionBtn'>
+        <button><a href="post_ad.php">Post an Ad</a></button>
+        <button><a href="my_ads.php">My Ads</a></button>
+        <button><a href="post_request.php">Post a Product Request</a></button>
+        <button><a href="my_requests.php">My Product Requests</a></button>
+        <button><a href="wishlist.php">My Wish List</a></button>
+    </div>
 
+
+    <div class="container">
+        <h2>Edit Profile</h2>
         <form action="profile.php" method="post">
             <div class="form-group">
                 <label for="username">Username</label>
@@ -304,7 +337,7 @@ if (isset($_POST['update'])) {
             <h2>Account Settings</h2>
             <div class="accountSettingsBtn">
                 <button><a href="change_password.php">Change Password</a></button>
-                <button><a href="delete_account.php">Delete My Account</a></button>
+                <button class='delete'><a href="delete_account.php">Delete My Account</a></button>
             </div>
         </div>
 
