@@ -45,7 +45,6 @@ $result = $stmt->get_result();
         flex-direction: column;
     }
 
-    /* Add background image */
     body::before {
         content: '';
         position: absolute;
@@ -55,7 +54,7 @@ $result = $stmt->get_result();
         height: 100%;
         background-image: url("images/B1.jpg");
         background-size: cover;
-        opacity: 0.5;
+        opacity: 0.2;
         z-index: -1;
     }
 

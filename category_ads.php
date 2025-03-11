@@ -50,6 +50,20 @@ $result = $stmt->get_result();
         display: flex;
         flex-direction: column;
         min-height: 100vh;
+        position: relative;
+    }
+
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("images/B1.jpg");
+        background-size: cover;
+        opacity: 0.2;
+        z-index: -1; 
     }
 
     .main-content {
@@ -81,6 +95,7 @@ $result = $stmt->get_result();
     }
 
     .ad-card {
+        background-color: #fff;
         text-align: center;
         border: 1px solid #ddd;
         border-radius: 10px;

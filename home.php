@@ -38,7 +38,8 @@ $ads_result = $conn->query($ads_query);
     .banner-image {
         position: relative;
         width: 100%;
-        height: 750px;
+        height: 100vh;
+
         overflow: hidden;
     }
 
@@ -71,10 +72,10 @@ $ads_result = $conn->query($ads_query);
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 30px;
+        gap: 15px;
         border-radius: 10px;
-        margin-top: 30px;
-        padding: 40px 0 50px 0;
+        margin: 30px 0 ;
+        padding: 5vh 0 10vh 0;
         background-color: #e9ecef;
     }
 
@@ -93,22 +94,20 @@ $ads_result = $conn->query($ads_query);
         flex-direction: column;
         align-items: center;
         text-align: center;
-        width: 200px;
-    }
-
-    .category-card a {
-        display: block;
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        overflow: hidden;
-        background-color: #f5f5a9;
-        transition: transform 0.4s ease, box-shadow 0.4s ease;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 20%;
+        transition: transform 0.4s ease;
     }
 
     .category-card:hover {
         transform: scale(1.05);
+    }
+
+    .category-card a {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
 
     .category-card img {
@@ -130,28 +129,29 @@ $ads_result = $conn->query($ads_query);
     .welcome-section {
         display: flex;
         align-items: center;
+        gap: 20px;
         justify-content: space-between;
         border-radius: 10px;
-        margin-top: 30px;
-        padding: 40px;
+        margin-bottom: 30px ;
+        padding: 10vh 0;
     }
 
     .welcome-image {
         flex: 1;
         display: flex;
         justify-content: center;
+        border-radius: 10px;
     }
 
     .welcome-image img {
         max-width: 100%;
         height: auto;
+        object-fit: contain;
         mix-blend-mode: multiply;
-        border-radius: 10px;
     }
 
     .welcome-text {
         flex: 1;
-        margin-left: 20px;
     }
 
     .welcome-text h2 {
@@ -166,22 +166,18 @@ $ads_result = $conn->query($ads_query);
         line-height: 1.5;
         display: -webkit-box;
         -webkit-line-clamp: 15;
-        /* set line limit to 15 */
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
-        margin-bottom: 20px;
     }
 
     .ads-container {
         display: flex;
-        flex-direction: column;
         flex-wrap: wrap;
         justify-content: center;
         background-color: #e9ecef;
         border-radius: 10px;
-        padding: 40px 0;
-        margin: 30px 0;
+        margin-bottom: 30px ;
     }
 
 
@@ -190,27 +186,31 @@ $ads_result = $conn->query($ads_query);
         width: 100%;
         font-size: 2rem;
         color: #333;
-        margin-bottom: 20px;
+        padding: 30px 0 10px 0;
     }
 
     .sugestion-ads {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 10px;
+        align-items: center;
+        gap: 20px;
         border-radius: 10px;
-        padding: 20px 0;
+        padding: 30px 20px;
     }
 
     .ad-card {
-        width: calc(20% - 25px);
+        flex: 1 0 calc(20% - 10px);
+        position: relative;
         text-align: center;
         background-color: white;
+        min-height: 400px;
+        overflow: hidden;
         border: 1px solid #ddd;
         border-radius: 10px;
-        margin: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         transition: transform 0.2s, box-shadow 0.2s;
+
     }
 
     .ad-card:hover {
@@ -231,7 +231,14 @@ $ads_result = $conn->query($ads_query);
     .ad-card h4 {
         font-size: 1.2rem;
         color: #333;
-        margin: 5px 0;
+        margin: 10px 5px 5px;
+        font-weight: 600;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-transform: capitalize;
     }
 
     .ad-card .description {
@@ -244,11 +251,15 @@ $ads_result = $conn->query($ads_query);
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
-        margin: 0px 15px 10px 15px;
+        margin: 20px 15px;
     }
 
     .ad-details {
-        margin: 5px 15px 10px 15px;
+        position: absolute;
+        width: 100%;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
         text-align: center;
     }
 
@@ -260,7 +271,7 @@ $ads_result = $conn->query($ads_query);
 
     .view-all-btn {
         text-align: center;
-        margin: 20px 0 30px 0;
+        margin: 15px 0 30px 0;
     }
 
     .view-all-btn button {
@@ -280,8 +291,7 @@ $ads_result = $conn->query($ads_query);
 
     .contact-section {
         border-radius: 10px;
-        padding: 50px 0;
-        margin: 30px 0;
+        margin-bottom: 30px ;
     }
 
     .contact-section h1 {
@@ -289,14 +299,13 @@ $ads_result = $conn->query($ads_query);
         width: 100%;
         font-size: 2rem;
         color: #333;
-        margin-bottom: 20px;
+        padding: 30px 0 30px 0;
     }
 
     .contact-container {
         display: flex;
         justify-content: center;
         gap: 20px;
-        padding: 0;
     }
 
     .contact-info {
@@ -354,7 +363,6 @@ $ads_result = $conn->query($ads_query);
         text-align: left;
         color: #3c3d37;
         margin-bottom: 8px;
-        font-size: 1rem;
     }
 
     .get-in-touch {
@@ -366,9 +374,9 @@ $ads_result = $conn->query($ads_query);
     }
 
     .get-in-touch h2 {
-        color: #333;
         text-align: center;
         font-size: 1.8rem;
+        color: white;
         margin-bottom: 20px;
     }
 
@@ -434,8 +442,6 @@ $ads_result = $conn->query($ads_query);
     }
 
 
-
-
     /*  Mobile devices */
     @media screen and (max-width: 480px) {
         .main-container {
@@ -443,7 +449,7 @@ $ads_result = $conn->query($ads_query);
         }
 
         .banner-image {
-            height: 200px;
+            height: 40vh;
         }
 
         /* Categories */
@@ -488,14 +494,23 @@ $ads_result = $conn->query($ads_query);
             font-size: 0.9rem;
         }
 
+
         /* Ads Section */
         .ads-title {
             font-size: 1.5rem;
         }
 
-        .ad-card {
-            width: calc(100% - 20px);
+            .sugestion-ads {
+            flex-direction: row;
+            align-items: stretch;
         }
+
+        .ad-card {
+            flex: 0 0 100%; 
+            width: 100%;
+            box-sizing: border-box; 
+        }
+
 
         /* Contact Section */
         .contact-section {
@@ -520,20 +535,6 @@ $ads_result = $conn->query($ads_query);
             flex-direction: column;
         }
 
-        /* Footer */
-        .footer-container {
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .footer-links ul {
-            align-items: center;
-        }
-
-        .social-links hr {
-            margin: 5px auto 20px auto;
-        }
     }
 
     /* 481px - 1200px  */
@@ -543,7 +544,7 @@ $ads_result = $conn->query($ads_query);
         }
 
         .banner-image {
-            height: 400px;
+            height: 50vh;
         }
 
         .category-card {
@@ -556,7 +557,7 @@ $ads_result = $conn->query($ads_query);
         }
 
         .welcome-section {
-            flex-direction: column;
+            flex-direction: row;
             padding: 30px;
         }
 
@@ -568,9 +569,14 @@ $ads_result = $conn->query($ads_query);
         .welcome-text h2 {
             font-size: 2rem;
         }
+        
+        .sugestion-ads {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
 
         .ad-card {
-            width: calc(33.33% - 20px);
+            flex: 0 0 calc(100% / 3 - 13.33px);
         }
 
         .contact-container {
@@ -583,36 +589,8 @@ $ads_result = $conn->query($ads_query);
             width: 100%;
             margin-bottom: 20px;
         }
-    }
-
-    @media screen and (min-width: 1201px) {
-        .main-container {
-            width: 75%;
-        }
-
-        .banner-image {
-            height: 750px;
-        }
-
-        .ad-card {
-            width: calc(20% - 25px);
-        }
-    }
 
 
-    @media screen and (max-width: 318px) {
-        .category-card {
-            width: 100px;
-        }
-
-        .category-card a {
-            width: 80px;
-            height: 80px;
-        }
-
-        .category-name {
-            font-size: 0.9rem;
-        }
     }
     </style>
 </head>

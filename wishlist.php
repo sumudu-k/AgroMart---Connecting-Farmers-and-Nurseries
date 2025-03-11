@@ -71,6 +71,27 @@ $wishlist_result = $stmt->get_result();
         padding: 0;
         background-color: #f4f4f4;
         overflow-x: hidden;
+        display: flex; 
+        flex-direction: column;
+        min-height: 100vh;
+        position: relative;
+    }
+
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("images/B1.jpg");
+        background-size: cover;
+        opacity: 0.2;
+        z-index: -1; 
+    }
+
+    .main-content {
+        flex: 1;
     }
 
     h1 {
@@ -94,6 +115,7 @@ $wishlist_result = $stmt->get_result();
         flex-wrap: wrap;
         gap: 20px;
         justify-content: center;
+
     }
 
     .wishlist-item {
@@ -101,10 +123,12 @@ $wishlist_result = $stmt->get_result();
         border: 1px solid #ddd;
         border-radius: 10px;
         width: calc(25% - 15px);
+        min-height: 400px;
         padding: 15px;
         text-align: center;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         transition: transform 0.2s ease, box-shadow 0.2s ease;
+        position: relative;
     }
 
     .wishlist-item:hover {
@@ -121,33 +145,41 @@ $wishlist_result = $stmt->get_result();
     }
 
     .wishlist-item h3 {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         color: #333;
-        margin: 10px 0 5px 0;
+        margin: 10px 5px 5px;
         font-weight: 600;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
         text-transform: capitalize;
     }
 
     .wishlist-item p {
         font-size: 1rem;
         color: #555;
-        margin: 5px 0;
+        margin: 10px 0 5px;
     }
 
     .wishlist-item p:nth-child(4) {
-        line-height: 2;
         color: #b03052;
         font-weight: 700;
     }
 
     .wishlist-item form {
-        margin-top: 10px;
+        position: absolute;
+        bottom: 20px;
+        right: 50%;
+        transform: translateX(50%);
     }
 
     .wishlist-item button {
         background-color: #28a745;
+        width: 170px;
+        padding: 5px 5px;
         color: #fff;
-        padding: 8px 15px;
         border: none;
         border-radius: 5px;
         font-size: 0.9rem;
@@ -157,7 +189,7 @@ $wishlist_result = $stmt->get_result();
     }
 
     .wishlist-item button:hover {
-        background-color: #cb790d;
+        background-color: #dc3545;
     }
 
     .empty-message {
@@ -167,7 +199,7 @@ $wishlist_result = $stmt->get_result();
         margin-top: 50px;
     }
 
-    /* mobile Devices (319px - 480px) */
+    /* mobile Devices */
     @media screen and (max-width: 480px) {
         h1 {
             font-size: 1.5rem;
@@ -185,6 +217,7 @@ $wishlist_result = $stmt->get_result();
 
         .wishlist-item {
             width: 100%;
+            min-height: 350px;
         }
 
         .wishlist-item img {
@@ -199,6 +232,10 @@ $wishlist_result = $stmt->get_result();
             font-size: 0.85rem;
         }
 
+        .wishlist-item form {
+            bottom: 30px;
+        }
+
         .wishlist-item button {
             font-size: 0.85rem;
             padding: 6px 12px;
@@ -210,7 +247,7 @@ $wishlist_result = $stmt->get_result();
         }
     }
 
-    /* tablets (481px - 1200px) */
+    /* tablets */
     @media screen and (min-width: 481px) and (max-width: 1200px) {
         h1 {
             font-size: 1.8rem;
@@ -223,7 +260,7 @@ $wishlist_result = $stmt->get_result();
 
         .wishlist-item {
             width: calc(50% - 10px);
-            /* 2 items per row */
+            min-height: 370px;
         }
 
         .wishlist-item img {
@@ -237,38 +274,38 @@ $wishlist_result = $stmt->get_result();
         .wishlist-item p {
             font-size: 0.9rem;
         }
-    }
 
-    /* desktops (1201px and up) */
-    @media screen and (min-width: 1201px) {}
-    </style>
+        .wishlist-item form {
+            bottom: 30px;
+        }
+    }
+</style>
 </head>
 
 <body>
-    <h1>Your Wishlist</h1>
-    <div class="container">
-        <div class="wishlist-items">
-            <?php if ($wishlist_result->num_rows > 0): ?>
-            <?php while ($item = $wishlist_result->fetch_assoc()): ?>
-            <div class="wishlist-item">
-                <img src="<?= htmlspecialchars($item['image'] ?? 'default.jpg'); ?>" alt="Product Image">
-                <h3><?= htmlspecialchars($item['title']); ?></h3>
-                <p>Category: <?= htmlspecialchars($item['category_name']); ?></p>
-                <p>Price: Rs <?= htmlspecialchars($item['price']); ?></p>
-                <form method="post">
-                    <input type="hidden" name="ad_id" value="<?= $item['ad_id']; ?>">
-                    <button type="submit">Remove from Wishlist</button>
-                </form>
+    <div class="main-content">
+        <h1>Your Wishlist</h1>
+        <div class="container">
+            <div class="wishlist-items">
+                <?php if ($wishlist_result->num_rows > 0): ?>
+                    <?php while ($item = $wishlist_result->fetch_assoc()): ?>
+                        <div class="wishlist-item">
+                            <img src="<?= htmlspecialchars($item['image'] ?? 'default.jpg'); ?>" alt="Product Image">
+                            <h3><?= htmlspecialchars($item['title']); ?></h3>
+                            <p>Category: <?= htmlspecialchars($item['category_name']); ?></p>
+                            <p>Price: Rs <?= htmlspecialchars($item['price']); ?></p>
+                            <form method="post">
+                                <input type="hidden" name="ad_id" value="<?= $item['ad_id']; ?>">
+                                <button type="submit">Remove from Wishlist</button>
+                            </form>
+                        </div>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <p class="empty-message">Your wishlist is empty.</p>
+                <?php endif; ?>
             </div>
-            <?php endwhile; ?>
-            <?php else: ?>
-            <p class="empty-message">Your wishlist is empty.</p>
-            <?php endif; ?>
         </div>
     </div>
+    <?php include 'footer.php'; ?>
 </body>
-
 </html>
-<?php
-include 'footer.php';
-?>

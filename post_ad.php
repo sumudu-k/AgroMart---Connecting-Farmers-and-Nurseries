@@ -78,7 +78,7 @@ if (isset($_POST['submit'])) {
         height: 100%;
         background-image: url("images/B1.jpg");
         background-size: cover;
-        opacity: 0.5;
+        opacity: 0.2;
         z-index: -1;
     }
 

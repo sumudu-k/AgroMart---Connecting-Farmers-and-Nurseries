@@ -115,6 +115,10 @@ if ($user_id) {
 
     .ad-image {
         flex: 1 1 45%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         min-width: 300px;
     }
 
