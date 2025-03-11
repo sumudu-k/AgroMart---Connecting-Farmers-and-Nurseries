@@ -58,10 +58,24 @@ if (isset($_POST['reset_password'])) {
     }
 
     body {
-        background-color: #f4f4f4;
         display: flex;
         flex-direction: column;
         min-height: 100vh;
+        position: relative;
+    }
+
+    /* Add background image */
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("images/B1.jpg");
+        background-size: cover;
+        opacity: 0.5;
+        z-index: -1;
     }
 
     /* Centered Wrapper */
@@ -73,6 +87,8 @@ if (isset($_POST['reset_password'])) {
         padding: 20px;
         width: 75%; 
         margin: 0 auto; 
+        position: relative; /* Ensure content is above background */
+        z-index: 1; /* Ensure content is above background */
     }
 
     .login-box {
@@ -192,7 +208,7 @@ if (isset($_POST['reset_password'])) {
         }
     }
 
-    /* Tablets*/
+    /* Tablets */
     @media screen and (min-width: 481px) and (max-width: 1200px) {
         .wrapper {
             width: 85%;

@@ -17,7 +17,7 @@ if (isset($_POST['register'])) {
         showAlert('Password do not match!', 'error', '#ff0000', 'register.php');
         exit;
     }
-    $hashpassword =  password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $hashpassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
     $user_check_sql = "SELECT * FROM users WHERE email = ?";
     $stmt = $conn->prepare($user_check_sql);
@@ -26,7 +26,6 @@ if (isset($_POST['register'])) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-
         showAlert('Email already registered!', 'error', '#ff0000', 'register.php');
     } else {
         $sql = "INSERT INTO users (username, email, password, contact_number, address) VALUES (?, ?, ?, ?, ?)";
@@ -45,7 +44,6 @@ if (isset($_POST['register'])) {
         }
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -64,7 +62,26 @@ if (isset($_POST['register'])) {
     }
 
     body {
-        background-color: #f3f4f6;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        min-height: 100vh;
+        display: flex; 
+        flex-direction: column; 
+    }
+
+    /* Add background image */
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("images/B1.jpg");
+        background-size: cover;
+        opacity: 0.5;
+        z-index: -1;
     }
 
     /* Centered Wrapper */
@@ -76,6 +93,8 @@ if (isset($_POST['register'])) {
         padding: 20px;
         width: 75%;
         margin: 0 auto;
+        position: relative; 
+        z-index: 1; 
     }
 
     /* Register Container Styling */
@@ -99,7 +118,6 @@ if (isset($_POST['register'])) {
         background-repeat: no-repeat;
         background-position: center;
         border-radius: 10px;
-
     }
 
     .register-form {
@@ -159,16 +177,17 @@ if (isset($_POST['register'])) {
     }
 
     .link {
-        text-decoration: none;
-        color: #0917ee;
-        font-weight: bold;
-    }
+            color: #006400;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
 
-    .link:hover {
-        text-decoration: underline;
-    }
+        .link:hover {
+            color: #f09319;
+        }
 
-    /* responsive design */
+    /* Responsive design */
     @media (max-width: 480px) {
         .wrapper {
             width: 95%;
@@ -204,9 +223,7 @@ if (isset($_POST['register'])) {
         }
     }
 
-
     @media (min-width: 481px) and (max-width: 1200px) {
-
         .wrapper {
             width: 85%;
             min-height: 60vh;
@@ -229,7 +246,6 @@ if (isset($_POST['register'])) {
         }
     }
     </style>
-
 </head>
 
 <body>
@@ -247,7 +263,7 @@ if (isset($_POST['register'])) {
                     <input type="password" name="confirm_password" placeholder="Confirm_Password" required>
                     <button type="submit" name="register">Register</button>
                 </form>
-                <p class="p1">Already have an account? &ensp; <a class="link" href="login.php">Login here</a>.</p>
+                <p class="p1">Already have an account?   <a class="link" href="login.php">Login here</a>.</p>
             </div>
         </div>
     </div>

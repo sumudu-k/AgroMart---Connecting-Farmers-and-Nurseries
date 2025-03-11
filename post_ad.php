@@ -67,10 +67,8 @@ if (isset($_POST['submit'])) {
         min-height: 100vh;
         display: flex;
         flex-direction: column;
-        background-color: rgb(85, 189, 0);
     }
 
-    /* background image */
     body::before {
         content: '';
         position: absolute;
@@ -89,7 +87,6 @@ if (isset($_POST['submit'])) {
         text-align: center;
         padding: 10px 12.5%;
         font-size: 1.8rem;
-        margin-bottom: 20px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         position: relative;
         z-index: 1;
@@ -102,7 +99,7 @@ if (isset($_POST['submit'])) {
     /* form container */
     .ad-form {
         max-width: 50%;
-        margin: 0 auto;
+        margin: 20px auto;
         padding: 20px;
         background-color: #e1e1e1;
         border-radius: 5px;

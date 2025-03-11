@@ -38,7 +38,25 @@ $result = $stmt->get_result();
     body {
         font-family: Arial, sans-serif;
         margin: 0;
-        overflow-x: hidden;
+        padding: 0;
+        position: relative;
+        min-height: 100vh;
+        display: flex; 
+        flex-direction: column;
+    }
+
+    /* Add background image */
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("images/B1.jpg");
+        background-size: cover;
+        opacity: 0.5;
+        z-index: -1;
     }
 
     .title {
@@ -53,6 +71,8 @@ $result = $stmt->get_result();
     .container {
         width: 75%;
         margin: 0 auto;
+        position: relative; 
+        z-index: 1;
     }
 
     /* Card layout for ads */
@@ -69,6 +89,7 @@ $result = $stmt->get_result();
         flex-direction: column;
         justify-content: space-between;
         text-align: center;
+        background-color: #fff;
         border: 1px solid #ddd;
         border-radius: 10px;
         overflow: hidden;
@@ -211,7 +232,7 @@ $result = $stmt->get_result();
         }
     }
 
-    /* Tablets*/
+    /* Tablets */
     @media screen and (min-width: 481px) and (max-width: 1200px) {
         .title {
             padding: 20px 8%;
@@ -259,11 +280,8 @@ $result = $stmt->get_result();
 </head>
 
 <body>
-
     <h2 class="title">My Ads</h2>
     <div class="container">
-
-
         <div class="ads-container">
             <?php if ($result->num_rows > 0): ?>
             <?php while ($row = $result->fetch_assoc()):
@@ -283,13 +301,11 @@ $result = $stmt->get_result();
                     <button class="btn btn-danger" onclick="confirmDelete(<?= $row['ad_id'] ?>)">Delete Ad</button>
                 </div>
             </div>
-
             <?php endwhile; ?>
             <?php else: ?>
             <p class="no-ads">You haven't placed any ads yet!</p>
             <?php endif; ?>
         </div>
-
     </div>
 </body>
 

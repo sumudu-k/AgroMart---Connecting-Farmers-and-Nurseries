@@ -55,8 +55,6 @@ if (isset($_GET['ad_id'])) {
     exit;
 }
 
-
-
 if ($user_id) {
     $wishlist_check_sql = "SELECT * FROM wishlist WHERE user_id = ? AND ad_id = ?";
     $wishlist_stmt = $conn->prepare($wishlist_check_sql);
@@ -84,7 +82,24 @@ if ($user_id) {
         margin: 0;
         padding: 0;
         color: #333;
-        overflow-x: hidden;
+        position: relative;
+        min-height: 100vh;
+        display: flex; 
+        flex-direction: column; 
+    }
+
+    /* Add background image */
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("images/B1.jpg");
+        background-size: cover;
+        opacity: 0.2;
+        z-index: -1;
     }
 
     .container {
@@ -94,6 +109,8 @@ if ($user_id) {
         display: flex;
         gap: 20px;
         flex-wrap: wrap;
+        position: relative; 
+        z-index: 1; 
     }
 
     .ad-image {
@@ -154,6 +171,8 @@ if ($user_id) {
     }
 
     .ad-details .ad-description {
+        font-size: 1.1rem; 
+        color: #444;
         margin: 10px 0 30px 0;
         line-height: 1.3;
     }
@@ -184,13 +203,14 @@ if ($user_id) {
         color: #ff8c00;
     }
 
-    
     .similarProducts {
         max-width: 75%;
         background-color: #f0ffe8;
         margin: 20px auto 30px auto;
         padding: 20px;
         border-radius: 10px;
+        position: relative; 
+        z-index: 1;
     }
 
     .similarProducts h3 {
@@ -349,14 +369,12 @@ if ($user_id) {
             font-size: 18px;
         }
 
-
         .ad-details p {
             font-size: 18px;
         }
 
         .similarProducts {
             max-width: 95%;
-            
         }
 
         .moreItemsContainer {
@@ -376,7 +394,6 @@ if ($user_id) {
 </head>
 
 <body>
-
     <div class="container">
         <div class="ad-image">
             <div class="displayed-image">
@@ -397,7 +414,6 @@ if ($user_id) {
             <p><strong>Category:</strong> <?= htmlspecialchars($ad['category_name']); ?></p>
             <p><strong>Posted On:</strong> <?= htmlspecialchars($ad['formatted_date']); ?></p>
             <p><strong>District:</strong> <?= htmlspecialchars($ad['district']); ?></p>
-            
 
             <?php if ($user_id): ?>
             <form method="post" action="wishlist.php">
@@ -409,8 +425,6 @@ if ($user_id) {
             <?php else: ?>
             <p><a href="login.php">Log in</a> to add this ad to your wishlist.</p>
             <?php endif; ?>
-            </a>
-
         </div>
     </div>
 
