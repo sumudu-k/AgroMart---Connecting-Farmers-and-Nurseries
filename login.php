@@ -52,7 +52,25 @@ if (isset($_POST['login'])) {
         }
 
         body {
-            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            position: relative; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("images/B1.jpg");
+            background-size: cover;
+            opacity: 0.5;
+            z-index: -1;
         }
 
         /* Centered Wrapper */
@@ -64,7 +82,9 @@ if (isset($_POST['login'])) {
             padding: 20px;
             width: 75%; 
             margin: 0 auto; 
-        }
+            position: relative;
+            z-index: 1; 
+        } 
 
         /* login Container Styling */
         .login-container {
