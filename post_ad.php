@@ -85,8 +85,9 @@ if (isset($_POST['submit'])) {
     h1 {
         background-color: #dbffc7;
         text-align: center;
-        padding: 10px 12.5%;
-        font-size: 1.8rem;
+        padding: 10px 0;
+        font-size: 2rem;
+        margin-bottom: 20px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         position: relative;
         z-index: 1;
@@ -101,7 +102,8 @@ if (isset($_POST['submit'])) {
         max-width: 50%;
         margin: 20px auto;
         padding: 20px;
-        background-color: #e1e1e1;
+        background-color: rgba(196, 196, 196, 0.3);
+        backdrop-filter: blur(10px);
         border-radius: 5px;
         position: relative;
         z-index: 1;

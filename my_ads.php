@@ -60,11 +60,11 @@ $result = $stmt->get_result();
 
     .title {
         background-color: #dbffc7;
-        text-align: left;
-        text-transform: capitalize;
-        padding: 20px 12.5%;
-        font-size: 2.2rem;
-        margin: 0;
+        text-align: center;
+        padding: 10px 0;
+        font-size: 2rem;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .container {
@@ -126,7 +126,6 @@ $result = $stmt->get_result();
         text-align: left;
         display: -webkit-box;
         -webkit-line-clamp: 4;
-        /* Limit to 10 lines */
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
