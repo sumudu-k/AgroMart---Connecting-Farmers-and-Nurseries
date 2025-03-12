@@ -43,6 +43,20 @@ $result = $conn->query($ads_sql);
             font-family: Arial, sans-serif;
             margin: 0;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("images/B1.jpg");
+            background-size: cover;
+            opacity: 0.2;
+            z-index: -1;
         }
 
         .container {
@@ -61,10 +75,12 @@ $result = $conn->query($ads_sql);
         .ad-card {
             text-align: center;
             position: relative;
+            background-color: #fff;
             border: 1px solid #ddd;
             border-radius: 10px;
             overflow: hidden;
             width: calc(25% - 20px);
+            min-height: 400px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s, box-shadow 0.2s;
             padding-bottom: 15px;
@@ -90,6 +106,12 @@ $result = $conn->query($ads_sql);
             color: #333;
             margin: 10px 0 5px 0;
             font-weight: 600;
+            height: 50px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
             text-transform: capitalize;
             padding: 0 10px;
         }
@@ -177,6 +199,7 @@ $result = $conn->query($ads_sql);
 
             .ad-card {
                 width: 100%;
+                min-height: 350px;
             }
 
             .ad-card img {
@@ -185,6 +208,7 @@ $result = $conn->query($ads_sql);
 
             .ad-card h4 {
                 font-size: 1rem;
+                height: 40px;
             }
 
             .ad-details .description {
@@ -221,11 +245,16 @@ $result = $conn->query($ads_sql);
             }
 
             .ad-card img {
-                height: 180px;
+                height: 250px;
+            }
+
+            .ad-details .description {
+                -webkit-line-clamp: 3;
             }
 
             .ad-card h4 {
                 font-size: 1.05rem;
+                height: 40px;
             }
 
             .pagination a {
