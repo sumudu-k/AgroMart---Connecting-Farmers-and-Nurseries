@@ -97,10 +97,9 @@ $wishlist_result = $stmt->get_result();
     h1 {
         background-color: #dbffc7;
         text-align: center;
-        padding: 20px;
-        font-size: 2.2rem;
+        padding: 10px 0;
+        font-size: 2rem;
         margin-bottom: 20px;
-        text-transform: capitalize;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 

@@ -103,9 +103,8 @@ if (isset($_POST['update'])) {
             background-color: #dbffc7;
             text-align: center;
             padding: 10px 0;
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            text-transform: capitalize;
+            font-size: 2rem;
+            margin-bottom: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
@@ -151,7 +150,8 @@ if (isset($_POST['update'])) {
         }
 
         form {
-            background-color: rgba(233, 236, 239, 0.2);
+            background-color: rgba(233, 236, 239, 0.3);
+            backdrop-filter: blur(10px);
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -209,7 +209,8 @@ if (isset($_POST['update'])) {
         }
 
         .accountSettings {
-            background-color: rgba(233, 236, 239, 0.2);
+            background-color: rgba(233, 236, 239, 0.3);
+            backdrop-filter: blur(10px);
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -360,7 +361,9 @@ if (isset($_POST['update'])) {
     <div class="main-content">
         <h1>My Account</h1>
         <div class='accountFunctionBtn'>
+            <button><a href="post_ad.php">Post an Ad</a></button>
             <button><a href="my_ads.php">My Ads</a></button>
+            <button><a href="post_request.php">Post a Product Request</a></button>
             <button><a href="my_requests.php">My Product Requests</a></button>
             <button><a href="wishlist.php">My Wish List</a></button>
         </div>

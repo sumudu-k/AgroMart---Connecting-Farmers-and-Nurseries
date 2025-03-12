@@ -72,11 +72,11 @@ $result = $stmt->get_result();
 
     .title {
         background-color: #dbffc7;
-        text-align: left;
-        text-transform: capitalize;
-        padding: 20px 12.5%;
-        font-size: 2.2rem;
-        margin: 0;
+        text-align: center;
+        padding: 10px 0;
+        font-size: 2rem;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
 

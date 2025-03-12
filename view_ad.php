@@ -75,12 +75,12 @@ if ($user_id) {
     <style>
     * {
         box-sizing: border-box;
+        margin: 0;
+        padding: 0;
     }
 
     body {
         font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
         color: #333;
         position: relative;
         min-height: 100vh;
