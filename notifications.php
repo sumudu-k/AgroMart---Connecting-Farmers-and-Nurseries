@@ -41,11 +41,16 @@ $unread_count = $row['unread_count'];
 <head>
     <title>My Notifications</title>
     <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
     body {
         font-family: Arial, sans-serif;
         background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
+
         display: flex;
         flex-direction: column;
         justify-content: center;

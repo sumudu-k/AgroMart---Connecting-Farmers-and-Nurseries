@@ -57,6 +57,8 @@ if (isset($_POST['submit'])) {
     <style>
     * {
         box-sizing: border-box;
+        padding: 0;
+        margin: 0;
     }
 
     body {

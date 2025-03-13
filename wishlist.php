@@ -63,6 +63,8 @@ $wishlist_result = $stmt->get_result();
     <style>
     * {
         box-sizing: border-box;
+        padding: 0;
+        margin: 0;
     }
 
     body {
@@ -71,7 +73,7 @@ $wishlist_result = $stmt->get_result();
         padding: 0;
         background-color: #f4f4f4;
         overflow-x: hidden;
-        display: flex; 
+        display: flex;
         flex-direction: column;
         min-height: 100vh;
         position: relative;
@@ -87,7 +89,7 @@ $wishlist_result = $stmt->get_result();
         background-image: url("images/B1.jpg");
         background-size: cover;
         opacity: 0.2;
-        z-index: -1; 
+        z-index: -1;
     }
 
     .main-content {
@@ -278,7 +280,7 @@ $wishlist_result = $stmt->get_result();
             bottom: 30px;
         }
     }
-</style>
+    </style>
 </head>
 
 <body>
@@ -287,24 +289,25 @@ $wishlist_result = $stmt->get_result();
         <div class="container">
             <div class="wishlist-items">
                 <?php if ($wishlist_result->num_rows > 0): ?>
-                    <?php while ($item = $wishlist_result->fetch_assoc()): ?>
-                        <div class="wishlist-item">
-                            <img src="<?= htmlspecialchars($item['image'] ?? 'default.jpg'); ?>" alt="Product Image">
-                            <h3><?= htmlspecialchars($item['title']); ?></h3>
-                            <p>Category: <?= htmlspecialchars($item['category_name']); ?></p>
-                            <p>Price: Rs <?= htmlspecialchars($item['price']); ?></p>
-                            <form method="post">
-                                <input type="hidden" name="ad_id" value="<?= $item['ad_id']; ?>">
-                                <button type="submit">Remove from Wishlist</button>
-                            </form>
-                        </div>
-                    <?php endwhile; ?>
+                <?php while ($item = $wishlist_result->fetch_assoc()): ?>
+                <div class="wishlist-item">
+                    <img src="<?= htmlspecialchars($item['image'] ?? 'default.jpg'); ?>" alt="Product Image">
+                    <h3><?= htmlspecialchars($item['title']); ?></h3>
+                    <p>Category: <?= htmlspecialchars($item['category_name']); ?></p>
+                    <p>Price: Rs <?= htmlspecialchars($item['price']); ?></p>
+                    <form method="post">
+                        <input type="hidden" name="ad_id" value="<?= $item['ad_id']; ?>">
+                        <button type="submit">Remove from Wishlist</button>
+                    </form>
+                </div>
+                <?php endwhile; ?>
                 <?php else: ?>
-                    <p class="empty-message">Your wishlist is empty.</p>
+                <p class="empty-message">Your wishlist is empty.</p>
                 <?php endif; ?>
             </div>
         </div>
     </div>
     <?php include 'footer.php'; ?>
 </body>
+
 </html>
