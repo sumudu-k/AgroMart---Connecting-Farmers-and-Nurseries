@@ -45,7 +45,7 @@ $unread_count = $row['unread_count'];
         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     }
 
-    /* First Row (Logo + Search) */
+    /* 1 Row */
     .nav-top {
         display: flex;
         justify-content: space-between;
@@ -53,38 +53,13 @@ $unread_count = $row['unread_count'];
         width: 100%;
     }
 
-    /* Logo styling */
     .logo a {
-        font-size: 24px;
+        font-size: 1.5rem;
         font-weight: bold;
         color: white;
         text-decoration: none;
     }
 
-    /* Search bar */
-    .search-container {
-        position: relative;
-    }
-
-    .search-container input {
-        width: 250px;
-        padding: 8px;
-        border: none;
-        border-radius: 5px;
-    }
-
-    /* Search results dropdown */
-    .search-results {
-        position: absolute;
-        top: 35px;
-        left: 0;
-        width: 250px;
-        background: white;
-        border: 1px solid #ccc;
-        display: none;
-    }
-
-    /* Second Row (Navigation Links) */
     .nav-bottom {
         width: 100%;
         margin-top: 10px;
@@ -99,7 +74,7 @@ $unread_count = $row['unread_count'];
     }
 
     .nav-right li {
-        margin: 0 10px;
+        margin: 0 5px;
     }
 
     .nav-right a {
@@ -118,16 +93,23 @@ $unread_count = $row['unread_count'];
 
     /* Special styling for Post Ads button */
     .place-ad {
-        background-color: #FFD700;
-        /* Gold */
-        color: black;
-        padding: 10px 15px;
-        border-radius: 5px;
+        background-color: #006400;
+        animation: blink 2.5s infinite;
     }
 
-    .place-ad:hover {
-        background-color: #FFA500;
-        /* Orange */
+    @keyframes blink {
+        0% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.9;
+            background-color: rgb(255, 153, 0);
+        }
+
+        100% {
+            opacity: 1;
+        }
     }
 
     /* Notification Icon */
@@ -145,6 +127,34 @@ $unread_count = $row['unread_count'];
         top: -10px;
         left: -5px;
     }
+
+
+    /* 2 row */
+    .search-container {
+        position: relative;
+    }
+
+    .search-container input {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        width: 50vw;
+        height: 50px;
+        padding: 8px;
+        border: none;
+        border-radius: 5px;
+    }
+
+    /* Search results dropdown */
+    .search-results {
+        position: absolute;
+        top: 35px;
+        left: 0;
+        width: 250px;
+        background: white;
+        border: 1px solid #ccc;
+        display: none;
+    }
+
 
     /* Responsive Design */
     @media (max-width: 768px) {
@@ -246,32 +256,32 @@ $unread_count = $row['unread_count'];
             <div class="logo">
                 <a href="home.php">AgroMart</a>
             </div>
-            <div class="search-container">
-                <input type="text" placeholder="Search what you want" onkeyup="searchProducts(this.value)">
-                <div class="search-results" id="search-results"></div>
-            </div>
-        </div>
-
-        <div class="nav-bottom">
             <ul class="nav-right">
-                <li><a href="my_ads.php">MY ADS</a></li>
-                <li><a href="post_ad.php" class="place-ad">POST ADS</a></li>
+                <li><a href="post_request.php">Request Products</a></li>
+                <li><a href="post_ad.php" class="place-ad">POST AD FREE</a></li>
                 <li><a href="wishlist.php"><i class="fas fa-heart" title="Wishlist"></i></a></li>
                 <li><a href="notifications.php">
-                        <img src='uploads/bell.png' style='width:24px' title="Notifications">
+                        <i class="fa fa-bell" aria-hidden="true"></i>
                         <?php if ($unread_count > 0): ?>
                         <span class="badge" id="notif_count"><?= $unread_count ?></span>
                         <?php endif; ?>
                     </a>
                 </li>
                 <?php if (isset($_SESSION['username'])): ?>
-                <li><a href="profile.php"><i class="fas fa-user"></i></a></li>
-                <li><a href="javascript:void(0);" onclick="confirmLogout()"><i class="fas fa-sign-out-alt"></i></a></li>
+                <li><a href="profile.php"><i class="fas fa-user"></i> &nbsp; Account</a></li>
+                <li><a href="logout.php" onclick="confirmLogout()">LogOut</a></li>
                 <?php else: ?>
                 <li><a href="login.php">LOGIN</a></li>
                 <li><a href="register.php">REGISTER</a></li>
                 <?php endif; ?>
             </ul>
+        </div>
+
+        <div class="nav-bottom">
+            <div class="search-container">
+                <input type="text" placeholder="Search what you want" onkeyup="searchProducts(this.value)">
+                <div class="search-results" id="search-results"></div>
+            </div>
         </div>
     </nav>
 
