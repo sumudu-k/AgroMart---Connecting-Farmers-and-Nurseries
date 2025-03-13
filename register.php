@@ -66,8 +66,8 @@ if (isset($_POST['register'])) {
         padding: 0;
         position: relative;
         min-height: 100vh;
-        display: flex; 
-        flex-direction: column; 
+        display: flex;
+        flex-direction: column;
     }
 
     /* Add background image */
@@ -93,8 +93,8 @@ if (isset($_POST['register'])) {
         padding: 20px;
         width: 75%;
         margin: 0 auto;
-        position: relative; 
-        z-index: 1; 
+        position: relative;
+        z-index: 1;
     }
 
     /* Register Container Styling */
@@ -177,15 +177,15 @@ if (isset($_POST['register'])) {
     }
 
     .link {
-            color: #006400;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
+        color: #006400;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+    }
 
-        .link:hover {
-            color: #f09319;
-        }
+    .link:hover {
+        color: #f09319;
+    }
 
     /* Responsive design */
     @media (max-width: 480px) {
@@ -257,10 +257,10 @@ if (isset($_POST['register'])) {
                 <form action="register.php" method="POST">
                     <input type="text" name="username" placeholder="Username" required>
                     <input type="email" name="email" placeholder="Email" required>
-                    <input type="text" name="contact" placeholder="Contact Number" required>
-                    <input type="text" name="address" placeholder="Address" required>
                     <input type="password" name="password" placeholder="Password" required>
                     <input type="password" name="confirm_password" placeholder="Confirm_Password" required>
+                    <input type="text" name="address" placeholder="Address" required>
+                    <input type="text" name="contact" placeholder="Contact Number" required>
                     <button type="submit" name="register">Register</button>
                 </form>
                 <p class="p1">Already have an account?   <a class="link" href="login.php">Login here</a>.</p>

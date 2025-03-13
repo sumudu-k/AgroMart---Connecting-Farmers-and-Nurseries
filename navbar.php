@@ -9,6 +9,9 @@ if (isset($_SESSION['user_id'])) {
     $user_id = null;
 }
 
+
+
+
 // Query to count unread notifications
 $sql = "SELECT COUNT(*) AS unread_count FROM notifications WHERE user_id = ? AND status = 'unread'";
 $stmt = $conn->prepare($sql);
@@ -31,271 +34,162 @@ $unread_count = $row['unread_count'];
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Poppins", sans-serif;
-    }
-
+    /* General navbar styling */
     nav {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        flex-direction: column;
         width: 100%;
         background-color: #006400;
-        position: relative;
-        min-height: 60px;
+        /* Green background */
         padding: 15px 12.5%;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     }
 
-    /* Logo */
-    nav .logo {
-        flex-shrink: 0; 
-        position: relative;
-        z-index: 2;
-    }
-    nav .logo a {
-        color: #f2f2f2;
-        font-size: 2.1rem;
-        font-weight: 800;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
-    /* Search Bar */
-    .search-container {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
+    /* 1 Row */
+    .nav-top {
         display: flex;
-        height: 40px;
-        line-height: 35px;
-        width: 25rem;
-        z-index: 1;
-    }
-
-    .search-container input {
-        border: 2px solid #adb5bd;
-        outline: none;
-        border-radius: 5px;
-        background-color: #f2f2f2;
-        height: 100%;
-        padding: 0 10px;
-        font-size: 16px;
+        justify-content: space-between;
+        align-items: center;
         width: 100%;
     }
 
-    /* Search Results */
-    .search-results {
-        position: absolute;
-        background-color: #e9ecef;
-        border-radius: 5px;
-        box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.2);
-        width: 25rem;
-        margin-top: 40px;
-        overflow-y: auto;
-        z-index: 1000;
-        display: none;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    .search-results a {
-        text-align: center;
-        height: 40px;
-        padding-top: 5px;
-        display: block;
-        font-size: 16px;
+    .logo a {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: white;
         text-decoration: none;
-        color: black;
-        transition: background-color 0.3s;
     }
 
-    .search-results a:hover {
-        background-color: #ddd;
-        font-weight: 600;
-        border-radius: 5px;
+    .nav-bottom {
+        width: 100%;
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
     }
 
-    /* Navbar Right (Visible items on large screens) */
     .nav-right {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
         list-style: none;
-        margin: auto 0;
-        flex-shrink: 0; 
-        position: relative;
-        z-index: 2;
+        padding: 0;
     }
 
-    .visible-items {
-        display: flex;
-        align-items: center;
+    .nav-right li {
+        margin: 0 5px;
     }
 
-    .visible-items li {
-        list-style: none;
-        display: inline-block;
-        padding: 5px 10px;
-    }
-
-    .visible-items li a {
-        color: white;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        font-size: 1.1rem;
+    .nav-right a {
         text-decoration: none;
+        color: white;
+        font-weight: bold;
+        padding: 10px 15px;
         border-radius: 5px;
-        padding: 5px 10px;
         transition: 0.3s;
     }
 
+    .nav-right a:hover {
+        background-color: #228B22;
+        /* Darker green */
+    }
+
+    /* Special styling for Post Ads button */
     .place-ad {
         background-color: #006400;
         animation: blink 2.5s infinite;
     }
 
     @keyframes blink {
-        0% { opacity: 1; }
-        50% { opacity: 0.9; background-color: rgb(255, 153, 0); }
-        100% { opacity: 1; }
+        0% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.9;
+            background-color: rgb(255, 153, 0);
+        }
+
+        100% {
+            opacity: 1;
+        }
     }
 
-    .nav-right .visible-items li a i {
-        font-size: 1.1rem;
+    /* Notification Icon */
+    .nav-right img {
+        width: 24px;
+    }
+
+    .badge {
+        background: red;
         color: white;
-        vertical-align: middle;
+        font-size: 12px;
+        padding: 3px 6px;
+        border-radius: 50%;
+        position: relative;
+        top: -10px;
+        left: -5px;
     }
 
-    .nav-right .visible-items li:hover a,
-    .nav-right .visible-items li:hover a i {
-        background-color:rgb(239, 236, 233);
-        color: black;
+
+    /* 2 row */
+    .search-container {
+        position: relative;
     }
 
-    /* Hamburger Menu */
-    .hamburger-menu {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        background-color:rgb(118, 175, 115);
-        position: absolute;
-        top: 100%;
-        right: 0;
-        z-index: 1000;
-    }
-
-    .hamburger-menu.active {
-        display: flex;
-    }
-
-    .hamburger-menu li {
-        list-style: none;
-        width: 100%;
-        text-align: left;
-        border-bottom: 1px solid white;
-        margin: 0;
-        padding: 15px 5%;
-    }
-
-    .hamburger-menu li a {
-        display: block;
-        text-align: center;
-        width: 100%;
-        color: black;
-        font-size: 1.1rem;
-        font-weight: 600;
-        text-decoration: none;
-        transition: 0.3s;
-    }
-
-    .hamburger-menu li:hover{
-        border: 1px solid black;
+    .search-container input {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        width: 50vw;
+        height: 50px;
+        padding: 8px;
+        border: none;
         border-radius: 5px;
-        background-color:rgba(233, 236, 239, 0.77);
     }
 
-    .hamburger-menu li:last-child {
-        border-bottom: none;
+    /* Search results dropdown */
+    .search-results {
+        position: absolute;
+        top: 35px;
+        left: 0;
+        width: 250px;
+        background: white;
+        border: 1px solid #ccc;
+        display: none;
     }
 
-    /* Hamburger Menu Icon */
-    .hamburger {
-        font-size: 1.5rem;
-        color: white;
-        cursor: pointer;
-        margin: auto 0 auto 10px;
-    }
 
-    /* Tablets */
-    @media (min-width: 481px) and (max-width: 1200px) {
+    /* Responsive Design */
+    @media (max-width: 768px) {
         nav {
-            padding: 15px 10%;
+            padding: 15px;
         }
 
-        .nav-right .visible-items {
-            display: none;
-        }
-
-        .hamburger {
-            display: block;
-        }
-
-        .hamburger-menu {
-            display: none;
-        }
-
-        .search-container {
-            width: 100%; 
-            max-width: 10rem; 
-        }
-
-        .search-results {
-            width: 100%;
-            max-width: 20rem;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-    }
-
-    /* Mobile */
-    @media (max-width: 480px) {
-        nav .logo a {
-            font-size: 28px;
-        }
-
-        .search-container {
-            width: 100%;
-            max-width: 15rem; /* Adjust max width for mobile */
+        .nav-top {
+            flex-direction: column;
+            text-align: center;
         }
 
         .search-container input {
-            font-size: 14px;
-        }
-
-        .search-results {
             width: 100%;
-            max-width: 15rem;
-            left: 50%;
-            transform: translateX(-50%);
         }
 
-        .hamburger-menu li a {
-            font-size: 18px;
+        .nav-bottom {
+            margin-top: 10px;
         }
 
-        .hamburger {
-            font-size: 24px;
+        .nav-right {
+            flex-wrap: wrap;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .nav-right li {
+            margin: 5px;
         }
     }
     </style>
 </head>
 
 <body>
+
     <script>
     function confirmLogout() {
         var confirmAction = confirm("Are you sure you want to log out?");
@@ -327,7 +221,7 @@ $unread_count = $row['unread_count'];
         const searchInput = document.querySelector('.search-container input[type="text"]');
         const searchResults = document.getElementById('search-results');
         const hamburger = document.querySelector('.hamburger');
-        const hamburgerMenu = document.querySelector('.hamburger-menu');
+        const navRight = document.querySelector('.nav-right');
 
         // Search functionality
         searchInput.addEventListener('focus', () => {
@@ -352,59 +246,45 @@ $unread_count = $row['unread_count'];
 
         // Hamburger menu toggle
         hamburger.addEventListener('click', () => {
-            hamburgerMenu.classList.toggle('active');
-        });
-
-        // Close hamburger menu when clicking outside
-        document.addEventListener('click', (event) => {
-            if (!event.target.closest('.hamburger') && !event.target.closest('.hamburger-menu')) {
-                hamburgerMenu.classList.remove('active');
-            }
+            navRight.classList.toggle('active');
         });
     });
     </script>
 
     <nav>
-        <div class="logo">
-            <a href="home.php">AgroMart</a>
+        <div class="nav-top">
+            <div class="logo">
+                <a href="home.php">AgroMart</a>
+            </div>
+            <ul class="nav-right">
+                <li><a href="post_request.php">Request Products</a></li>
+                <li><a href="post_ad.php" class="place-ad">POST AD FREE</a></li>
+                <li><a href="wishlist.php"><i class="fas fa-heart" title="Wishlist"></i></a></li>
+                <li><a href="notifications.php">
+                        <i class="fa fa-bell" aria-hidden="true"></i>
+                        <?php if ($unread_count > 0): ?>
+                        <span class="badge" id="notif_count"><?= $unread_count ?></span>
+                        <?php endif; ?>
+                    </a>
+                </li>
+                <?php if (isset($_SESSION['username'])): ?>
+                <li><a href="profile.php"><i class="fas fa-user"></i> &nbsp; Account</a></li>
+                <li><a href="logout.php" onclick="confirmLogout()">LogOut</a></li>
+                <?php else: ?>
+                <li><a href="login.php">LOGIN</a></li>
+                <li><a href="register.php">REGISTER</a></li>
+                <?php endif; ?>
+            </ul>
         </div>
 
-        <div class="search-container">
-            <input type="text" placeholder="Search what you want" onkeyup="searchProducts(this.value)"
-                aria-label="Search">
-            <div class="search-results" id="search-results" aria-live="polite"></div>
-        </div>
-
-        <div class="nav-right">
-            <div class="visible-items">
-                <ul>
-                    <li><a href="my_ads.php">MY ADS</a></li>
-                    <li><a href="post_ad.php" class="place-ad">POST ADS</a></li>
-                </ul>
-            </div>
-            <div class="hamburger-menu">
-                <ul>
-                    <li><a href="wishlist.php"><i class="fas fa-heart" title="Wishlist"></i></a></li>
-                    
-                    <li><a href="notifications.php"> <i class="fa fa-bell" aria-hidden="true"  title="Notifications"></i>
-                            <?php if ($unread_count > 0): ?>
-                            <span class="badge" id="notif_count"><?= $unread_count ?></span>
-                            <?php endif; ?>
-                        </a></li>
-                    <?php if (isset($_SESSION['username'])): ?>
-                    <li><a href="profile.php"><i class="fas fa-user" title="Profile"></i></a></li>
-                    <li><a href="#" onclick="confirmLogout(); return false;">LOGOUT</a></li>
-                    <?php else: ?>
-                    <li><a href="login.php">LOGIN</a></li>
-                    <li><a href="register.php">REGISTER</a></li>
-                    <?php endif; ?>
-                </ul>
-            </div>
-            <div class="hamburger">
-                <i class="fas fa-bars"></i>
+        <div class="nav-bottom">
+            <div class="search-container">
+                <input type="text" placeholder="Search what you want" onkeyup="searchProducts(this.value)">
+                <div class="search-results" id="search-results"></div>
             </div>
         </div>
     </nav>
+
 </body>
 
 </html>
