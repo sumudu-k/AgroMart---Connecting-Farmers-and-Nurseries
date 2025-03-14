@@ -9,7 +9,7 @@ include 'alertFunction.php';
 
 //check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    showAlert('Please login to post an ad', 'error', '#ff0000', 'login.php');
+    showAlert('Please login to post an ad', 'error', '#ff0000');
     exit();
 }
 

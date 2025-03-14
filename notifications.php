@@ -2,10 +2,8 @@
 session_start();
 include 'config.php';
 include 'navbar.php';
-include 'alertFunction.php';
 
 if (!isset($_SESSION['user_id'])) {
-    showAlert('Please log in to see notifications.', 'error', '#ff0000', 'login.php');
     exit();
 }
 

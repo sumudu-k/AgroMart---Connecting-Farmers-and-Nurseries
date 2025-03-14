@@ -6,7 +6,7 @@ include 'navbar.php';
 include 'alertFunction.php';
 
 if (!isset($_SESSION['user_id'])) {
-    showAlert('Please log in to access your ads.', 'error', '#ff0000', 'login.php');
+    showAlert('Please log in to access your ads.', 'error', '#ff0000');
     exit();
 }
 
@@ -31,7 +31,7 @@ $result = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Ads</title>
     <style>
-    *{
+    * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
@@ -41,7 +41,7 @@ $result = $stmt->get_result();
         font-family: Arial, sans-serif;
         position: relative;
         min-height: 100vh;
-        display: flex; 
+        display: flex;
         flex-direction: column;
     }
 
@@ -70,7 +70,7 @@ $result = $stmt->get_result();
     .container {
         width: 75%;
         margin: 0 auto;
-        position: relative; 
+        position: relative;
         z-index: 1;
     }
 

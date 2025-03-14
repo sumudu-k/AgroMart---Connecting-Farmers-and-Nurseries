@@ -35,12 +35,12 @@ $unread_count = $row['unread_count'];
 
     <style>
     /* General navbar styling */
-    *{
+    * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
     }
-    
+
     nav {
         display: flex;
         flex-direction: column;
@@ -192,6 +192,10 @@ $unread_count = $row['unread_count'];
         }
     }
     </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src='alertFunction.js'></script>
+
 </head>
 
 <body>
@@ -263,6 +267,21 @@ $unread_count = $row['unread_count'];
                 <a href="home.php">AgroMart</a>
             </div>
             <ul class="nav-right">
+                <?php if (!isset($_SESSION['username'])): ?>
+                <li><a href="#" onclick="showAlert('Please login to add a product request','warning','red')">Request
+                        Products</a></li>
+                <li><a href="#" onclick="showAlert('Please login to post an Ad','warning','red')" class="place-ad">POST
+                        AD FREE</a></li>
+                <li><a href="#" onclick="showAlert('Please login to see Wishlist','warning','red')"><i
+                            class="fas fa-heart" title="Wishlist"></i></a></li>
+                <li><a href="#" onclick="showAlert('Please login to see Notifications','warning','red')">
+                        <i class="fa fa-bell" aria-hidden="true"></i>
+                        <?php if ($unread_count > 0): ?>
+                        <span class="badge" id="notif_count"><?= $unread_count ?></span>
+                        <?php endif; ?>
+                    </a>
+                </li>
+                <?php else: ?>
                 <li><a href="post_request.php">Request Products</a></li>
                 <li><a href="post_ad.php" class="place-ad">POST AD FREE</a></li>
                 <li><a href="wishlist.php"><i class="fas fa-heart" title="Wishlist"></i></a></li>
@@ -273,6 +292,9 @@ $unread_count = $row['unread_count'];
                         <?php endif; ?>
                     </a>
                 </li>
+                <?php endif; ?>
+
+
                 <?php if (isset($_SESSION['username'])): ?>
                 <li><a href="profile.php"><i class="fas fa-user"></i> &nbsp; Account</a></li>
                 <li><a href="logout.php" onclick="confirmLogout()">LogOut</a></li>

@@ -2,8 +2,7 @@
 session_start();
 ob_start();
 include 'config.php';
-include 'navbar.php'; // Assuming you have a navbar.php for consistency
-include 'alertFunction.php';
+include 'navbar.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
