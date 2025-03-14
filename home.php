@@ -32,6 +32,7 @@ $ads_result = $conn->query($ads_query);
         box-sizing: border-box;
         font-family: Arial, sans-serif;
         margin: 0;
+        padding: 0;
     }
 
     /* banner Image */

@@ -48,14 +48,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change Password - AgroMart</title>
     <style>
-    * {
+    *{
+        margin: 0;
+        padding: 0;
         box-sizing: border-box;
     }
 
     body {
         font-family: "Poppins", Arial, sans-serif;
-        margin: 0;
-        padding: 0;
         position: relative;
         overflow-x: hidden;
         min-height: 100vh;

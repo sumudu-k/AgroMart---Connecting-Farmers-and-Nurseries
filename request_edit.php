@@ -59,8 +59,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         body {
             font-family: "Poppins", Arial, sans-serif;
-            margin: 0;
-            padding: 0;
             position: relative;
             overflow-x: hidden;
             min-height: 100vh;

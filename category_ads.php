@@ -39,13 +39,14 @@ $result = $stmt->get_result();
     <link rel="stylesheet" href="css/category_ads.css">
     <title>Category Ads</title>
     <style>
-    * {
+    *{
+        margin: 0;
+        padding: 0;
         box-sizing: border-box;
     }
 
     body {
         font-family: Arial, sans-serif;
-        margin: 0;
         overflow-x: hidden;
         display: flex;
         flex-direction: column;

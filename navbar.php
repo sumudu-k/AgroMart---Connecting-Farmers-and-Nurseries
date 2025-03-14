@@ -35,6 +35,12 @@ $unread_count = $row['unread_count'];
 
     <style>
     /* General navbar styling */
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
     nav {
         display: flex;
         flex-direction: column;

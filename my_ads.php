@@ -31,14 +31,14 @@ $result = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Ads</title>
     <style>
-    * {
+    *{
+        margin: 0;
+        padding: 0;
         box-sizing: border-box;
     }
 
     body {
         font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
         position: relative;
         min-height: 100vh;
         display: flex; 

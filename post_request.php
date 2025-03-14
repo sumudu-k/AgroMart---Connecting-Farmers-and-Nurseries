@@ -43,7 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-
     }
 
     body {

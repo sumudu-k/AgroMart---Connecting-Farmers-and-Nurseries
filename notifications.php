@@ -50,7 +50,6 @@ $unread_count = $row['unread_count'];
     body {
         font-family: Arial, sans-serif;
         background-color: #f4f4f4;
-
         display: flex;
         flex-direction: column;
         justify-content: center;

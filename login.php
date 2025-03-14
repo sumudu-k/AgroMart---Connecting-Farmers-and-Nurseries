@@ -52,8 +52,6 @@ if (isset($_POST['login'])) {
         }
 
         body {
-            margin: 0;
-            padding: 0;
             position: relative; 
             min-height: 100vh;
             display: flex;
