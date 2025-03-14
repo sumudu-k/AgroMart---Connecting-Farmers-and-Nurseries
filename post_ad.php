@@ -3,16 +3,15 @@ session_start();
 ob_start();
 include 'config.php';
 include 'navbar.php';
-include 'alertFunction.php';
 
-
-
-//check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    showAlert('Please login to post an ad', 'error', '#ff0000');
+    echo "<script>
+    window.onload = function() {
+        showAlert('Please login to post an ad', 'error', '#ff0000');
+    };
+</script>";
     exit();
 }
-
 
 if (isset($_POST['submit'])) {
     $title = $_POST['title'];
@@ -23,7 +22,6 @@ if (isset($_POST['submit'])) {
     $user_id = $_SESSION['user_id'];
     $category_id = $_POST['category'];
 
-    // insert ad details into the ads table
     $ad_sql = "INSERT INTO ads (title, description, price, phone_number, user_id, category_id, district) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($ad_sql);
     $stmt->bind_param("ssdsiss", $title, $description, $price, $phone_number, $user_id, $category_id, $district);
@@ -43,7 +41,14 @@ if (isset($_POST['submit'])) {
             }
         }
     }
-    showAlert('Your ad has posted successfully', 'success', '#008000', 'my_ads.php');
+    echo "<script>
+    window.onload = function() {
+        showAlert('Your ad has posted successfully', 'success', '#008000');
+    };
+    setTimeout(function() {
+        window.location.href = 'my_ads.php';
+    }, 2000);
+</script>";
 }
 ?>
 
@@ -53,7 +58,6 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="UTF-8">
     <title>Post Ad</title>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
     * {
         box-sizing: border-box;
@@ -334,6 +338,7 @@ if (isset($_POST['submit'])) {
         </form>
     </div>
     <?php include 'footer.php'; ?>
+    <script src='alertFunction.js'></script>
 </body>
 
 </html>

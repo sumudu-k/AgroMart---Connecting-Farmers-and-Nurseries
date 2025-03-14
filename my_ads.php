@@ -3,11 +3,13 @@ session_start();
 ob_start();
 include 'config.php';
 include 'navbar.php';
-include 'alertFunction.php';
 
 if (!isset($_SESSION['user_id'])) {
-    showAlert('Please log in to access your ads.', 'error', '#ff0000');
-    exit();
+    echo "<script>
+    window.onload = function() {
+        showAlert('Please login to post an ad', 'error', '#ff0000');
+    };
+</script>";
 }
 
 $user_id = $_SESSION['user_id'];
@@ -305,6 +307,7 @@ $result = $stmt->get_result();
             <?php endif; ?>
         </div>
     </div>
+    <script src='alertFunction.js'></script>
 </body>
 
 </html>
