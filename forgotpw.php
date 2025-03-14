@@ -3,7 +3,6 @@ session_start();
 ob_start();
 include 'config.php';
 include 'navbar.php';
-include 'alertFunction.php';
 
 if (isset($_POST['submit_email'])) {
     $email = $_POST['email'];
@@ -19,7 +18,11 @@ if (isset($_POST['submit_email'])) {
         header("Location: forgotpw.php?reset_password=true");
         exit;
     } else {
-        showAlert('Email not found!', 'error', '#ff0000', 'forgotpw.php');
+        echo "<script>
+        window.onload = function() {
+            showAlert('Email not found!', 'error', '#ff0000');
+        };
+        </script>";
     }
 }
 
@@ -34,10 +37,20 @@ if (isset($_POST['reset_password'])) {
         $stmt->execute();
 
         unset($_SESSION['reset_email']);
-        showAlert('Password has been reset', 'success', '#008000', 'login.php');
-        exit;
+        echo "<script>
+        window.onload = function() {
+            showAlert('Password has been reset', 'success', '#008000', 'login.php');
+        };
+        setTimeout(function() {
+            window.location.href = 'login.php';
+        }, 2000);
+        </script>";
     } else {
-        showAlert('Session expired or no reset request found', 'warning', '#ff0000', 'forgotpw.php');
+        echo "<script>
+        window.onload = function() {
+            showAlert('Session expired or no reset request found', 'warning', '#ff0000');
+        };
+        </script>";
     }
 }
 ?>
@@ -85,10 +98,12 @@ if (isset($_POST['reset_password'])) {
         align-items: center;
         min-height: 80vh;
         padding: 20px;
-        width: 75%; 
-        margin: 0 auto; 
-        position: relative; /* Ensure content is above background */
-        z-index: 1; /* Ensure content is above background */
+        width: 75%;
+        margin: 0 auto;
+        position: relative;
+        /* Ensure content is above background */
+        z-index: 1;
+        /* Ensure content is above background */
     }
 
     .login-box {
@@ -96,8 +111,8 @@ if (isset($_POST['reset_password'])) {
         padding: 30px;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 100%; 
-        max-width: 400px; 
+        width: 100%;
+        max-width: 400px;
         text-align: center;
     }
 
@@ -176,7 +191,7 @@ if (isset($_POST['reset_password'])) {
     /* Mobile Devices */
     @media screen and (max-width: 480px) {
         .wrapper {
-            width: 95%; 
+            width: 95%;
             min-height: 60vh;
             padding: 10px;
         }
@@ -245,31 +260,33 @@ if (isset($_POST['reset_password'])) {
         <div class="login-box">
             <h2>Forgot Password</h2>
             <?php if (!isset($_GET['reset_password'])): ?>
-                <form action="forgotpw.php" method="POST">
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                    </div>
-                    <button type="submit" name="submit_email">Submit</button>
-                    <div class="links">
-                        <p>Remembered your password? <a href="login.php">Login here</a></p>
-                    </div>
-                </form>
+            <form action="forgotpw.php" method="POST">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <button type="submit" name="submit_email">Submit</button>
+                <div class="links">
+                    <p>Remembered your password? <a href="login.php">Login here</a></p>
+                </div>
+            </form>
             <?php else: ?>
-                <form action="forgotpw.php" method="POST">
-                    <div class="form-group">
-                        <label for="new_password">New Password</label>
-                        <input type="password" id="new_password" name="new_password" placeholder="Enter new password" required>
-                    </div>
-                    <button type="submit" name="reset_password">Reset Password</button>
-                    <div class="links">
-                        <p>Back to <a href="login.php">Login</a></p>
-                    </div>
-                </form>
+            <form action="forgotpw.php" method="POST">
+                <div class="form-group">
+                    <label for="new_password">New Password</label>
+                    <input type="password" id="new_password" name="new_password" placeholder="Enter new password"
+                        required>
+                </div>
+                <button type="submit" name="reset_password">Reset Password</button>
+                <div class="links">
+                    <p>Back to <a href="login.php">Login</a></p>
+                </div>
+            </form>
             <?php endif; ?>
         </div>
     </div>
     <?php include 'footer.php'; ?>
+    <script src='alertFunction.js'></script>
 </body>
 
 </html>

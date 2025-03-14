@@ -47,6 +47,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             window.onload = function() {
                 showAlert('Password updated successfully!', 'success', '#008000');
                 };
+                setTimeout(function() {
+                    window.location.href = 'profile.php';
+                }, 2000);
             </script>";
         } else {
             echo "<script>

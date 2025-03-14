@@ -75,7 +75,6 @@ if (isset($_POST['submit'])) {
     window.location.href = 'my_ads.php';
     }, 2000);
 </script>";
-    // exit();
 }
 ?>
 

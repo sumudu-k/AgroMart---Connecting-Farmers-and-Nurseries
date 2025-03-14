@@ -1,7 +1,6 @@
 <?php
 session_start();
 include 'config.php';
-include 'alertFunction.php';
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
@@ -22,10 +21,37 @@ if (isset($_GET['ad_id'])) {
     $stmt_img->bind_param("i", $ad_id);
     $stmt_img->execute();
 
-    showAlert('Ad deleted successfully!', 'success', '#008000', 'my_ads.php');
-    exit();
+    echo "<script>
+    window.onload = function() {
+        showAlert('Ad deleted successfully!', 'success', '#008000');
+    };
+    setTimeout(function() {
+        window.location.href = 'my_ads.php';
+    }, 2000);
+    </script>";
 } else {
-    showAlert('Ad ID is missing', 'error', '#ff0000', 'delete_ad.php');
+
+    echo "<script>
+    window.onload = function() {
+        showAlert('Ad ID is missing', 'error', '#ff0000');
+    };
+    </script>";
 }
 
 include 'footer.php';
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete ad</title>
+</head>
+
+<body>
+    <script src='alertFunction.js'></script>
+</body>
+
+</html>
