@@ -23,7 +23,7 @@ $adreqcount = "SELECT COUNT(*) as total FROM plant_requests";
 $adrequests = $conn->query($adreqcount);
 $adrequests = $adrequests->fetch_assoc();
 
-$notificationcount = "SELECT COUNT(*) as total FROM notifications";
+$notificationcount = "SELECT COUNT(DISTINCT message) AS total FROM notifications";
 $notifications = $conn->query($notificationcount);
 $notifications = $notifications->fetch_assoc();
 
