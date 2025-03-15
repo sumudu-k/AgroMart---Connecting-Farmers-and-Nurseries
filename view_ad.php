@@ -2,7 +2,6 @@
 session_start();
 include 'config.php';
 include 'navbar.php';
-include 'alertFunction.php';
 
 if (isset($_GET['ad_id'])) {
     $ad_id = $_GET['ad_id'];
@@ -21,8 +20,15 @@ if (isset($_GET['ad_id'])) {
     if ($ad) {
         $category_id = $ad['category_id'];
     } else {
-        showAlert('Ad not found.', 'error', '#ff0000', 'home.php');
-        exit;
+
+        echo "<script>
+        window.onload = function() {
+            showAlert('Ad not found', 'error', '#ff0000');
+        };
+        setTimeout(function() {
+        window.location.href = 'home.php';
+        }, 2000);
+    </script>";
     }
 
     $img_sql = "SELECT image_path FROM ad_images WHERE ad_id = ?";
@@ -51,7 +57,16 @@ if (isset($_GET['ad_id'])) {
     $user_id = $_SESSION['user_id'] ?? null;
     $is_wishlisted = false;
 } else {
-    showAlert('Ad ID is missing', 'error', '#ff0000', 'home.php');
+    echo "<script>
+    window.onload = function() {
+        showAlert('Ad Id is missing', 'error', '#ff0000');
+    };
+    setTimeout(function() {
+    window.location.href = 'home.php';
+}, 2000);
+
+    
+    </script>";
     exit;
 }
 
@@ -84,8 +99,8 @@ if ($user_id) {
         color: #333;
         position: relative;
         min-height: 100vh;
-        display: flex; 
-        flex-direction: column; 
+        display: flex;
+        flex-direction: column;
     }
 
     /* Add background image */
@@ -109,8 +124,8 @@ if ($user_id) {
         display: flex;
         gap: 20px;
         flex-wrap: wrap;
-        position: relative; 
-        z-index: 1; 
+        position: relative;
+        z-index: 1;
     }
 
     .ad-image {
@@ -175,7 +190,7 @@ if ($user_id) {
     }
 
     .ad-details .ad-description {
-        font-size: 1.1rem; 
+        font-size: 1.1rem;
         color: #444;
         margin: 10px 0 30px 0;
         line-height: 1.3;
@@ -213,7 +228,7 @@ if ($user_id) {
         margin: 20px auto 30px auto;
         padding: 20px;
         border-radius: 10px;
-        position: relative; 
+        position: relative;
         z-index: 1;
     }
 
@@ -414,7 +429,9 @@ if ($user_id) {
             <h1><?= htmlspecialchars($ad['title']); ?></h1>
             <p class="ad-description"><?= htmlspecialchars($ad['description']); ?></p>
             <p><strong>Price:</strong> <span class="price">Rs <?= htmlspecialchars($ad['price']); ?></span></p>
-            <p><strong>Contact Number:</strong> <a href="https://wa.me/+94<?= htmlspecialchars($ad['phone_number']); ?>"><?= htmlspecialchars($ad['phone_number']); ?></a></p>
+            <p><strong>Contact Number:</strong> <a
+                    href="https://wa.me/+94<?= htmlspecialchars($ad['phone_number']); ?>"><?= htmlspecialchars($ad['phone_number']); ?></a>
+            </p>
             <p><strong>Category:</strong> <?= htmlspecialchars($ad['category_name']); ?></p>
             <p><strong>Posted On:</strong> <?= htmlspecialchars($ad['formatted_date']); ?></p>
             <p><strong>District:</strong> <?= htmlspecialchars($ad['district']); ?></p>
@@ -451,6 +468,7 @@ if ($user_id) {
         document.getElementById('displayedImage').src = src;
     }
     </script>
+    <script src='alertFunction.js'></script>
 
 </body>
 

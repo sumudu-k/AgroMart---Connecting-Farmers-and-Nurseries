@@ -2,8 +2,7 @@
 session_start();
 ob_start();
 include 'config.php';
-include 'navbar.php'; // Assuming you have a navbar.php for consistency
-include 'alertFunction.php';
+include 'navbar.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -23,9 +22,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("issss", $user_id, $subject, $description, $contact, $district);
 
     if ($stmt->execute()) {
-        showAlert('Request submitted successfully!', 'success', '#008000', 'my_requests.php');
+        echo "<script>
+        showAlert('Request Created Successfully!', 'success', 'green');
+        setTimeout(function() {
+        window.location.href = 'my_requests.php';
+        }, 2000);
+    </script>";
     } else {
-        showAlert('Error submitting request', 'error', '#ff0000', 'post_request.php');
+        echo "<script>
+        showAlert('An Error Creating Request!', 'success', 'green');
+    </script>";
     }
     $stmt->close();
 }
@@ -38,12 +44,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post a Request</title>
+    <script src='alertFunction.js'></script>
     <style>
     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-
     }
 
     body {

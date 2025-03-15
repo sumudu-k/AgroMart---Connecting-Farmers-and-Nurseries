@@ -28,6 +28,11 @@
     </div>
 </footer>
 <style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
     /* Footer */
     footer {
         background-color: #006400;

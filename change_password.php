@@ -1,10 +1,13 @@
 <?php
 session_start();
 include 'config.php';
-include 'alertFunction.php';
 
 if (!isset($_SESSION['user_id'])) {
-    showAlert('You must log in first!', 'error', 'ff0000', 'login.php');
+    echo "<script>
+    window.onload = function() {
+        showAlert('You must log in first!', 'error', '#ff0000');
+        };
+    </script>";
     exit();
 }
 
@@ -23,18 +26,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = $result->fetch_assoc();
 
     if (!password_verify($current_password, $user['password'])) {
-        showAlert('Your current password is incorrect.', 'error', 'ff0000', 'change_password.php');
+        echo "<script>
+    window.onload = function() {
+        showAlert('Your current password is incorrect.', 'error', '#ff0000');
+    };
+</script>";
     } elseif ($new_password !== $confirm_password) {
-        showAlert('New passwords do not match.', 'error', 'ff0000', 'change_password.php');
+        echo "<script>
+        window.onload = function() {
+            showAlert('New passwords do not match.', 'error', '#ff0000');
+            };
+        </script>";
     } else {
         $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
         $update_stmt = $conn->prepare("UPDATE users SET password = ? WHERE user_id = ?");
         $update_stmt->bind_param("si", $hashed_password, $user_id);
 
         if ($update_stmt->execute()) {
-            showAlert('Password updated successfully!', 'success', '008000', 'profile.php');
+            echo "<script>
+            window.onload = function() {
+                showAlert('Password updated successfully!', 'success', '#008000');
+                };
+                setTimeout(function() {
+                    window.location.href = 'profile.php';
+                }, 2000);
+            </script>";
         } else {
-            showAlert('Error updating the password.', 'error', 'ff0000', 'change_password.php');
+            echo "<script>
+            window.onload = function() {
+                showAlert('An error occurred while updating your password.', 'error', '#ff0000');
+                };
+            </script>";
         }
     }
 }
@@ -49,13 +71,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Change Password - AgroMart</title>
     <style>
     * {
+        margin: 0;
+        padding: 0;
         box-sizing: border-box;
     }
 
     body {
         font-family: "Poppins", Arial, sans-serif;
-        margin: 0;
-        padding: 0;
         position: relative;
         overflow-x: hidden;
         min-height: 100vh;
@@ -162,6 +184,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         background-color: #cb790d;
     }
 
+
+    h4 {
+        margin-top: 15px;
+        font-weight: 500;
+    }
+
+    a {
+        color: rgb(0, 107, 23);
+        text-decoration: none;
+        font-weight: bold;
+    }
+
     /* mobile Devices */
     @media screen and (max-width: 480px) {
         h1 {
@@ -225,7 +259,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
@@ -250,10 +284,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         placeholder="Confirm new password" required>
                 </div>
                 <button type="submit">Change Password</button>
+                <h4>Forgot Password <a href='forgotpw.php'>Reset here</a></h4>
             </form>
         </div>
     </div>
     <?php include 'footer.php'; ?>
+    <script src='alertFunction.js'></script>
 </body>
 
 </html>

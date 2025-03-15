@@ -1,7 +1,6 @@
 <?php
 session_start();
 include 'config.php';
-include 'alertFunction.php';
 
 $ad_id = $_GET['ad_id'];
 
@@ -68,8 +67,14 @@ if (isset($_POST['submit'])) {
             $stmt->execute();
         }
     }
-    showAlert('Ad updated successfully!', 'success', '#008000', 'my_ads.php');
-    exit();
+    echo "<script>
+    window.onload = function() {
+        showAlert('Ad updated successfully!', 'success', '#008000');
+    };
+        setTimeout(function() {
+    window.location.href = 'my_ads.php';
+    }, 2000);
+</script>";
 }
 ?>
 
@@ -222,7 +227,7 @@ if (isset($_POST['submit'])) {
     }
 
     /*submit button */
-    button{
+    button {
         display: block;
         margin: 20px auto;
         padding: 10px 20px;
@@ -421,6 +426,7 @@ if (isset($_POST['submit'])) {
         </form>
     </div>
     <?php include 'footer.php'; ?>
+    <script src='alertFunction.js'></script>
 </body>
 
 </html>

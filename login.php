@@ -3,7 +3,6 @@
 ob_start();
 include 'config.php';
 include 'navbar.php';
-include 'alertFunction.php';
 
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
@@ -25,10 +24,18 @@ if (isset($_POST['login'])) {
 
             exit();
         } else {
-            showAlert('Invalid password!', 'error', '#ff0000', 'login.php');
+            echo "<script>
+            window.onload = function() {
+                showAlert('Invalid password!', 'error', '#ff0000');
+            };
+            </script>";
         }
     } else {
-        showAlert('User not found!', 'error', '#ff0000', 'login.php');
+        echo "<script>
+        window.onload = function() {
+            showAlert('User not found!', 'error', '#ff0000');
+        };
+        </script>";
     }
 }
 ?>
@@ -43,137 +50,134 @@ if (isset($_POST['login'])) {
     <title>Login</title>
 
     <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
+    body {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
 
-        body {
-            margin: 0;
-            padding: 0;
-            position: relative; 
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("images/B1.jpg");
+        background-size: cover;
+        opacity: 0.5;
+        z-index: -1;
+    }
 
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("images/B1.jpg");
-            background-size: cover;
-            opacity: 0.5;
-            z-index: -1;
-        }
+    /* Centered Wrapper */
+    .wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 70vh;
+        padding: 20px;
+        width: 75%;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+    }
 
-        /* Centered Wrapper */
-        .wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 70vh;
-            padding: 20px;
-            width: 75%; 
-            margin: 0 auto; 
-            position: relative;
-            z-index: 1; 
-        } 
+    /* login Container Styling */
+    .login-container {
+        display: flex;
+        background-color: #e2e6eb;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 1200px;
+    }
 
-        /* login Container Styling */
-        .login-container {
-            display: flex;
-            background-color: #e2e6eb;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 1200px;
-        }
+    .plant-image {
+        flex: 0.75;
+        background-image: url("images/login_image.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        mix-blend-mode: multiply;
+        background-position: center;
+        border-radius: 10px;
+        min-height: 300px;
+    }
 
-        .plant-image {
-            flex: 0.75;
-            background-image: url("images/login_image.png");
-            background-size: contain;
-            background-repeat: no-repeat;
-            mix-blend-mode:multiply;
-            background-position: center;
-            border-radius: 10px;
-            min-height: 300px;
-        }
+    .login-form {
+        flex: 1.25;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-        .login-form {
-            flex: 1.25;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+    .login-form form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 
-        .login-form form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+    .login-form h2 {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
 
-        .login-form h2 {
-            font-size: 24px;
-            margin-bottom: 30px;
-        }
+    .login-form input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
 
-        .login-form input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+    input:focus {
+        outline: none;
+        border-color: #007a33;
+    }
 
-        input:focus {
-            outline: none;
-            border-color: #007a33;
-        }
+    .login-form form button {
+        width: 200px;
+        background-color: #007a33;
+        color: #fff;
+        padding: 10px;
+        font-size: 1.125rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
 
-        .login-form form button {
-            width: 200px;
-            background-color: #007a33;
-            color: #fff;
-            padding: 10px;
-            font-size: 1.125rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+    .login-form button:hover {
+        background-color: #005922;
+    }
 
-        .login-form button:hover {
-            background-color: #005922;
-        }
+    p {
+        font-size: 0.938rem;
+        color: black;
+        margin-top: 15px;
+    }
 
-        p {
-            font-size: 0.938rem;
-            color: black;
-            margin-top: 15px;
-        }
+    .link {
+        color: #006400;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+    }
 
-        .link {
-            color: #006400;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .link:hover {
-            color: #f09319;
-        }
+    .link:hover {
+        color: #f09319;
+    }
 
 
     /* responsive design */
@@ -219,12 +223,13 @@ if (isset($_POST['login'])) {
     }
 
 
-    
+
     @media (min-width: 481px) and (max-width: 1200px) {
         .wrapper {
             min-height: 50vh;
-            
+
         }
+
         .login-container {
             flex-direction: row;
             width: 90%;
@@ -260,6 +265,7 @@ if (isset($_POST['login'])) {
             </div>
         </div>
     </div>
+    <script src='alertFunction.js'></script>
 </body>
 
 </html>

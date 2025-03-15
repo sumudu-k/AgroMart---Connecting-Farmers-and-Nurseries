@@ -2,10 +2,8 @@
 session_start();
 include 'config.php';
 include 'navbar.php';
-include 'alertFunction.php';
 
 if (!isset($_SESSION['user_id'])) {
-    showAlert('Please log in to see notifications.', 'error', '#ff0000', 'login.php');
     exit();
 }
 
@@ -41,11 +39,15 @@ $unread_count = $row['unread_count'];
 <head>
     <title>My Notifications</title>
     <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
     body {
         font-family: Arial, sans-serif;
         background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
         display: flex;
         flex-direction: column;
         justify-content: center;

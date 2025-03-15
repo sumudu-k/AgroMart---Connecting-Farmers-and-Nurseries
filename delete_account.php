@@ -2,7 +2,6 @@
 session_start();
 include 'config.php';
 include 'navbar.php';
-include 'alertFunction.php';
 
 
 if (!isset($_SESSION['user_id'])) {
@@ -23,7 +22,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = $result->fetch_assoc();
 
     if (!password_verify($password, $user['password'])) {
-        showAlert('Incorrect password. Account not deleted', 'error', '#ff0000', 'delete_account.php');
+        echo "<script>
+        window.onload = function() {
+            showAlert('Incorrect password. Account not deleted', 'error', '#ff0000');
+        };
+        setTimeout(function() {
+            window.location.href = 'delete_account.php';
+        }, 2000);
+        </script>";
         exit();
     }
 
@@ -33,10 +39,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($delete_stmt->execute()) {
         session_destroy();
-        showAlert('Your account deleted', 'success', '#008000', 'register.php');
-        exit();
+        echo "<script>
+        window.onload = function() {
+            showAlert('Your account deleted', 'success', '#008000');
+        };
+        setTimeout(function() {
+            window.location.href = 'home.php';
+        }, 2000);
+        </script>";
     } else {
-        showAlert('error deleting account', 'error', '#ff0000', 'delete_account.php');
+        echo "<script>
+        window.onload = function() {
+            showAlert('error deleting account', 'error', '#ff0000');
+        };
+        setTimeout(function() {
+            window.location.href = 'profile.php';
+        }, 2000);
+        </script>";
     }
 }
 ?>
@@ -50,13 +69,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Delete Account - AgroMart</title>
     <style>
     * {
+        margin: 0;
+        padding: 0;
         box-sizing: border-box;
     }
 
     body {
         font-family: "Poppins", Arial, sans-serif;
-        margin: 0;
-        padding: 0;
         position: relative;
         overflow-x: hidden;
         min-height: 100vh;
@@ -259,6 +278,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
     <?php include 'footer.php'; ?>
+    <script src='alertFunction.js'></script>
 </body>
 
 </html>

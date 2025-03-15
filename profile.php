@@ -3,7 +3,6 @@ ob_start();
 session_start();
 include 'config.php';
 include 'navbar.php';
-include 'alertFunction.php';
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
@@ -31,16 +30,22 @@ if (isset($_POST['update'])) {
         $stmt->execute();
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
-            showAlert('Email already exists. Please use another email.', 'error', '#ff0000', 'profile.php');
+            echo "<script>
+                showAlert('Email already in use.', 'error', '#ff0000');
+            </script>";
         } else {
             $update_sql = "UPDATE users SET username=?, email=?, contact_number=?, address=? WHERE user_id=?";
             $stmt = $conn->prepare($update_sql);
             $stmt->bind_param("ssisi", $username, $email, $contact_number, $address, $user_id);
 
             if ($stmt->execute()) {
-                showAlert('Profile updated successfully!', 'success', '#008000', 'profile.php');
+                echo "<script>
+                    showAlert('Profile updated successfully!', 'success', '#008000');
+                </script>";
             } else {
-                showAlert('Error updating profile.', 'error', '#ff0000', 'profile.php');
+                echo "<script>
+                    showAlert('Error updating profile.', 'error', '#ff0000');
+                </script>";
             }
         }
     } else {
@@ -49,9 +54,17 @@ if (isset($_POST['update'])) {
         $stmt->bind_param("ssisi", $username, $email, $contact_number, $address, $user_id);
 
         if ($stmt->execute()) {
-            showAlert('Profile updated successfully!', 'success', '#008000', 'profile.php');
+
+            echo "<script>
+                showAlert('Profile updated successfully!', 'success', '#008000');
+                setTimeout(function() {
+        window.location.href = window.location.href; 
+    }, 2000);
+            </script>";
         } else {
-            showAlert('Error updating profile.', 'error', '#ff0000', 'profile.php');
+            echo "<script>
+                showAlert('Error updating profile.', 'error', '#ff0000');
+            </script>";
         }
     }
 }
@@ -65,296 +78,297 @@ if (isset($_POST['update'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - AgroMart</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
 
-        body {
-            font-family: "Poppins", Arial, sans-serif;
-            background-color: #f4f4f4;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            position: relative;
-        }
+    body {
+        font-family: "Poppins", Arial, sans-serif;
+        background-color: #f4f4f4;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        position: relative;
+    }
 
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("images/B1.jpg");
-            background-size: cover;
-            opacity: 0.2;
-            z-index: -1;
-        }
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("images/B1.jpg");
+        background-size: cover;
+        opacity: 0.2;
+        z-index: -1;
+    }
 
-        /* Main content area */
-        .main-content {
-            flex: 1;
-        }
+    /* Main content area */
+    .main-content {
+        flex: 1;
+    }
 
+    h1 {
+        background-color: #dbffc7;
+        text-align: center;
+        padding: 10px 0;
+        font-size: 2rem;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .accountFunctionBtn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 20px 0;
+    }
+
+    .accountFunctionBtn button {
+        background-color: #28a745;
+        min-width: 150px;
+        text-align: center;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .accountFunctionBtn button a {
+        text-decoration: none;
+        font-size: 1.1rem;
+        color: #fff;
+    }
+
+    .accountFunctionBtn button:hover {
+        background-color: #218838;
+    }
+
+    .container {
+        width: 75%;
+        margin: 20px auto;
+    }
+
+    .container h2 {
+        font-size: 1.8rem;
+        text-align: center;
+        color: #333;
+    }
+
+    form {
+        background-color: rgba(233, 236, 239, 0.3);
+        backdrop-filter: blur(10px);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus {
+        border-color: #f09319;
+    }
+
+    .form-group input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .updateBtn {
+        background-color: #f09319;
+        color: #fff;
+        padding: 10px 20px;
+        width: 150px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        display: block;
+        margin: 20px auto 0;
+        transition: background-color 0.2s ease;
+    }
+
+    .updateBtn:hover {
+        background-color: #cb790d;
+    }
+
+    .accountSettings {
+        background-color: rgba(233, 236, 239, 0.3);
+        backdrop-filter: blur(10px);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .accountSettingsBtn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .accountSettingsBtn button {
+        background-color: #28a745;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        margin: 10px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .accountSettingsBtn button a {
+        text-decoration: none;
+        color: #fff;
+        font-size: 1rem;
+    }
+
+    .accountSettingsBtn button.delete {
+        background-color: #dc3545;
+    }
+
+    .accountSettingsBtn button.delete:hover {
+        background-color: #c82333;
+    }
+
+    .accountSettingsBtn button:hover:not(.delete) {
+        background-color: #218838;
+    }
+
+    /* Mobile Devices */
+    @media screen and (max-width: 480px) {
         h1 {
-            background-color: #dbffc7;
-            text-align: center;
-            padding: 10px 0;
-            font-size: 2rem;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .accountFunctionBtn {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 20px 0;
-        }
-
-        .accountFunctionBtn button {
-            background-color: #28a745;
-            min-width: 150px;
-            text-align: center;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-
-        .accountFunctionBtn button a {
-            text-decoration: none;
-            font-size: 1.1rem;
-            color: #fff;
-        }
-
-        .accountFunctionBtn button:hover {
-            background-color: #218838;
-        }
-
-        .container {
-            width: 75%;
-            margin: 20px auto;
+            font-size: 1.5rem;
+            padding: 15px 5%;
         }
 
         .container h2 {
-            font-size: 1.8rem;
-            text-align: center;
-            color: #333;
+            font-size: 1.3rem;
+            padding: 15px 5%;
+        }
+
+        .accountFunctionBtn {
+            flex-direction: column;
+            padding: 10px 0;
+            align-items: center;
+        }
+
+        .accountFunctionBtn button {
+            width: 200px;
+            min-width: 0;
+            font-size: 0.9rem;
+            padding: 8px;
+        }
+
+        .container {
+            width: 95%;
+            padding: 10px;
         }
 
         form {
-            background-color: rgba(233, 236, 239, 0.3);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: 0 auto 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
+            padding: 15px;
         }
 
         .form-group label {
-            display: block;
-            font-size: 1rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 5px;
+            font-size: 0.9rem;
         }
 
         .form-group input {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input:focus {
-            border-color: #f09319;
-        }
-
-        .form-group input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
+            font-size: 0.9rem;
+            padding: 6px;
         }
 
         .updateBtn {
-            background-color: #f09319;
-            color: #fff;
-            padding: 10px 20px;
-            width: 150px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            cursor: pointer;
-            display: block;
-            margin: 20px auto 0;
-            transition: background-color 0.2s ease;
-        }
-
-        .updateBtn:hover {
-            background-color: #cb790d;
+            font-size: 0.9rem;
+            padding: 8px 15px;
+            width: 120px;
         }
 
         .accountSettings {
-            background-color: rgba(233, 236, 239, 0.3);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .accountSettingsBtn {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
+            padding: 15px;
         }
 
         .accountSettingsBtn button {
-            background-color: #28a745;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            margin: 10px;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
+            width: 200px;
+            margin: 5px 0;
+        }
+    }
+
+    /* Tablets */
+    @media screen and (min-width: 481px) and (max-width: 1200px) {
+        h1 {
+            font-size: 1.8rem;
+            padding: 20px 8%;
         }
 
-        .accountSettingsBtn button a {
-            text-decoration: none;
-            color: #fff;
-            font-size: 1rem;
+        .container h2 {
+            font-size: 1.5rem;
+            padding: 20px 8%;
         }
 
-        .accountSettingsBtn button.delete {
-            background-color: #dc3545;
+        .container {
+            width: 95%;
         }
 
-        .accountSettingsBtn button.delete:hover {
-            background-color: #c82333;
+        form {
+            padding: 20px;
         }
 
-        .accountSettingsBtn button:hover:not(.delete) {
-            background-color: #218838;
+        .form-group label {
+            font-size: 0.95rem;
         }
 
-        /* Mobile Devices */
-        @media screen and (max-width: 480px) {
-            h1 {
-                font-size: 1.5rem;
-                padding: 15px 5%;
-            }
-
-            .container h2 {
-                font-size: 1.3rem;
-                padding: 15px 5%;
-            }
-
-            .accountFunctionBtn {
-                flex-direction: column;
-                padding: 10px 0;
-                align-items: center;
-            }
-
-            .accountFunctionBtn button {
-                width: 200px;
-                min-width: 0;
-                font-size: 0.9rem;
-                padding: 8px;
-            }
-
-            .container {
-                width: 95%;
-                padding: 10px;
-            }
-
-            form {
-                padding: 15px;
-            }
-
-            .form-group label {
-                font-size: 0.9rem;
-            }
-
-            .form-group input {
-                font-size: 0.9rem;
-                padding: 6px;
-            }
-
-            .updateBtn {
-                font-size: 0.9rem;
-                padding: 8px 15px;
-                width: 120px;
-            }
-
-            .accountSettings {
-                padding: 15px;
-            }
-
-            .accountSettingsBtn button {
-                width: 200px;
-                margin: 5px 0;
-            }
+        .form-group input {
+            font-size: 0.95rem;
+            padding: 7px;
         }
 
-        /* Tablets */
-        @media screen and (min-width: 481px) and (max-width: 1200px) {
-            h1 {
-                font-size: 1.8rem;
-                padding: 20px 8%;
-            }
-
-            .container h2 {
-                font-size: 1.5rem;
-                padding: 20px 8%;
-            }
-
-            .container {
-                width: 95%;
-            }
-
-            form {
-                padding: 20px;
-            }
-
-            .form-group label {
-                font-size: 0.95rem;
-            }
-
-            .form-group input {
-                font-size: 0.95rem;
-                padding: 7px;
-            }
-
-            .accountFunctionBtn {
-                gap: 15px;
-            }
-
-            .accountFunctionBtn button {
-                padding: 10px;
-            }
-
-            .accountSettingsBtn button {
-                padding: 10px 15px;
-            }
+        .accountFunctionBtn {
+            gap: 15px;
         }
+
+        .accountFunctionBtn button {
+            padding: 10px;
+        }
+
+        .accountSettingsBtn button {
+            padding: 10px 15px;
+        }
+    }
     </style>
+    <script src='alertFunction.js'></script>
 </head>
 
 <body>

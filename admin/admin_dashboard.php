@@ -7,6 +7,26 @@ if (!isset($_SESSION['admin_logged_in'])) {
 
 include '../config.php';
 
+$usercount = "SELECT COUNT(*) as total FROM users";
+$users = $conn->query($usercount);
+$users = $users->fetch_assoc();
+
+$adcount = "SELECT COUNT(*) as total FROM ads";
+$ads = $conn->query($adcount);
+$ads = $ads->fetch_assoc();
+
+$catcount = "SELECT COUNT(*) as total FROM categories";
+$categories = $conn->query($catcount);
+$categories = $categories->fetch_assoc();
+
+$adreqcount = "SELECT COUNT(*) as total FROM plant_requests";
+$adrequests = $conn->query($adreqcount);
+$adrequests = $adrequests->fetch_assoc();
+
+$notificationcount = "SELECT COUNT(*) as total FROM notifications";
+$notifications = $conn->query($notificationcount);
+$notifications = $notifications->fetch_assoc();
+
 ?>
 
 <!DOCTYPE html>
@@ -75,8 +95,22 @@ include '../config.php';
         <div class="error-message"><?= $_SESSION['error'];
                                         unset($_SESSION['error']); ?></div>
         <?php endif; ?>
+        <div>
+            <h2>Statistics</h2>
+            <div>
+                <h3>Total Users: <?= $users['total'] ?></h3>
+                <h3>Total Ads: <?= $ads['total'] ?></h3>
+                <h3>Total Categories: <?= $categories['total'] ?></h3>
+                <h3>Total Ad Requests: <?= $adrequests['total'] ?></h3>
+                <h3>Total Notifications: <?= $notifications['total'] ?></h3>
+            </div>
+        </div>
 
     </div>
+
+
+
+
 </body>
 
 </html>

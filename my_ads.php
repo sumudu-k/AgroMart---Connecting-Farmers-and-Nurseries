@@ -3,11 +3,13 @@ session_start();
 ob_start();
 include 'config.php';
 include 'navbar.php';
-include 'alertFunction.php';
 
 if (!isset($_SESSION['user_id'])) {
-    showAlert('Please log in to access your ads.', 'error', '#ff0000', 'login.php');
-    exit();
+    echo "<script>
+    window.onload = function() {
+        showAlert('Please login to post an ad', 'error', '#ff0000');
+    };
+</script>";
 }
 
 $user_id = $_SESSION['user_id'];
@@ -32,16 +34,16 @@ $result = $stmt->get_result();
     <title>My Ads</title>
     <style>
     * {
+        margin: 0;
+        padding: 0;
         box-sizing: border-box;
     }
 
     body {
         font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
         position: relative;
         min-height: 100vh;
-        display: flex; 
+        display: flex;
         flex-direction: column;
     }
 
@@ -70,7 +72,7 @@ $result = $stmt->get_result();
     .container {
         width: 75%;
         margin: 0 auto;
-        position: relative; 
+        position: relative;
         z-index: 1;
     }
 
@@ -305,6 +307,7 @@ $result = $stmt->get_result();
             <?php endif; ?>
         </div>
     </div>
+    <script src='alertFunction.js'></script>
 </body>
 
 </html>

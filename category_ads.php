@@ -8,13 +8,13 @@ $category_id = isset($_GET['category_id_qp']) ? (int) $_GET['category_id_qp'] : 
 
 $category_name = 'Category';
 if ($category_id > 0) {
-  $query = "SELECT category_name FROM categories WHERE category_id = ?";
-  $stmt = $conn->prepare($query);
-  $stmt->bind_param("i", $category_id);
-  $stmt->execute();
-  $stmt->bind_result($category_name);
-  $stmt->fetch();
-  $stmt->close();
+    $query = "SELECT category_name FROM categories WHERE category_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $category_id);
+    $stmt->execute();
+    $stmt->bind_result($category_name);
+    $stmt->fetch();
+    $stmt->close();
 }
 
 $category_name = htmlspecialchars($category_name);
@@ -40,12 +40,13 @@ $result = $stmt->get_result();
     <title>Category Ads</title>
     <style>
     * {
+        margin: 0;
+        padding: 0;
         box-sizing: border-box;
     }
 
     body {
         font-family: Arial, sans-serif;
-        margin: 0;
         overflow-x: hidden;
         display: flex;
         flex-direction: column;
@@ -63,7 +64,7 @@ $result = $stmt->get_result();
         background-image: url("images/B1.jpg");
         background-size: cover;
         opacity: 0.2;
-        z-index: -1; 
+        z-index: -1;
     }
 
     .main-content {
@@ -254,22 +255,22 @@ $result = $stmt->get_result();
         <div class="container">
             <div class="ads-container">
                 <?php
-        if ($result->num_rows > 0) {
-          while ($ad = $result->fetch_assoc()) {
-            $ad_id = $ad['ad_id'];
+                if ($result->num_rows > 0) {
+                    while ($ad = $result->fetch_assoc()) {
+                        $ad_id = $ad['ad_id'];
 
-            $img_sql = "SELECT image_path FROM ad_images WHERE ad_id = ? LIMIT 1";
-            $stmt_img = $conn->prepare($img_sql);
-            $stmt_img->bind_param("i", $ad_id);
-            $stmt_img->execute();
-            $img_result = $stmt_img->get_result();
-            $image = $img_result->fetch_assoc();
+                        $img_sql = "SELECT image_path FROM ad_images WHERE ad_id = ? LIMIT 1";
+                        $stmt_img = $conn->prepare($img_sql);
+                        $stmt_img->bind_param("i", $ad_id);
+                        $stmt_img->execute();
+                        $img_result = $stmt_img->get_result();
+                        $image = $img_result->fetch_assoc();
 
-            $description = substr(htmlspecialchars($ad['description']), 0, 100);
-            if (strlen($ad['description']) > 100) {
-              $description .= '...';
-            }
-        ?>
+                        $description = substr(htmlspecialchars($ad['description']), 0, 100);
+                        if (strlen($ad['description']) > 100) {
+                            $description .= '...';
+                        }
+                ?>
                 <div class="ad-card">
                     <a href="view_ad.php?ad_id=<?= $ad_id; ?>">
                         <?php if ($image): ?>
@@ -286,11 +287,11 @@ $result = $stmt->get_result();
                     </a>
                 </div>
                 <?php
-          }
-        } else {
-          echo "<p>No ads found in this category.</p>";
-        }
-        ?>
+                    }
+                } else {
+                    echo "<h3>Sorry! No ads found in this category.</h3>";
+                }
+                ?>
             </div>
         </div>
 
