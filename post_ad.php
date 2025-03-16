@@ -5,12 +5,12 @@ include 'config.php';
 include 'navbar.php';
 
 if (!isset($_SESSION['user_id'])) {
-    echo "<script>
-    window.onload = function() {
-        showAlert('Please login to post an ad', 'error', '#ff0000');
-    };
-</script>";
-    exit();
+    header("Location: home.php");
+}
+
+function isValidContact($phone_number)
+{
+    return preg_match('/^0\d{9}$/', $phone_number);
 }
 
 if (isset($_POST['submit'])) {
@@ -22,33 +22,83 @@ if (isset($_POST['submit'])) {
     $user_id = $_SESSION['user_id'];
     $category_id = $_POST['category'];
 
-    $ad_sql = "INSERT INTO ads (title, description, price, phone_number, user_id, category_id, district) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($ad_sql);
-    $stmt->bind_param("ssdsiss", $title, $description, $price, $phone_number, $user_id, $category_id, $district);
-    $stmt->execute();
-    $ad_id = $conn->insert_id;
+    $_SESSION['u-title'] = $title;
+    $_SESSION['u-description'] = $description;
+    $_SESSION['u-price'] = $price;
+    $_SESSION['u-phone_number'] = $phone_number;
 
-    for ($i = 0; $i < count($_FILES['images']['name']); $i++) {
-        if ($_FILES['images']['error'][$i] == 0) {
-            $image_name = basename($_FILES['images']['name'][$i]);
-            $target_path = 'uploads/' . $image_name;
 
-            if (move_uploaded_file($_FILES['images']['tmp_name'][$i], $target_path)) {
-                $img_sql = "INSERT INTO ad_images (ad_id, image_path) VALUES (?, ?)";
-                $stmt_img = $conn->prepare($img_sql);
-                $stmt_img->bind_param("is", $ad_id, $target_path);
-                $stmt_img->execute();
+    if (empty($title) || empty($description) || empty($district) || empty($category_id) || empty($price) || empty($phone_number)) {
+        echo "<script>
+        window.onload = function() {
+            showAlert('Please fill all fields!', 'error', '#ff0000');
+        };
+        </script>";
+    } elseif (empty($_FILES['images']['name'][0])) {
+        echo "<script>
+        window.onload = function() {
+            showAlert('Please upload at least one image!', 'error', '#ff0000');
+        };
+        </script>";
+    } elseif (strlen($title) < 20) {
+        echo "<script>
+            window.onload = function() {
+                showAlert('Title is too short!', 'error', '#ff0000');
+            };
+        </script>";
+    } elseif (strlen($title) > 150) {
+        echo "<script>
+            window.onload = function() {
+                showAlert('Title is too long!', 'error', '#ff0000');
+            };
+        </script>";
+    } elseif (strlen($description) < 20) {
+        echo "<script>
+            window.onload = function() {
+                showAlert('Description is too short!', 'error', '#ff0000');
+            };
+        </script>";
+    } elseif (strlen($description) > 700) {
+        echo "<script>
+            window.onload = function() {
+                showAlert('Description is too long!', 'error', '#ff0000');
+            };  
+        </script>";
+    } elseif (!isValidContact($phone_number)) {
+        echo "<script>
+            window.onload = function() {
+                showAlert('Invalid Contact Number!', 'error', '#ff0000');
+            };
+        </script>";
+    } else {
+        $ad_sql = "INSERT INTO ads (title, description, price, phone_number, user_id, category_id, district) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($ad_sql);
+        $stmt->bind_param("ssdsiss", $title, $description, $price, $phone_number, $user_id, $category_id, $district);
+        $stmt->execute();
+        $ad_id = $conn->insert_id;
+
+        for ($i = 0; $i < count($_FILES['images']['name']); $i++) {
+            if ($_FILES['images']['error'][$i] == 0) {
+                $image_name = basename($_FILES['images']['name'][$i]);
+                $target_path = 'uploads/' . $image_name;
+
+                if (move_uploaded_file($_FILES['images']['tmp_name'][$i], $target_path)) {
+                    $img_sql = "INSERT INTO ad_images (ad_id, image_path) VALUES (?, ?)";
+                    $stmt_img = $conn->prepare($img_sql);
+                    $stmt_img->bind_param("is", $ad_id, $target_path);
+                    $stmt_img->execute();
+                }
             }
         }
+        echo "<script>
+        window.onload = function() {
+            showAlert('Your ad has posted successfully', 'success', '#008000');
+        };
+        setTimeout(function() {
+            window.location.href = 'my_ads.php';
+        }, 2000);
+        </script>";
     }
-    echo "<script>
-    window.onload = function() {
-        showAlert('Your ad has posted successfully', 'success', '#008000');
-    };
-    setTimeout(function() {
-        window.location.href = 'my_ads.php';
-    }, 2000);
-</script>";
 }
 ?>
 
@@ -267,17 +317,20 @@ if (isset($_POST['submit'])) {
         <form action="post_ad.php" method="POST" enctype="multipart/form-data" class="ad-form">
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" name="title" placeholder="Enter title here" required>
+                <input type="text" name="title" placeholder="Enter title here"
+                    value="<?= isset($_SESSION['u-title']) ? htmlspecialchars($_SESSION['u-title']) : '' ?>">
             </div>
 
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea name="description" placeholder="Describe your ad here" required></textarea>
+                <textarea name="description" id="description"
+                    placeholder="Describe your request here"><?= isset($_SESSION['u-description']) ? htmlspecialchars($_SESSION['u-description']) : '' ?></textarea>
+
             </div>
 
             <div class="form-group">
                 <label for="district">District</label>
-                <select name="district" required>
+                <select name="district">
                     <option value="">Select District</option>
                     <option value="Ampara">Ampara</option>
                     <option value="Anuradhapura">Anuradhapura</option>
@@ -309,7 +362,8 @@ if (isset($_POST['submit'])) {
 
             <div class="form-group">
                 <label for="category">Category</label>
-                <select name="category" required>
+                <select name="category">
+                    <option value="">Select Category</option>
                     <?php
                     $categories = $conn->query("SELECT * FROM categories");
                     while ($category = $categories->fetch_assoc()) {
@@ -321,17 +375,19 @@ if (isset($_POST['submit'])) {
 
             <div class="form-group">
                 <label for="phone_number">Contact</label>
-                <input type="text" name="phone_number" placeholder="Enter 10 digit number" required>
+                <input type="text" name="phone_number" placeholder="Enter 10 digit number"
+                    value="<?= isset($_SESSION['u-phone_number']) ? htmlspecialchars($_SESSION['u-phone_number']) : '' ?>">
             </div>
 
             <div class="form-group">
                 <label for="price">Price</label>
-                <input type="number" name="price" placeholder="Rs" required>
+                <input type="number" name="price" placeholder="Rs"
+                    value="<?= isset($_SESSION['u-price']) ? htmlspecialchars($_SESSION['u-price']) : '' ?>">
             </div>
 
             <div class="form-group">
                 <label for="images">Images</label>
-                <input type="file" name="images[]" multiple required>
+                <input type="file" name="images[]" multiple>
             </div>
 
             <button type="submit" name="submit">Submit Ad</button>

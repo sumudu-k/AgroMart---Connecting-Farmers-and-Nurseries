@@ -4,6 +4,12 @@ include 'config.php';
 
 $ad_id = $_GET['ad_id'];
 
+function isValidContact($phone_number)
+{
+    return preg_match('/^0\d{9}$/', $phone_number);
+}
+
+
 $ad_sql = "SELECT * FROM ads WHERE ad_id = ?";
 $stmt = $conn->prepare($ad_sql);
 $stmt->bind_param("i", $ad_id);
@@ -28,46 +34,90 @@ if (isset($_POST['submit'])) {
     $category_id = $_POST['category'];
     $district = $_POST['district'];
 
-    $update_sql = "UPDATE ads SET title = ?, description = ?, price = ?, phone_number = ?, category_id = ?, district = ? WHERE ad_id = ?";
-    $stmt = $conn->prepare($update_sql);
-    $stmt->bind_param("ssdsisi", $title, $description, $price, $phone_number, $category_id, $district, $ad_id);
-    $stmt->execute();
+    if (empty($title) || empty($description) || empty($district) || empty($category_id) || empty($price) || empty($phone_number)) {
+        echo "<script>
+        window.onload = function() {
+            showAlert('Please fill all fields!', 'error', '#ff0000');
+        };
+        </script>";
+        // } elseif (empty($_FILES['images']['name'][0])) {
+        //     echo "<script>
+        //     window.onload = function() {
+        //         showAlert('Please upload at least one image!', 'error', '#ff0000');
+        //     };
+        //     </script>";
+    } elseif (strlen($title) < 20) {
+        echo "<script>
+            window.onload = function() {
+                showAlert('Title is too short!', 'error', '#ff0000');
+            };
+        </script>";
+    } elseif (strlen($title) > 150) {
+        echo "<script>
+            window.onload = function() {
+                showAlert('Title is too long!', 'error', '#ff0000');
+            };
+        </script>";
+    } elseif (strlen($description) < 20) {
+        echo "<script>
+            window.onload = function() {
+                showAlert('Description is too short!', 'error', '#ff0000');
+            };
+        </script>";
+    } elseif (strlen($description) > 700) {
+        echo "<script>
+            window.onload = function() {
+                showAlert('Description is too long!', 'error', '#ff0000');
+            };  
+        </script>";
+    } elseif (!isValidContact($phone_number)) {
+        echo "<script>
+            window.onload = function() {
+                showAlert('Invalid Contact Number!', 'error', '#ff0000');
+            };
+        </script>";
+    } else {
 
-    if (!empty($_FILES['new_images']['name'][0])) {
-        for ($i = 0; $i < count($_FILES['new_images']['name']); $i++) {
-            if ($_FILES['new_images']['error'][$i] == 0) {
-                $image_name = basename($_FILES['new_images']['name'][$i]);
-                $target_path = 'uploads/' . $image_name;
+        $update_sql = "UPDATE ads SET title = ?, description = ?, price = ?, phone_number = ?, category_id = ?, district = ? WHERE ad_id = ?";
+        $stmt = $conn->prepare($update_sql);
+        $stmt->bind_param("ssdsisi", $title, $description, $price, $phone_number, $category_id, $district, $ad_id);
+        $stmt->execute();
 
-                if (move_uploaded_file($_FILES['new_images']['tmp_name'][$i], $target_path)) {
-                    $insert_img_sql = "INSERT INTO ad_images (ad_id, image_path) VALUES (?, ?)";
-                    $stmt_img = $conn->prepare($insert_img_sql);
-                    $stmt_img->bind_param("is", $ad_id, $target_path);
-                    $stmt_img->execute();
+        if (!empty($_FILES['new_images']['name'][0])) {
+            for ($i = 0; $i < count($_FILES['new_images']['name']); $i++) {
+                if ($_FILES['new_images']['error'][$i] == 0) {
+                    $image_name = basename($_FILES['new_images']['name'][$i]);
+                    $target_path = 'uploads/' . $image_name;
+
+                    if (move_uploaded_file($_FILES['new_images']['tmp_name'][$i], $target_path)) {
+                        $insert_img_sql = "INSERT INTO ad_images (ad_id, image_path) VALUES (?, ?)";
+                        $stmt_img = $conn->prepare($insert_img_sql);
+                        $stmt_img->bind_param("is", $ad_id, $target_path);
+                        $stmt_img->execute();
+                    }
                 }
             }
         }
-    }
 
-    if (isset($_POST['delete_images'])) {
-        foreach ($_POST['delete_images'] as $image_id) {
-            $del_img_sql = "SELECT image_path FROM ad_images WHERE image_id = ?";
-            $stmt = $conn->prepare($del_img_sql);
-            $stmt->bind_param("i", $image_id);
-            $stmt->execute();
-            $img_path = $stmt->get_result()->fetch_assoc()['image_path'];
+        if (isset($_POST['delete_images'])) {
+            foreach ($_POST['delete_images'] as $image_id) {
+                $del_img_sql = "SELECT image_path FROM ad_images WHERE image_id = ?";
+                $stmt = $conn->prepare($del_img_sql);
+                $stmt->bind_param("i", $image_id);
+                $stmt->execute();
+                $img_path = $stmt->get_result()->fetch_assoc()['image_path'];
 
-            if (file_exists($img_path)) {
-                unlink($img_path);
+                if (file_exists($img_path)) {
+                    unlink($img_path);
+                }
+
+                $delete_sql = "DELETE FROM ad_images WHERE image_id = ?";
+                $stmt = $conn->prepare($delete_sql);
+                $stmt->bind_param("i", $image_id);
+                $stmt->execute();
             }
-
-            $delete_sql = "DELETE FROM ad_images WHERE image_id = ?";
-            $stmt = $conn->prepare($delete_sql);
-            $stmt->bind_param("i", $image_id);
-            $stmt->execute();
         }
-    }
-    echo "<script>
+        echo "<script>
     window.onload = function() {
         showAlert('Ad updated successfully!', 'success', '#008000');
     };
@@ -75,6 +125,7 @@ if (isset($_POST['submit'])) {
     window.location.href = 'my_ads.php';
     }, 2000);
 </script>";
+    }
 }
 ?>
 
@@ -337,27 +388,27 @@ if (isset($_POST['submit'])) {
         <form action="edit_ad.php?ad_id=<?= $ad_id ?>" method="POST" enctype="multipart/form-data" class="ad-form">
             <div class="form-group">
                 <label for="title">Ad Title</label>
-                <input type="text" name="title" value="<?= htmlspecialchars($ad['title']) ?>" required>
+                <input type="text" name="title" value="<?= htmlspecialchars($ad['title']) ?>">
             </div>
 
             <div class="form-group">
                 <label for="description">Ad Description</label>
-                <textarea name="description" required><?= htmlspecialchars($ad['description']) ?></textarea>
+                <textarea name="description"><?= htmlspecialchars($ad['description']) ?></textarea>
             </div>
 
             <div class="form-group">
                 <label for="price">Price</label>
-                <input type="number" name="price" value="<?= htmlspecialchars($ad['price']) ?>" required>
+                <input type="number" name="price" value="<?= htmlspecialchars($ad['price']) ?>">
             </div>
 
             <div class="form-group">
                 <label for="phone_number">Phone Number</label>
-                <input type="text" name="phone_number" value="<?= htmlspecialchars($ad['phone_number']) ?>" required>
+                <input type="text" name="phone_number" value="<?= htmlspecialchars($ad['phone_number']) ?>">
             </div>
 
             <div class="form-group">
                 <label for="category">Category</label>
-                <select name="category" required>
+                <select name="category">
                     <?php while ($category = $categories_result->fetch_assoc()): ?>
                     <option value="<?= $category['category_id'] ?>"
                         <?= $category['category_id'] == $ad['category_id'] ? 'selected' : '' ?>>
@@ -369,7 +420,7 @@ if (isset($_POST['submit'])) {
 
             <div class="form-group">
                 <label for="district">District</label>
-                <select name="district" required>
+                <select name="district">
                     <option value="Ampara" <?= $ad['district'] == 'Ampara' ? 'selected' : '' ?>>Ampara</option>
                     <option value="Anuradhapura" <?= $ad['district'] == 'Anuradhapura' ? 'selected' : '' ?>>Anuradhapura
                     </option>

@@ -5,37 +5,54 @@ include 'config.php';
 include 'navbar.php';
 
 if (isset($_POST['login'])) {
+
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $sql = "SELECT * FROM users WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
+    if (empty($email) || empty($password)) {
+        echo "<script>
+        window.onload = function() {
+            showAlert('Please fill in all fields!', 'error', '#ff0000');
+        };
+        </script>";
+    } else {
 
-    if ($user) {
-        if (password_verify($password, $user['password'])) {
-            $_SESSION['user_id'] = $user['user_id'];
-            $_SESSION['username'] = $user['username'];
+        $sql = "SELECT * FROM users WHERE email = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
 
-            header("Location: home.php");
 
-            exit();
-        } else {
-            echo "<script>
+
+
+        if ($user) {
+            if (password_verify($password, $user['password'])) {
+                $_SESSION['user_id'] = $user['user_id'];
+                $_SESSION['username'] = $user['username'];
+                echo "<script>
+            window.onload = function() {
+                showAlert('Login Successful', 'success', '#008000');
+            };
+            setTimeout(function() {
+                window.location.href = 'home.php';
+            }, 2000);
+            </script>";
+            } else {
+                echo "<script>
             window.onload = function() {
                 showAlert('Invalid password!', 'error', '#ff0000');
             };
             </script>";
-        }
-    } else {
-        echo "<script>
+            }
+        } else {
+            echo "<script>
         window.onload = function() {
             showAlert('User not found!', 'error', '#ff0000');
         };
         </script>";
+        }
     }
 }
 ?>
@@ -256,8 +273,8 @@ if (isset($_POST['login'])) {
             <div class="login-form">
                 <h2>Welcome Back</h2>
                 <form action="login.php" method="post">
-                    <input type="email" name="email" placeholder="Email" required>
-                    <input type="password" name="password" placeholder="Password" required>
+                    <input type="email" name="email" placeholder="Email">
+                    <input type="password" name="password" placeholder="Password">
                     <button type="submit" name="login">Login</button>
                 </form>
                 <p> Forgot Password? &ensp; <a class="link" href="forgotpw.php">Reset here</a>.</p>

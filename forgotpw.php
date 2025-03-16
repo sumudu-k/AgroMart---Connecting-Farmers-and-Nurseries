@@ -4,25 +4,44 @@ ob_start();
 include 'config.php';
 include 'navbar.php';
 
+function isValidPassword($password)
+{
+    return preg_match('/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/', $password);
+}
+
 if (isset($_POST['submit_email'])) {
     $email = $_POST['email'];
-
-    $sql = "SELECT * FROM users WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $_SESSION['reset_email'] = $email;
-        header("Location: forgotpw.php?reset_password=true");
-        exit;
-    } else {
+    if (empty($email)) {
         echo "<script>
+        window.onload = function() {
+            showAlert('Please enter your email!', 'error', '#ff0000');
+        };
+        </script>";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "<script>
+        window.onload = function() {
+            showAlert('Please enter valid email!', 'error', '#ff0000');
+        };
+        </script>";
+    } else {
+
+        $sql = "SELECT * FROM users WHERE email = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $_SESSION['reset_email'] = $email;
+            header("Location: forgotpw.php?reset_password=true");
+            exit;
+        } else {
+            echo "<script>
         window.onload = function() {
             showAlert('Email not found!', 'error', '#ff0000');
         };
         </script>";
+        }
     }
 }
 
@@ -30,14 +49,27 @@ if (isset($_POST['reset_password'])) {
     if (isset($_SESSION['reset_email'])) {
         $new_password = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
         $email = $_SESSION['reset_email'];
+        if (empty($new_password)) {
+            echo "<script>
+            window.onload = function() {
+                showAlert('Please enter new password!', 'error', '#ff0000');
+            };
+            </script>";
+        } elseif (!isValidPassword($_POST['new_password'])) {
+            echo "<script>
+            window.onload = function() {
+                showAlert('Password must contain at least 8 characters, one uppercase letter, one number and one special character!', 'error', '#ff0000');
+            };
+            
+            </script>";
+        } else {
+            $sql = "UPDATE users SET password = ? WHERE email = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ss", $new_password, $email);
+            $stmt->execute();
 
-        $sql = "UPDATE users SET password = ? WHERE email = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ss", $new_password, $email);
-        $stmt->execute();
-
-        unset($_SESSION['reset_email']);
-        echo "<script>
+            unset($_SESSION['reset_email']);
+            echo "<script>
         window.onload = function() {
             showAlert('Password has been reset', 'success', '#008000', 'login.php');
         };
@@ -45,6 +77,7 @@ if (isset($_POST['reset_password'])) {
             window.location.href = 'login.php';
         }, 2000);
         </script>";
+        }
     } else {
         echo "<script>
         window.onload = function() {
@@ -263,7 +296,7 @@ if (isset($_POST['reset_password'])) {
             <form action="forgotpw.php" method="POST">
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    <input type="text" id="email" name="email" placeholder="Enter your email">
                 </div>
                 <button type="submit" name="submit_email">Submit</button>
                 <div class="links">
@@ -274,8 +307,7 @@ if (isset($_POST['reset_password'])) {
             <form action="forgotpw.php" method="POST">
                 <div class="form-group">
                     <label for="new_password">New Password</label>
-                    <input type="password" id="new_password" name="new_password" placeholder="Enter new password"
-                        required>
+                    <input type="password" id="new_password" name="new_password" placeholder="Enter new password">
                 </div>
                 <button type="submit" name="reset_password">Reset Password</button>
                 <div class="links">

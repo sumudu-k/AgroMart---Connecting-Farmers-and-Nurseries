@@ -28,7 +28,7 @@ $unread_count = $row['unread_count'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navbar</title>
+    <title>AgroMart</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -268,13 +268,14 @@ $unread_count = $row['unread_count'];
             </div>
             <ul class="nav-right">
                 <?php if (!isset($_SESSION['username'])): ?>
-                <li><a href="#" onclick="showAlert('Please login to add a product request','warning','red')">Request
+                <li><a href="#" onclick="showAlert('Please login to add a product request','error','#ff0000')">Request
                         Products</a></li>
-                <li><a href="#" onclick="showAlert('Please login to post an Ad','warning','red')" class="place-ad">POST
+                <li><a href="#" onclick="showAlert('Please login to post an Ad','error','#ff0000')"
+                        class="place-ad">POST
                         AD FREE</a></li>
-                <li><a href="#" onclick="showAlert('Please login to see Wishlist','warning','red')"><i
+                <li><a href="#" onclick="showAlert('Please login to see Wishlist','error','#ff0000')"><i
                             class="fas fa-heart" title="Wishlist"></i></a></li>
-                <li><a href="#" onclick="showAlert('Please login to see Notifications','warning','red')">
+                <li><a href="#" onclick="showAlert('Please login to see Notifications','error','#ff0000')">
                         <i class="fa fa-bell" aria-hidden="true"></i>
                         <?php if ($unread_count > 0): ?>
                         <span class="badge" id="notif_count"><?= $unread_count ?></span>

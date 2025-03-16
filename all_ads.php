@@ -272,7 +272,7 @@ $result = $conn->query($ads_sql);
                     }
                 ?>
             <div class="ad-card" onclick="window.location.href='view_ad.php?ad_id=<?= $ad['ad_id']; ?>'">
-                <img src="<?= htmlspecialchars($ad['image'] ?? 'images/placeholder/no-image.jpg'); ?>"
+                <img src="<?= htmlspecialchars($ad['image'] ?? 'images/placeholder/No_Image_AD.png'); ?>"
                     alt="Product Image">
                 <h4><?= htmlspecialchars($ad['title']); ?></h4>
                 <div class="ad-details">
