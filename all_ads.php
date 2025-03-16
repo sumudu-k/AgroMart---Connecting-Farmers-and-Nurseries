@@ -18,7 +18,7 @@ $ads_sql = "
         (SELECT image_path FROM ad_images WHERE ad_id = ads.ad_id LIMIT 1) AS image 
     FROM ads 
     JOIN categories ON ads.category_id = categories.category_id 
-    ORDER BY ads.created_at DESC 
+    ORDER BY RAND() 
     LIMIT $ads_per_page OFFSET $offset";
 $result = $conn->query($ads_sql);
 ?>

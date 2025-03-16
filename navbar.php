@@ -34,7 +34,6 @@ $unread_count = $row['unread_count'];
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-    /* General navbar styling */
     * {
         margin: 0;
         padding: 0;
@@ -51,6 +50,7 @@ $unread_count = $row['unread_count'];
         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     }
 
+
     /* 1 Row */
     .nav-top {
         display: flex;
@@ -59,12 +59,78 @@ $unread_count = $row['unread_count'];
         width: 100%;
     }
 
-    .logo a {
+    h6 {
+        animation: pulse 2.5s infinite;
+    }
+
+    @keyframes pulse {
+
+        0%,
+        100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0;
+        }
+    }
+
+    .nav-hero {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+    }
+
+    .nav-hero li {
         font-size: 1.5rem;
         font-weight: bold;
         color: white;
-        text-decoration: none;
+        list-style: none;
+        padding: 0;
+        color: white;
     }
+
+    .nav-hero li a {
+        text-decoration: none;
+        color: white;
+    }
+
+    .nav-hero li:last-child a {
+        color: white;
+        font-size: 1rem;
+    }
+
+
+    .nav-left {
+        display: flex;
+        list-style: none;
+        padding: 0;
+    }
+
+    .nav-left li {
+        margin: 0 5px;
+    }
+
+    .nav-left a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        padding: 10px 15px;
+        border-radius: 5px;
+        transition: 0.3s;
+    }
+
+    .nav-left a:hover {
+        background-color: #228B22;
+        /* Darker green */
+    }
+
+
+
 
     .nav-bottom {
         width: 100%;
@@ -201,12 +267,12 @@ $unread_count = $row['unread_count'];
 <body>
 
     <script>
-    function confirmLogout() {
-        var confirmAction = confirm("Are you sure you want to log out?");
-        if (confirmAction) {
-            window.location.href = "logout.php";
-        }
-    }
+    // function confirmLogout() {
+    //     var confirmAction = confirm("Are you sure you want to log out?");
+    //     if (confirmAction) {
+    //         window.location.href = "logout.php";
+    //     }
+    // }
 
     function searchProducts(query) {
         const results = document.getElementById("search-results");
@@ -262,9 +328,18 @@ $unread_count = $row['unread_count'];
     </script>
 
     <nav>
+        <div class="nav-hero">
+            <li><a href="home.php">AgroMart</a></li>
+            <li>
+                <h6>Welcome to Sri Lanka's most leading plant nursery marketplace</h6>
+            </li>
+            <li><a href="about_us.php">About Us</a></li>
+        </div>
         <div class="nav-top">
-            <div class="logo">
-                <a href="home.php">AgroMart</a>
+            <div class="nav-left">
+                <li><a href="all_ads.php">All Ads</a></li>
+                <li><a href="requests.php">All requests</a></li>
+
             </div>
             <ul class="nav-right">
                 <?php if (!isset($_SESSION['username'])): ?>
@@ -298,7 +373,7 @@ $unread_count = $row['unread_count'];
 
                 <?php if (isset($_SESSION['username'])): ?>
                 <li><a href="profile.php"><i class="fas fa-user"></i> &nbsp; Account</a></li>
-                <li><a href="logout.php" onclick="confirmLogout()">LogOut</a></li>
+                <li><a href="logout.php">LogOut</a></li>
                 <?php else: ?>
                 <li><a href="login.php">LOGIN</a></li>
                 <li><a href="register.php">REGISTER</a></li>

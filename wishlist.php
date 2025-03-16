@@ -2,10 +2,9 @@
 session_start();
 ob_start();
 include 'config.php';
-include 'alertFunction.php';
 
 if (!isset($_SESSION['user_id'])) {
-    showAlert('Please log in to access your wishlist.', 'error', '#ff0000', 'login.php');
+    //showAlert('Please log in to access your wishlist.', 'error', '#ff0000', 'login.php');
     exit;
 }
 
@@ -28,14 +27,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['ad_id'])) {
         $stmt = $conn->prepare($delete_sql);
         $stmt->bind_param("ii", $user_id, $ad_id);
         $stmt->execute();
-        showAlert('Removed from wishlist!', 'success', '#008000', 'wishlist.php');
+        //showAlert('Removed from wishlist!', 'success', '#008000', 'wishlist.php');
     } else {
         //add to wishlist
         $insert_sql = "INSERT INTO wishlist (user_id, ad_id) VALUES (?, ?)";
         $stmt = $conn->prepare($insert_sql);
         $stmt->bind_param("ii", $user_id, $ad_id);
         $stmt->execute();
-        showAlert('Added to wishlist!', 'success', '#008000', 'wishlist.php');
+        //showAlert('Added to wishlist!', 'success', '#008000', 'wishlist.php');
     }
 }
 

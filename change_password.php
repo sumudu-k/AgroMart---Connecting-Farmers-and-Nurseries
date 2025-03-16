@@ -2,6 +2,11 @@
 session_start();
 include 'config.php';
 
+function isValidPassword($password)
+{
+    return preg_match('/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/', $password);
+}
+
 if (!isset($_SESSION['user_id'])) {
     echo "<script>
     window.onload = function() {
@@ -13,37 +18,50 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (isset($_POST['submit'])) {
     $current_password = $_POST['current_password'];
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
 
-    // fetch user's current password
-    $stmt = $conn->prepare("SELECT password FROM users WHERE user_id = ?");
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
-
-    if (!password_verify($current_password, $user['password'])) {
+    if (empty($current_password) || empty($new_password) || empty($confirm_password)) {
         echo "<script>
+        window.onload = function() {
+            showAlert('Please fill in all fields.', 'error', '#ff0000');
+        };
+        </script>";
+    } elseif (!isValidPassword($new_password)) {
+        echo "<script>
+        window.onload = function() {
+            showAlert('Password must contain at least 8 characters, one uppercase letter, one number and one special character.', 'error', '#ff0000');
+        };
+        </script>";
+    } else {
+
+        $stmt = $conn->prepare("SELECT password FROM users WHERE user_id = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+
+        if (!password_verify($current_password, $user['password'])) {
+            echo "<script>
     window.onload = function() {
         showAlert('Your current password is incorrect.', 'error', '#ff0000');
     };
 </script>";
-    } elseif ($new_password !== $confirm_password) {
-        echo "<script>
+        } elseif ($new_password !== $confirm_password) {
+            echo "<script>
         window.onload = function() {
             showAlert('New passwords do not match.', 'error', '#ff0000');
             };
         </script>";
-    } else {
-        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-        $update_stmt = $conn->prepare("UPDATE users SET password = ? WHERE user_id = ?");
-        $update_stmt->bind_param("si", $hashed_password, $user_id);
+        } else {
+            $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+            $update_stmt = $conn->prepare("UPDATE users SET password = ? WHERE user_id = ?");
+            $update_stmt->bind_param("si", $hashed_password, $user_id);
 
-        if ($update_stmt->execute()) {
-            echo "<script>
+            if ($update_stmt->execute()) {
+                echo "<script>
             window.onload = function() {
                 showAlert('Password updated successfully!', 'success', '#008000');
                 };
@@ -51,12 +69,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     window.location.href = 'profile.php';
                 }, 2000);
             </script>";
-        } else {
-            echo "<script>
+            } else {
+                echo "<script>
             window.onload = function() {
                 showAlert('An error occurred while updating your password.', 'error', '#ff0000');
                 };
             </script>";
+            }
         }
     }
 }
@@ -271,19 +290,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="form-group">
                     <label for="current_password">Current Password:</label>
                     <input type="password" id="current_password" name="current_password"
-                        placeholder="Enter current password" required>
+                        placeholder="Enter current password">
                 </div>
                 <div class="form-group">
                     <label for="new_password">New Password:</label>
-                    <input type="password" id="new_password" name="new_password" placeholder="Enter new password"
-                        required>
+                    <input type="password" id="new_password" name="new_password" placeholder="Enter new password">
+                    <span>Password must contain at least 8 characters, one uppercase letter, one number and one special
+                        character.</span>
                 </div>
                 <div class="form-group">
                     <label for="confirm_password">Confirm New Password:</label>
                     <input type="password" id="confirm_password" name="confirm_password"
-                        placeholder="Confirm new password" required>
+                        placeholder="Confirm new password">
                 </div>
-                <button type="submit">Change Password</button>
+                <button type="submit" name='submit'>Change Password</button>
                 <h4>Forgot Password <a href='forgotpw.php'>Reset here</a></h4>
             </form>
         </div>

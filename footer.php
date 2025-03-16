@@ -14,7 +14,7 @@
         <div class="footer-container">
             <div class="footer-info">
                 <h3>AgroMart</h3>
-                <p class="address">No 15, Haputhalegama, Haputhale</p>
+                <p>No 15, Haputhalegama, Haputhale</p>
                 <p>Phone: 071 3864286</p>
                 <p>Email: info@agromart.com</p>
             </div>
@@ -83,10 +83,6 @@
         margin-bottom: 20px;
     }
 
-    .footer-info .address {
-        text-transform: capitalize;
-        text-align: center;
-    }
 
     .footer-links {
         width: 20%;

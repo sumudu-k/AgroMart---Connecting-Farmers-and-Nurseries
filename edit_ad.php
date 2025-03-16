@@ -40,12 +40,6 @@ if (isset($_POST['submit'])) {
             showAlert('Please fill all fields!', 'error', '#ff0000');
         };
         </script>";
-        // } elseif (empty($_FILES['images']['name'][0])) {
-        //     echo "<script>
-        //     window.onload = function() {
-        //         showAlert('Please upload at least one image!', 'error', '#ff0000');
-        //     };
-        //     </script>";
     } elseif (strlen($title) < 20) {
         echo "<script>
             window.onload = function() {

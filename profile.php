@@ -11,6 +11,11 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
+function isValidContact($contact_number)
+{
+    return preg_match('/^0\d{9}$/', $contact_number);
+}
+
 $sql = 'SELECT * FROM users WHERE user_id = ?';
 $stmt = $conn->prepare($sql);
 $stmt->bind_param('i', $user_id);
@@ -24,7 +29,19 @@ if (isset($_POST['update'])) {
     $contact_number = $_POST['contact_number'];
     $address = $_POST['address'];
 
-    if ($email !== $userData['email']) {
+    if (empty($username) || empty($email) || empty($contact_number) || empty($address)) {
+        echo "<script>
+            showAlert('Please fill in all fields.', 'error', '#ff0000');
+        </script>";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "<script>
+            showAlert('Please enter a valid email.', 'error', '#ff0000');
+        </script>";
+    } elseif (!isValidContact($contact_number)) {
+        echo "<script>
+            showAlert('Please enter a valid contact number.', 'error', '#ff0000');
+        </script>";
+    } elseif ($email !== $userData['email']) {
         $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? AND user_id != ?");
         $stmt->bind_param('si', $email, $user_id);
         $stmt->execute();
@@ -36,11 +53,14 @@ if (isset($_POST['update'])) {
         } else {
             $update_sql = "UPDATE users SET username=?, email=?, contact_number=?, address=? WHERE user_id=?";
             $stmt = $conn->prepare($update_sql);
-            $stmt->bind_param("ssisi", $username, $email, $contact_number, $address, $user_id);
+            $stmt->bind_param("ssssi", $username, $email, $contact_number, $address, $user_id);
 
             if ($stmt->execute()) {
                 echo "<script>
                     showAlert('Profile updated successfully!', 'success', '#008000');
+                    setTimeout(function() {
+                        window.location.href = 'profile.php';
+                    }, 2000);
                 </script>";
             } else {
                 echo "<script>
@@ -51,15 +71,15 @@ if (isset($_POST['update'])) {
     } else {
         $update_sql = "UPDATE users SET username=?, email=?, contact_number=?, address=? WHERE user_id=?";
         $stmt = $conn->prepare($update_sql);
-        $stmt->bind_param("ssisi", $username, $email, $contact_number, $address, $user_id);
+        $stmt->bind_param("ssssi", $username, $email, $contact_number, $address, $user_id);
 
         if ($stmt->execute()) {
 
             echo "<script>
                 showAlert('Profile updated successfully!', 'success', '#008000');
                 setTimeout(function() {
-        window.location.href = window.location.href; 
-    }, 2000);
+                    window.location.href = 'profile.php';
+                }, 2000);
             </script>";
         } else {
             echo "<script>
@@ -387,22 +407,21 @@ if (isset($_POST['update'])) {
             <form action="profile.php" method="post">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" id="username" required name="username"
+                    <input type="text" id="username" name="username"
                         value="<?= htmlspecialchars($userData['username']) ?>">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" required name="email"
-                        value="<?= htmlspecialchars($userData['email']) ?>">
+                    <input type="text" id="email" name="email" value="<?= htmlspecialchars($userData['email']) ?>">
                 </div>
                 <div class="form-group">
                     <label for="contact_number">Contact Number</label>
-                    <input type="number" id="contact_number" required name="contact_number"
+                    <input type="text" id="contact_number" name="contact_number"
                         value="<?= htmlspecialchars($userData['contact_number']) ?>">
                 </div>
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <input type="text" id="address" required name="address"
+                    <input type="text" id="address" name="address"
                         value="<?= htmlspecialchars($userData['address']) ?>">
                 </div>
                 <button class="updateBtn" type="submit" name="update">Update</button>

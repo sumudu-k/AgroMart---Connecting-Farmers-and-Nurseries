@@ -98,6 +98,7 @@ if (isset($_POST['submit'])) {
             window.location.href = 'my_ads.php';
         }, 2000);
         </script>";
+        unset($_SESSION['u-title'], $_SESSION['u-description'], $_SESSION['u-price'], $_SESSION['u-phone_number']);
     }
 }
 ?>
