@@ -1,12 +1,19 @@
 <?php
+session_start();
 include '../config.php';
+
+if (!isset($_SESSION['admin_logged_in'])) {
+    header("Location: admin_login.php");
+    exit();
+}
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $message = $_POST['message'];
     $link = !empty($_POST['link']) ? $_POST['link'] : NULL;
     $image = NULL;
 
-    // Upload the image if provided
+ 
     if (!empty($_FILES['image']['name'])) {
         $targetDir = "uploads/";
         $imageName = time() . "_" . basename($_FILES["image"]["name"]);
@@ -19,22 +26,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Fetch all users from the users table
+
     $sql = "SELECT user_id FROM users";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        // Loop through all users and insert the notification for each
+       
         while ($row = $result->fetch_assoc()) {
             $user_id = $row['user_id'];
             
-            // Insert notification for each user
+      
             $stmt = $conn->prepare("INSERT INTO notifications (user_id, message, link, image) VALUES (?, ?, ?, ?)");
             $stmt->bind_param("isss", $user_id, $message, $link, $image);
 
             if (!$stmt->execute()) {
                 echo "<script>alert('Error sending notification to user ID: $user_id');</script>";
-                continue; // Proceed to the next user if there is an error
+                continue; 
             }
         }
         
@@ -43,23 +50,90 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>alert('No users found!');</script>";
     }
 }
+
+
+ob_start();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+<style>
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-<head>
-    <title>Admin - Send Notification</title>
-</head>
+    h2 {
+        text-align: center;
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+    }
 
-<body>
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    textarea,
+    input[type="text"],
+    input[type="file"] {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    textarea {
+        resize: vertical;
+        height: 100px;
+    }
+
+    button {
+        background-color: #007a33;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    @media screen and (max-width: 768px) {
+        .container {
+            padding: 15px;
+        }
+
+        textarea,
+        input[type="text"],
+        input[type="file"],
+        button {
+            font-size: 14px;
+        }
+    }
+</style>
+
+<div class="container">
     <h2>Send Notification</h2>
     <form method="post" enctype="multipart/form-data">
-        <textarea name="message" required placeholder="Enter notification message"></textarea><br>
-        <input type="text" name="link" placeholder="Optional Link"><br>
-        <input type="file" name="image" accept="image/*"><br>
+        <textarea name="message" required placeholder="Enter notification message"></textarea>
+        <input type="text" name="link" placeholder="Optional Link">
+        <input type="file" name="image" accept="image/*">
         <button type="submit">Send Notification</button>
     </form>
-</body>
+</div>
 
-</html>
+<?php
+
+$content = ob_get_clean();
+include '../admin/admin_navbar.php';
+?>
