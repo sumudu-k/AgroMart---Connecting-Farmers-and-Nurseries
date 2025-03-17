@@ -373,7 +373,8 @@ $unread_count = $row['unread_count'];
 
                 <?php if (isset($_SESSION['username'])): ?>
                 <li><a href="profile.php"><i class="fas fa-user"></i> &nbsp; Account</a></li>
-                <li><a href="logout.php">LogOut</a></li>
+                <li><a href="#" onclick="confirmAlert('Are you sure want to logout?','logout.php')">LogOut</a>
+                </li>
                 <?php else: ?>
                 <li><a href="login.php">LOGIN</a></li>
                 <li><a href="register.php">REGISTER</a></li>

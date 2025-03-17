@@ -70,6 +70,12 @@ if (isset($_POST['submit'])) {
                 showAlert('Invalid Contact Number!', 'error', '#ff0000');
             };
         </script>";
+    } elseif (!is_numeric($price)) {
+        echo "<script>
+            window.onload = function() {
+                showAlert('Price must be a number!', 'error', '#ff0000');
+            };
+        </script>";
     } else {
         $ad_sql = "INSERT INTO ads (title, description, price, phone_number, user_id, category_id, district) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($ad_sql);
@@ -382,7 +388,7 @@ if (isset($_POST['submit'])) {
 
             <div class="form-group">
                 <label for="price">Price</label>
-                <input type="number" name="price" placeholder="Rs"
+                <input type="text" name="price" placeholder="Rs"
                     value="<?= isset($_SESSION['u-price']) ? htmlspecialchars($_SESSION['u-price']) : '' ?>">
             </div>
 

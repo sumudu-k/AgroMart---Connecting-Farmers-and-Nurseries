@@ -70,6 +70,12 @@ if (isset($_POST['submit'])) {
                 showAlert('Invalid Contact Number!', 'error', '#ff0000');
             };
         </script>";
+    } elseif (is_numeric($price) == false) {
+        echo "<script>
+            window.onload = function() {
+                showAlert('Price must be a number!', 'error', '#ff0000');
+            };
+        </script>";
     } else {
 
         $update_sql = "UPDATE ads SET title = ?, description = ?, price = ?, phone_number = ?, category_id = ?, district = ? WHERE ad_id = ?";
@@ -392,7 +398,7 @@ if (isset($_POST['submit'])) {
 
             <div class="form-group">
                 <label for="price">Price</label>
-                <input type="number" name="price" value="<?= htmlspecialchars($ad['price']) ?>">
+                <input type="text" name="price" value="<?= htmlspecialchars($ad['price']) ?>">
             </div>
 
             <div class="form-group">

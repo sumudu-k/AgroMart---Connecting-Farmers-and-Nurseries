@@ -4,7 +4,7 @@ include 'config.php';
 
 function isValidPassword($password)
 {
-    return preg_match('/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/', $password);
+    return preg_match('/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/', $password);
 }
 
 if (!isset($_SESSION['user_id'])) {

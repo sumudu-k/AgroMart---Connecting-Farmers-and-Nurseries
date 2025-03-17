@@ -1,5 +1,6 @@
 <?php
 session_start();
+ob_start();
 include 'config.php';
 include 'navbar.php';
 
@@ -8,8 +9,8 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-if (isset($_GET['id'])) {
-    $request_id = $_GET['id'];
+if (isset($_GET['request_id'])) {
+    $request_id = $_GET['request_id'];
     $user_id = $_SESSION['user_id'];
 
     $sql = "SELECT * FROM plant_requests WHERE request_id = ? AND user_id = ?";
@@ -24,14 +25,8 @@ if (isset($_GET['id'])) {
         $stmt->bind_param("ii", $request_id, $user_id);
 
         if ($stmt->execute()) {
-            echo "<script>
-                window.onload = function() {
-                    showAlert('Request deleted successfully!', 'success', '#008000', 'my_requests.php');
-                };
-                setTimeout(function() {
-                    window.location.href = 'my_requests.php';
-                }, 2000);
-            </script>";
+            header("Location: my_requests.php");
+            exit();
         } else {
             echo "<script>
                 window.onload = function() {

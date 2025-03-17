@@ -21,21 +21,7 @@ if (isset($_GET['ad_id'])) {
     $stmt_img->bind_param("i", $ad_id);
     $stmt_img->execute();
 
-    echo "<script>
-    window.onload = function() {
-        showAlert('Ad deleted successfully!', 'success', '#008000');
-    };
-    setTimeout(function() {
-        window.location.href = 'my_ads.php';
-    }, 2000);
-    </script>";
-} else {
-
-    echo "<script>
-    window.onload = function() {
-        showAlert('Ad ID is missing', 'error', '#ff0000');
-    };
-    </script>";
+    header('Location: my_ads.php');
 }
 
 include 'footer.php';

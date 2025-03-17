@@ -238,7 +238,8 @@ $result = $stmt->get_result();
             <p>Created at: <?= htmlspecialchars($row['created_at']); ?></p>
             <div class="request-actions">
                 <a href="request_edit.php?id=<?= $row['request_id']; ?>">Edit</a>
-                <a href="delete_request.php?id=<?= $row['request_id']; ?>">Delete</a>
+                <a href="#" onclick="confirmAlerRequest(<?= $row['request_id']; ?>)">Delete</a>
+
             </div>
         </div>
         <?php endwhile; ?>
@@ -247,6 +248,7 @@ $result = $stmt->get_result();
         <?php endif; ?>
     </div>
     <?php include 'footer.php'; ?>
+    <script src="alertFunction.js"></script>
 </body>
 
 </html>
