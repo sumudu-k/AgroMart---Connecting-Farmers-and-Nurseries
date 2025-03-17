@@ -1,0 +1,5 @@
+Options -Indexes
+RewriteEngine On
+
+# Redirect 404 errors to a custom error page
+ErrorDocument 404 http://localhost/Agromart%20Project/404.php

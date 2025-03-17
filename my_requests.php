@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'config.php';
-// include 'navbar.php'; 
+include 'navbar.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -140,13 +140,17 @@ $result = $stmt->get_result();
         margin-right: 10px;
     }
 
+    .request-actions a:last-child {
+        background-color: #dc3545;
+    }
+
     .request-actions a:first-child:hover {
         background-color: #006400;
         ;
     }
 
     .request-actions a:last-child:hover {
-        background-color: #c82333;
+        background-color: rgb(175, 10, 27);
     }
 
     .no-requests {
@@ -222,7 +226,7 @@ $result = $stmt->get_result();
 </head>
 
 <body>
-    <h2>My Plant Requests</h2>
+    <h2>My Product Requests</h2>
     <div class="container">
         <?php if ($result->num_rows > 0): ?>
         <?php while ($row = $result->fetch_assoc()): ?>
@@ -231,9 +235,11 @@ $result = $stmt->get_result();
             <p><?= htmlspecialchars($row['description']); ?></p>
             <p>Contact: <?= htmlspecialchars($row['contact']); ?></p>
             <p>District: <?= htmlspecialchars($row['district']); ?></p>
+            <p>Created at: <?= htmlspecialchars($row['created_at']); ?></p>
             <div class="request-actions">
                 <a href="request_edit.php?id=<?= $row['request_id']; ?>">Edit</a>
-                <a href="delete_request.php?id=<?= $row['request_id']; ?>">Delete</a>
+                <a href="#" onclick="confirmAlerRequest(<?= $row['request_id']; ?>)">Delete</a>
+
             </div>
         </div>
         <?php endwhile; ?>
@@ -242,6 +248,7 @@ $result = $stmt->get_result();
         <?php endif; ?>
     </div>
     <?php include 'footer.php'; ?>
+    <script src="alertFunction.js"></script>
 </body>
 
 </html>

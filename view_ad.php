@@ -416,7 +416,9 @@ if ($user_id) {
     <div class="container">
         <div class="ad-image">
             <div class="displayed-image">
-                <img id="displayedImage" src="<?= htmlspecialchars($images[0] ?? ''); ?>" alt="Main Product Image">
+                <img id="displayedImage"
+                    src="<?= htmlspecialchars($images[0] ?? 'images/placeholder/No_Image_AD.png'); ?>"
+                    alt="Main Product Image">
             </div>
             <div class="thumbnail-images">
                 <?php foreach ($images as $image): ?>
@@ -455,7 +457,8 @@ if ($user_id) {
         <div class="moreItemsContainer">
             <?php while ($similar_ad = $similar_ads_result->fetch_assoc()): ?>
             <div class="moreItemCard" onclick="window.location.href='view_ad.php?ad_id=<?= $similar_ad['ad_id']; ?>'">
-                <img src="<?= htmlspecialchars($similar_ad['image']); ?>" alt="Product Image">
+                <img src="<?= htmlspecialchars($similar_ad['image'] ?? 'images/placeholder/No_Image_AD.png'); ?>"
+                    alt="Product Image">
                 <h4><?= htmlspecialchars($similar_ad['title']); ?></h4>
                 <p>Rs <?= htmlspecialchars($similar_ad['price']); ?></p>
             </div>

@@ -18,7 +18,7 @@ $ads_sql = "
         (SELECT image_path FROM ad_images WHERE ad_id = ads.ad_id LIMIT 1) AS image 
     FROM ads 
     JOIN categories ON ads.category_id = categories.category_id 
-    ORDER BY ads.created_at DESC 
+    ORDER BY RAND() 
     LIMIT $ads_per_page OFFSET $offset";
 $result = $conn->query($ads_sql);
 ?>
@@ -272,7 +272,7 @@ $result = $conn->query($ads_sql);
                     }
                 ?>
             <div class="ad-card" onclick="window.location.href='view_ad.php?ad_id=<?= $ad['ad_id']; ?>'">
-                <img src="<?= htmlspecialchars($ad['image'] ?? 'images/placeholder/no-image.jpg'); ?>"
+                <img src="<?= htmlspecialchars($ad['image'] ?? 'images/placeholder/No_Image_AD.png'); ?>"
                     alt="Product Image">
                 <h4><?= htmlspecialchars($ad['title']); ?></h4>
                 <div class="ad-details">

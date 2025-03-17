@@ -28,13 +28,12 @@ $unread_count = $row['unread_count'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navbar</title>
+    <title>AgroMart</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-    /* General navbar styling */
     * {
         margin: 0;
         padding: 0;
@@ -51,6 +50,7 @@ $unread_count = $row['unread_count'];
         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     }
 
+
     /* 1 Row */
     .nav-top {
         display: flex;
@@ -59,12 +59,78 @@ $unread_count = $row['unread_count'];
         width: 100%;
     }
 
-    .logo a {
+    h6 {
+        animation: pulse 2.5s infinite;
+    }
+
+    @keyframes pulse {
+
+        0%,
+        100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0;
+        }
+    }
+
+    .nav-hero {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+    }
+
+    .nav-hero li {
         font-size: 1.5rem;
         font-weight: bold;
         color: white;
-        text-decoration: none;
+        list-style: none;
+        padding: 0;
+        color: white;
     }
+
+    .nav-hero li a {
+        text-decoration: none;
+        color: white;
+    }
+
+    .nav-hero li:last-child a {
+        color: white;
+        font-size: 1rem;
+    }
+
+
+    .nav-left {
+        display: flex;
+        list-style: none;
+        padding: 0;
+    }
+
+    .nav-left li {
+        margin: 0 5px;
+    }
+
+    .nav-left a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        padding: 10px 15px;
+        border-radius: 5px;
+        transition: 0.3s;
+    }
+
+    .nav-left a:hover {
+        background-color: #228B22;
+        /* Darker green */
+    }
+
+
+
 
     .nav-bottom {
         width: 100%;
@@ -201,12 +267,12 @@ $unread_count = $row['unread_count'];
 <body>
 
     <script>
-    function confirmLogout() {
-        var confirmAction = confirm("Are you sure you want to log out?");
-        if (confirmAction) {
-            window.location.href = "logout.php";
-        }
-    }
+    // function confirmLogout() {
+    //     var confirmAction = confirm("Are you sure you want to log out?");
+    //     if (confirmAction) {
+    //         window.location.href = "logout.php";
+    //     }
+    // }
 
     function searchProducts(query) {
         const results = document.getElementById("search-results");
@@ -262,19 +328,29 @@ $unread_count = $row['unread_count'];
     </script>
 
     <nav>
+        <div class="nav-hero">
+            <li><a href="home.php">AgroMart</a></li>
+            <li>
+                <h6>Welcome to Sri Lanka's most leading plant nursery marketplace</h6>
+            </li>
+            <li><a href="about_us.php">About Us</a></li>
+        </div>
         <div class="nav-top">
-            <div class="logo">
-                <a href="home.php">AgroMart</a>
+            <div class="nav-left">
+                <li><a href="all_ads.php">All Ads</a></li>
+                <li><a href="requests.php">All requests</a></li>
+
             </div>
             <ul class="nav-right">
                 <?php if (!isset($_SESSION['username'])): ?>
-                <li><a href="#" onclick="showAlert('Please login to add a product request','warning','red')">Request
+                <li><a href="#" onclick="showAlert('Please login to add a product request','error','#ff0000')">Request
                         Products</a></li>
-                <li><a href="#" onclick="showAlert('Please login to post an Ad','warning','red')" class="place-ad">POST
+                <li><a href="#" onclick="showAlert('Please login to post an Ad','error','#ff0000')"
+                        class="place-ad">POST
                         AD FREE</a></li>
-                <li><a href="#" onclick="showAlert('Please login to see Wishlist','warning','red')"><i
+                <li><a href="#" onclick="showAlert('Please login to see Wishlist','error','#ff0000')"><i
                             class="fas fa-heart" title="Wishlist"></i></a></li>
-                <li><a href="#" onclick="showAlert('Please login to see Notifications','warning','red')">
+                <li><a href="#" onclick="showAlert('Please login to see Notifications','error','#ff0000')">
                         <i class="fa fa-bell" aria-hidden="true"></i>
                         <?php if ($unread_count > 0): ?>
                         <span class="badge" id="notif_count"><?= $unread_count ?></span>
@@ -297,7 +373,8 @@ $unread_count = $row['unread_count'];
 
                 <?php if (isset($_SESSION['username'])): ?>
                 <li><a href="profile.php"><i class="fas fa-user"></i> &nbsp; Account</a></li>
-                <li><a href="logout.php" onclick="confirmLogout()">LogOut</a></li>
+                <li><a href="#" onclick="confirmAlert('Are you sure want to logout?','logout.php')">LogOut</a>
+                </li>
                 <?php else: ?>
                 <li><a href="login.php">LOGIN</a></li>
                 <li><a href="register.php">REGISTER</a></li>

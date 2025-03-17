@@ -75,7 +75,7 @@ $ads_result = $conn->query($ads_query);
         justify-content: center;
         gap: 15px;
         border-radius: 10px;
-        margin: 30px 0 ;
+        margin: 30px 0;
         padding: 5vh 0 10vh 0;
         background-color: #e9ecef;
     }
@@ -133,7 +133,7 @@ $ads_result = $conn->query($ads_query);
         gap: 20px;
         justify-content: space-between;
         border-radius: 10px;
-        margin-bottom: 30px ;
+        margin-bottom: 30px;
         padding: 10vh 0;
     }
 
@@ -178,7 +178,7 @@ $ads_result = $conn->query($ads_query);
         justify-content: center;
         background-color: #e9ecef;
         border-radius: 10px;
-        margin-bottom: 30px ;
+        margin-bottom: 30px;
     }
 
 
@@ -292,7 +292,7 @@ $ads_result = $conn->query($ads_query);
 
     .contact-section {
         border-radius: 10px;
-        margin-bottom: 30px ;
+        margin-bottom: 30px;
     }
 
     .contact-section h1 {
@@ -501,15 +501,15 @@ $ads_result = $conn->query($ads_query);
             font-size: 1.5rem;
         }
 
-            .sugestion-ads {
+        .sugestion-ads {
             flex-direction: row;
             align-items: stretch;
         }
 
         .ad-card {
-            flex: 0 0 100%; 
+            flex: 0 0 100%;
             width: 100%;
-            box-sizing: border-box; 
+            box-sizing: border-box;
         }
 
 
@@ -570,7 +570,7 @@ $ads_result = $conn->query($ads_query);
         .welcome-text h2 {
             font-size: 2rem;
         }
-        
+
         .sugestion-ads {
             flex-wrap: wrap;
             justify-content: center;
@@ -628,9 +628,6 @@ $ads_result = $conn->query($ads_query);
     </script>
 
     <div class="main-container">
-        <a href="post_request.php "><button> Post request</button></a>
-        <a href="my_requests.php "><button> My request</button></a>
-        <a href="requests.php "><button> Requests</button></a>
 
         <!-- category section -->
         <div class="category-container">
@@ -673,7 +670,8 @@ $ads_result = $conn->query($ads_query);
                 <?php if ($ads_result->num_rows > 0): ?>
                 <?php while ($ad = $ads_result->fetch_assoc()): ?>
                 <div class="ad-card" onclick="window.location.href='view_ad.php?ad_id=<?= $ad['ad_id']; ?>'">
-                    <img src="<?= htmlspecialchars($ad['image']); ?>" alt="Ad Image">
+                    <img src="<?= htmlspecialchars($ad['image'] ?? 'images/placeholder/No_Image_AD.png'); ?>"
+                        alt="Product Image">
                     <h4><?= htmlspecialchars($ad['title']); ?></h4>
                     <p class="description"><?= htmlspecialchars(substr($ad['description'], 0, 100)) . '...'; ?></p>
                     <div class="ad-details">

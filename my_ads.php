@@ -18,7 +18,7 @@ $sql = "SELECT ads.*, GROUP_CONCAT(ad_images.image_path) AS images
         FROM ads 
         LEFT JOIN ad_images ON ads.ad_id = ad_images.ad_id 
         WHERE ads.user_id = ? 
-        GROUP BY ads.ad_id";
+        GROUP BY ads.ad_id DESC";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
@@ -294,11 +294,12 @@ $result = $stmt->get_result();
                     <h4><?= htmlspecialchars($row['title']) ?></h4>
                     <p><?= htmlspecialchars($row['description']) ?></p>
                     <p class="price">Price: Rs <?= number_format($row['price'], 2) ?></p>
+                    <P>Posted on:<?= htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></P>
                 </div>
                 <div class="ad-buttons" style="margin-top: 10px;">
                     <a href="view_ad.php?ad_id=<?= $row['ad_id'] ?>" class="btn">View Ad</a>
                     <a href="edit_ad.php?ad_id=<?= $row['ad_id'] ?>" class="btn">Edit Ad</a>
-                    <button class="btn btn-danger" onclick="confirmDelete(<?= $row['ad_id'] ?>)">Delete Ad</button>
+                    <button class="btn btn-danger" onclick="confirmAlertAd(<?= $row['ad_id'] ?>)">Delete Ad</button>
                 </div>
             </div>
             <?php endwhile; ?>

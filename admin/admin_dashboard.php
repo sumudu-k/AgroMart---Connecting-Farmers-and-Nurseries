@@ -1,11 +1,12 @@
 <?php
 session_start();
+include '../config.php';
+
 if (!isset($_SESSION['admin_logged_in'])) {
     header("Location: admin_login.php");
     exit();
 }
 
-include '../config.php';
 
 $usercount = "SELECT COUNT(*) as total FROM users";
 $users = $conn->query($usercount);
@@ -23,94 +24,139 @@ $adreqcount = "SELECT COUNT(*) as total FROM plant_requests";
 $adrequests = $conn->query($adreqcount);
 $adrequests = $adrequests->fetch_assoc();
 
-$notificationcount = "SELECT COUNT(*) as total FROM notifications";
+$notificationcount = "SELECT COUNT(DISTINCT message) AS total FROM notifications";
 $notifications = $conn->query($notificationcount);
 $notifications = $notifications->fetch_assoc();
 
+
+ob_start();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <style>
-    body {
-        display: flex;
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
-
-    .sidebar {
-        width: 200px;
-        background-color: #333;
-        color: white;
-        height: 100vh;
+    .container {
+        max-width: 100%;
+        margin: 0 auto;
         padding: 20px;
-        position: fixed;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
-    .sidebar a {
-        display: block;
+    h1 {
+        text-align: center;
+        font-size: 28px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    stats-container h2 {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: space-around;
+    }
+
+    .stat-item {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 8px;
+        flex: 1;
+        min-width: 200px;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-item h3 {
+        font-size: 18px;
+        color: #555;
+        margin: 0;
+    }
+
+    .success-message {
+        background-color: #d4edda;
+        color: #155724;
         padding: 10px;
-        color: white;
-        text-decoration: none;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        text-align: center;
     }
 
-    .sidebar a:hover {
-        background-color: #575757;
+    .error-message {
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 10px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        text-align: center;
     }
 
-    .content {
-        margin-left: 220px;
-        padding: 0px 20px;
-        width: 100%;
+    @media screen and (max-width: 768px) {
+        .container {
+            padding: 15px;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+
+        .stat-item {
+            min-width: 100%;
+        }
     }
-    </style>
-</head>
+</style>
 
-<body>
-    <div class="sidebar">
-        <h2>Admin Menu</h2>
-        <a href="add_category.php">Add Category</a>
-        <a href="delete_category.php">Delete Category</a>
-        <a href="view_users.php">Manage Users</a>
-        <a href="view_ads.php">View & Delete Ads</a>
-        <a href="admin_send_notification.php">Send Push Notifications</a>
-        <a href="admin_manage_notifications.php">Delete Push Notifications</a>
-        <a href="admin_manage_requests.php">Manage Requests</a>
-        <a href="admin_approval.php">Admin Approval</a>
-    </div>
+<div class="container">
+    <h1>Welcome to Admin Dashboard</h1>
 
-    <div class="content">
-        <?php include 'admin_navbar.php'; ?>
-        <h1>Welcome to Admin Dashboard</h1>
+    <?php if (isset($_SESSION['success'])): ?>
+        <div class="success-message"><?= htmlspecialchars($_SESSION['success']); ?></div>
+        <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
 
-        <?php if (isset($_SESSION['success'])): ?>
-        <div class="success-message"><?= $_SESSION['success'];
-                                            unset($_SESSION['success']); ?></div>
-        <?php endif; ?>
+    <?php if (isset($_SESSION['error'])): ?>
+        <div class="error-message"><?= htmlspecialchars($_SESSION['error']); ?></div>
+        <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
 
-        <?php if (isset($_SESSION['error'])): ?>
-        <div class="error-message"><?= $_SESSION['error'];
-                                        unset($_SESSION['error']); ?></div>
-        <?php endif; ?>
-        <div>
-            <h2>Statistics</h2>
-            <div>
-                <h3>Total Users: <?= $users['total'] ?></h3>
-                <h3>Total Ads: <?= $ads['total'] ?></h3>
-                <h3>Total Categories: <?= $categories['total'] ?></h3>
-                <h3>Total Ad Requests: <?= $adrequests['total'] ?></h3>
-                <h3>Total Notifications: <?= $notifications['total'] ?></h3>
+    <div class="stats-container">
+        <h2>Statistics</h2>
+        <div class="stats">
+            <div class="stat-item">
+                <h3>Total Users: <?= htmlspecialchars($users['total']); ?></h3>
+            </div>
+            <div class="stat-item">
+                <h3>Total Ads: <?= htmlspecialchars($ads['total']); ?></h3>
+            </div>
+            <div class="stat-item">
+                <h3>Total Categories: <?= htmlspecialchars($categories['total']); ?></h3>
+            </div>
+            <div class="stat-item">
+                <h3>Total Ad Requests: <?= htmlspecialchars($adrequests['total']); ?></h3>
+            </div>
+            <div class="stat-item">
+                <h3>Total Notifications: <?= htmlspecialchars($notifications['total']); ?></h3>
             </div>
         </div>
-
     </div>
+</div>
 
+<?php
 
-
-
-</body>
-
-</html>
+$content = ob_get_clean();
+include '../admin/admin_navbar.php';
+?>
