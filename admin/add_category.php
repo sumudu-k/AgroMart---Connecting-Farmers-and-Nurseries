@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../config.php';
+include '../alertFunction.php';
 
 if (!isset($_SESSION['admin_logged_in'])) {
     header("Location: admin_login.php");
@@ -101,7 +102,7 @@ ob_start();
         font-weight: bold;
     }
 
-    .form-group input{
+    .form-group input {
         flex: 1.5;
         font-size: 1rem;
         padding: 8px;
@@ -142,7 +143,6 @@ ob_start();
     form .button:hover {
         background-color: #005922;
     }
-
 </style>
 
 <div class="category-container">
