@@ -247,6 +247,18 @@ if (isset($_POST['register'])) {
         color: #f09319;
     }
 
+    #icon {
+        color: rgb(114, 114, 114);
+        margin: 7px 7px 7px 0px;
+    }
+
+    span {
+        font-size: 0.8rem;
+        color: rgb(114, 114, 114);
+        align-self: flex-start;
+        margin-bottom: 10px;
+    }
+
     /* Responsive design */
     @media (max-width: 480px) {
         .wrapper {
@@ -322,7 +334,9 @@ if (isset($_POST['register'])) {
                         value="<?= isset($_SESSION['u-email']) ? htmlspecialchars($_SESSION['u-email']) : '' ?>">
 
                     <input type="password" name="password" placeholder="Password">
-                    <span>Password must be at least 8 characters long and include a capital letter, a number, and a
+                    <span><i class="fa fa-exclamation-circle" aria-hidden="true" id="icon"></i>Password must be at least
+                        8
+                        characters long and include a capital letter, a number, and a
                         special character</span>
 
                     <input type="password" name="confirm_password" placeholder="Confirm Password">
@@ -332,7 +346,8 @@ if (isset($_POST['register'])) {
 
                     <input type="text" name="contact" placeholder="Contact Number"
                         value="<?= isset($_SESSION['u-contact']) ? htmlspecialchars($_SESSION['u-contact']) : '' ?>">
-                    <span>Contact number should contain 10 digits</span>
+                    <span><i class="fa fa-exclamation-circle" aria-hidden="true" id="icon"></i> Contact number should
+                        contain 10 digit </span>
                     <button type="submit" name="register">Register</button>
                 </form>
                 <p class="p1">Already have an account? <a class="link" href="login.php">Login here</a>.</p>

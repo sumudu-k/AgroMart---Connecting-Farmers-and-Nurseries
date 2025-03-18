@@ -10,12 +10,14 @@ $result = $conn->query($sql);
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Plant Requests</title>
-    <!-- Add Font Awesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         * {
             box-sizing: border-box;
@@ -112,7 +114,8 @@ $result = $conn->query($sql);
         }
 
         .whatsapp-link {
-            color: #25D366; /* WhatsApp green color */
+            color: #25D366;
+            /* WhatsApp green color */
             text-decoration: none;
             display: inline-flex;
             align-items: center;
@@ -125,7 +128,8 @@ $result = $conn->query($sql);
         }
 
         .whatsapp-link:hover {
-            color: #128C7E; /* Darker shade on hover */
+            color: #128C7E;
+            /* Darker shade on hover */
         }
 
         .whatsapp-link:hover i {
@@ -196,6 +200,7 @@ $result = $conn->query($sql);
         }
     </style>
 </head>
+
 <body>
     <h2>All Plant Requests</h2>
     <div class="container">
@@ -205,8 +210,9 @@ $result = $conn->query($sql);
                     <strong><?= htmlspecialchars($row['subject']); ?> by <?= htmlspecialchars($row['username']); ?></strong>
                     <p><?= htmlspecialchars($row['description']); ?></p>
                     <p>Contact Number: <?= htmlspecialchars($row['contact']); ?></p>
-                    <p>Connect via: 
-                        <a href="https://wa.me/+94<?= htmlspecialchars($row['contact']); ?>" target="_blank" class="whatsapp-link">
+                    <p>Connect via:
+                        <a href="https://wa.me/+94<?= htmlspecialchars($row['contact']); ?>" target="_blank"
+                            class="whatsapp-link">
                             WhatsApp
                             <i class="fab fa-whatsapp"></i>
                         </a>
@@ -216,11 +222,12 @@ $result = $conn->query($sql);
                 </div>
             <?php endwhile; ?>
         <?php else: ?>
-            <p class="no-requests">No plant requests available.</p>
+            <p class="no-requests">Sorry! No plant requests available.</p>
         <?php endif; ?>
     </div>
     <?php include 'footer.php'; ?>
 </body>
+
 </html>
 <?php
 $conn->close();

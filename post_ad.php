@@ -324,14 +324,14 @@ if (isset($_POST['submit'])) {
         <form action="post_ad.php" method="POST" enctype="multipart/form-data" class="ad-form">
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" name="title" placeholder="Enter title here"
+                <input type="text" name="title" placeholder="Enter title here. Max 150 characters"
                     value="<?= isset($_SESSION['u-title']) ? htmlspecialchars($_SESSION['u-title']) : '' ?>">
             </div>
 
             <div class="form-group">
                 <label for="description">Description</label>
                 <textarea name="description" id="description"
-                    placeholder="Describe your request here"><?= isset($_SESSION['u-description']) ? htmlspecialchars($_SESSION['u-description']) : '' ?></textarea>
+                    placeholder="Describe your request here. Max 700 characters"><?= isset($_SESSION['u-description']) ? htmlspecialchars($_SESSION['u-description']) : '' ?></textarea>
 
             </div>
 

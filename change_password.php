@@ -203,16 +203,16 @@ if (isset($_POST['submit'])) {
         background-color: #cb790d;
     }
 
-
-    h4 {
-        margin-top: 15px;
-        font-weight: 500;
+    #icon {
+        color: rgb(114, 114, 114);
+        margin: 7px 7px 7px 0px;
     }
 
-    a {
-        color: rgb(0, 107, 23);
-        text-decoration: none;
-        font-weight: bold;
+    span {
+        font-size: 0.8rem;
+        color: rgb(114, 114, 114);
+        align-self: flex-start;
+        margin-bottom: 10px;
     }
 
     /* mobile Devices */
@@ -295,7 +295,10 @@ if (isset($_POST['submit'])) {
                 <div class="form-group">
                     <label for="new_password">New Password:</label>
                     <input type="password" id="new_password" name="new_password" placeholder="Enter new password">
-                    <span>Password must contain at least 8 characters, one uppercase letter, one number and one special
+                    <span> <i class="fa fa-exclamation-circle" aria-hidden="true" id="icon"></i> Password must contain
+                        at least 8
+                        characters, one uppercase
+                        letter, one number and one special
                         character.</span>
                 </div>
                 <div class="form-group">
@@ -304,7 +307,6 @@ if (isset($_POST['submit'])) {
                         placeholder="Confirm new password">
                 </div>
                 <button type="submit" name='submit'>Change Password</button>
-                <h4>Forgot Password <a href='forgotpw.php'>Reset here</a></h4>
             </form>
         </div>
     </div>

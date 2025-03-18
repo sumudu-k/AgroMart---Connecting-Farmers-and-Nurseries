@@ -1,4 +1,4 @@
-
+//alert box
 function showAlert(title, icon, color) {
     Swal.fire({
         toast: true,
@@ -11,6 +11,7 @@ function showAlert(title, icon, color) {
     });
 }
 
+// confirm dialog box
 function confirmAlert(title, page) {
     Swal.fire({
         text: title,
@@ -28,7 +29,7 @@ function confirmAlert(title, page) {
     });
 }
 
-
+// confirm dialog box for ad delete
 function confirmAlertAd(ad_id) {
     Swal.fire({
         text: "Are you sure you want to delete this ad?",
@@ -46,6 +47,21 @@ function confirmAlertAd(ad_id) {
     });
 }
 
+// confirm dialog box for remove from wishlist
+function confirmAlertWishlist() {
+    Swal.fire({
+        text: "Are you sure you remove from wishlist?",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes",
+        cancelButtonColor: "#006400",
+        width: "350px",
+        padding: "10px"
+    })
+}
+
+// confirm dialog box for request delete
 function confirmAlerRequest(request_id) {
     Swal.fire({
         text: "Are you sure you want to delete this request?",
