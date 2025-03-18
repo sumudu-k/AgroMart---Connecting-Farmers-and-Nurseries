@@ -7,7 +7,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
     exit();
 }
 
-
+// Fetch statistics
 $usercount = "SELECT COUNT(*) as total FROM users";
 $users = $conn->query($usercount);
 $users = $users->fetch_assoc();
@@ -28,99 +28,109 @@ $notificationcount = "SELECT COUNT(DISTINCT message) AS total FROM notifications
 $notifications = $conn->query($notificationcount);
 $notifications = $notifications->fetch_assoc();
 
-
+// Start output buffering
 ob_start();
 ?>
 
 <style>
     * {
+        box-sizing: border-box;
         margin: 0;
         padding: 0;
-        box-sizing: border-box;
-    }
-    .container {
-        max-width: 100%;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        font-family: "Poppins", Arial, sans-serif;
     }
 
-    h1 {
-        text-align: center;
-        font-size: 28px;
+    body {
         color: #333;
-        margin-bottom: 20px;
+        min-height: 100vh;
+        position: relative;
+        display: flex;
+        background-color: #f4f4f4;
     }
 
-    stats-container h2 {
-        font-size: 24px;
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("../images/B1.jpg");
+        background-size: cover;
+        opacity: 0.2;
+    }
+
+    .dashdoard-container {
+        max-width: 90%;
+        margin: 20px auto;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 1;
+    }
+
+    .dashdoard-container h1 {
+        text-align: center;
+        font-size: 2rem;
         color: #333;
         margin-bottom: 15px;
+        padding: 10px 0;
+        border-radius: 5px;
+    }
+
+    .stats-container {
+        padding: 20px 0;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    .stats-container h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-align: center;
+        color: #333;
+        margin: 0 0 30px;
+        background-color:rgba(169, 230, 169, 0.45); 
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .stats {
         display: flex;
-        flex-wrap: wrap;
         gap: 20px;
-        justify-content: space-around;
+        justify-content: center;
+        align-items: stretch; 
+        flex-wrap: wrap;
     }
 
     .stat-item {
-        background-color: #f9f9f9;
+        background-color: #fff;
         padding: 15px;
         border-radius: 8px;
-        flex: 1;
-        min-width: 200px;
+        width: 18%;
+        min-height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         text-align: center;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
     .stat-item h3 {
-        font-size: 18px;
+        font-size: 1.1rem;
+        line-height: 1.5;
         color: #555;
         margin: 0;
+        font-weight: bold;
     }
 
-    .success-message {
-        background-color: #d4edda;
-        color: #155724;
-        padding: 10px;
-        border-radius: 4px;
-        margin-bottom: 20px;
-        text-align: center;
-    }
-
-    .error-message {
-        background-color: #f8d7da;
-        color: #721c24;
-        padding: 10px;
-        border-radius: 4px;
-        margin-bottom: 20px;
-        text-align: center;
-    }
-
-    @media screen and (max-width: 768px) {
-        .container {
-            padding: 15px;
-        }
-
-        h1 {
-            font-size: 24px;
-        }
-
-        h2 {
-            font-size: 20px;
-        }
-
-        .stat-item {
-            min-width: 100%;
-        }
-    }
 </style>
 
-<div class="container">
+<div class="dashdoard-container">
     <h1>Welcome to Admin Dashboard</h1>
 
     <?php if (isset($_SESSION['success'])): ?>
@@ -137,26 +147,26 @@ ob_start();
         <h2>Statistics</h2>
         <div class="stats">
             <div class="stat-item">
-                <h3>Total Users: <?= htmlspecialchars($users['total']); ?></h3>
+                <h3>Total Users: <br><?= htmlspecialchars($users['total']); ?></h3>
             </div>
             <div class="stat-item">
-                <h3>Total Ads: <?= htmlspecialchars($ads['total']); ?></h3>
+                <h3>Total Ads: <br><?= htmlspecialchars($ads['total']); ?></h3>
             </div>
             <div class="stat-item">
-                <h3>Total Categories: <?= htmlspecialchars($categories['total']); ?></h3>
+                <h3>Total Categories: <br><?= htmlspecialchars($categories['total']); ?></h3>
             </div>
             <div class="stat-item">
-                <h3>Total Ad Requests: <?= htmlspecialchars($adrequests['total']); ?></h3>
+                <h3>Total Ad Requests: <br><?= htmlspecialchars($adrequests['total']); ?></h3>
             </div>
             <div class="stat-item">
-                <h3>Total Notifications: <?= htmlspecialchars($notifications['total']); ?></h3>
+                <h3>Total Notifications: <br><?= htmlspecialchars($notifications['total']); ?></h3>
             </div>
         </div>
     </div>
 </div>
 
 <?php
-
+// Capture the content and include the layout
 $content = ob_get_clean();
 include '../admin/admin_navbar.php';
 ?>

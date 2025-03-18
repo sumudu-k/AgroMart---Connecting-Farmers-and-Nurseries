@@ -7,7 +7,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
     exit();
 }
 
-
+// Handle approval or rejection
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $admin_id = $_POST['admin_id'];
 
@@ -21,51 +21,100 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($update_status->execute()) {
         echo "<script>alert('Action successful!');window.location = 'admin_approval.php';</script>";
     } else {
-        echo "Error: " . $conn->error;
+        echo "<script>alert('Error: " . addslashes($conn->error) . "');</script>";
     }
 }
 
-
+// Start output buffering
 ob_start();
 ?>
 
 <style>
-    .container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    * {
+        font-family: "Poppins", Arial, sans-serif;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    
+
+    body {
+        color: #333;
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background-color: #f4f4f4;
     }
 
-    h2 {
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("../images/B1.jpg");
+        background-size: cover;
+        opacity: 0.2;
+        z-index: -1;
+    }
+
+    .admin-approval-container {
+        max-width: 90%;
+        margin: 20px auto;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1;
+    }
+
+    .admin-approval-container h1 {
         text-align: center;
-        font-size: 24px;
+        font-size: 2rem;
         color: #333;
-        margin-bottom: 20px;
+        padding: 10px 0;
+        border-bottom: 2px solid #007a33;
     }
 
     table {
         width: 100%;
         border-collapse: collapse;
-        border: 1px solid #ddd;
+        background-color: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-top: 40px;
     }
 
     th, td {
-        border: 1px solid #ddd;
-        padding: 10px;
+        padding: 12px;
         text-align: left;
+        border-bottom: 1px solid #ddd;
+        vertical-align: middle;
     }
 
     th {
         text-align: center;
-        background-color: #f2f2f2;
-        font-weight: bold;
+        background-color: #a9e6a9;
+        font-weight: 600;
+        color: #333;
+        border-right: 2px solid rgba(51, 51, 51, 0.2);
+    }
+
+    th:last-child {
+        border-right: none;
+    }
+
+    td:last-child {
+        text-align: center;
+    }
+
+    tr {
+        transition: background-color 0.2s ease;
     }
 
     tr:hover {
-        background-color: #f5f5f5;
+        background-color: #e6ffe6; 
     }
 
     .approve-button, .reject-button {
@@ -76,6 +125,7 @@ ob_start();
         font-size: 14px;
         color: white;
         margin-right: 5px;
+        transition: background-color 0.2s ease;
     }
 
     .approve-button {
@@ -83,7 +133,7 @@ ob_start();
     }
 
     .approve-button:hover {
-        background-color: #45a049;
+        background-color: #005922;
     }
 
     .reject-button {
@@ -97,38 +147,23 @@ ob_start();
     .no-requests {
         text-align: center;
         color: #666;
-        font-size: 16px;
+        font-size: 1.1rem;
         margin-top: 20px;
+        padding: 15px;
+        background-color: #fff;
+        border-radius: 5px;
     }
 
-    @media screen and (max-width: 768px) {
-        .container {
-            padding: 15px;
-        }
-
-        table {
-            font-size: 14px;
-        }
-
-        th, td {
-            padding: 8px;
-        }
-
-        .approve-button, .reject-button {
-            font-size: 12px;
-            padding: 6px 12px;
-        }
-    }
 </style>
 
-<div class="container">
+<div class="admin-approval-container">
     <?php
-  
+    // Fetch pending admin registrations
     $query = "SELECT * FROM admins WHERE status = 'pending'";
     $result = $conn->query($query);
 
     if ($result->num_rows > 0) {
-        echo "<h2>Pending Admin Approvals</h2>";
+        echo "<h1>Pending Admin Approvals</h1>";
         echo "<table>
                 <tr>
                     <th>Username</th>
@@ -138,9 +173,9 @@ ob_start();
 
         while ($row = $result->fetch_assoc()) {
             echo "<tr>
-                    <td>" . htmlspecialchars($row['username']) . "</td>
-                    <td>" . htmlspecialchars($row['email']) . "</td>
-                    <td>
+                    <td data-label='Username'>" . htmlspecialchars($row['username']) . "</td>
+                    <td data-label='Email'>" . htmlspecialchars($row['email']) . "</td>
+                    <td data-label='Action'>
                         <form method='POST'>
                             <input type='hidden' name='admin_id' value='" . $row['admin_id'] . "'>
                             <button type='submit' name='approve' class='approve-button'>Approve</button>
@@ -157,7 +192,7 @@ ob_start();
 </div>
 
 <?php
-
+// Capture the content and include the layout
 $content = ob_get_clean();
 include '../admin/admin_navbar.php';
 ?>
