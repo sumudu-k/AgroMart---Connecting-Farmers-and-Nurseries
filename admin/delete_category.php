@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../config.php';
+include '../alertFunction.php';
 
 if (!isset($_SESSION['admin_logged_in'])) {
     header("Location: admin_login.php");
@@ -33,68 +34,68 @@ ob_start();
 ?>
 
 <style>
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th,
-td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-}
-
-.delete-button {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.delete-button:hover {
-    background-color: #d32f2f;
-}
-
-@media screen and (max-width: 768px) {
     .container {
-        padding: 15px;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     table {
-        font-size: 14px;
+        width: 100%;
+        border-collapse: collapse;
     }
 
     th,
     td {
-        padding: 8px;
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        font-weight: bold;
     }
 
     .delete-button {
-        font-size: 12px;
-        padding: 6px 12px;
+        background-color: #f44336;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        border-radius: 4px;
+        cursor: pointer;
     }
-}
+
+    .delete-button:hover {
+        background-color: #d32f2f;
+    }
+
+    @media screen and (max-width: 768px) {
+        .container {
+            padding: 15px;
+        }
+
+        table {
+            font-size: 14px;
+        }
+
+        th,
+        td {
+            padding: 8px;
+        }
+
+        .delete-button {
+            font-size: 12px;
+            padding: 6px 12px;
+        }
+    }
 </style>
 
 <div class="container">
@@ -110,14 +111,14 @@ th {
             $categories = $conn->query("SELECT * FROM categories");
             while ($category = $categories->fetch_assoc()):
             ?>
-            <tr>
-                <td><?= htmlspecialchars($category['category_name']); ?></td>
-                <td>
-                    <a href="delete_category.php?category_id=<?= $category['category_id']; ?>" class="delete-button"
-                        onclick="return confirm('Are you sure you want to delete this category?')">Delete
-                    </a>
-                </td>
-            </tr>
+                <tr>
+                    <td><?= htmlspecialchars($category['category_name']); ?></td>
+                    <td>
+                        <a href="delete_category.php?category_id=<?= $category['category_id']; ?>" class="delete-button"
+                            onclick="return confirm('Are you sure you want to delete this category?')">Delete
+                        </a>
+                    </td>
+                </tr>
             <?php endwhile; ?>
         </tbody>
     </table>

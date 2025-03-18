@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../config.php';
+include '../alertFunction.php';
 
 if (!isset($_SESSION['admin_logged_in'])) {
     header("Location: admin_login.php");
@@ -47,7 +48,8 @@ ob_start();
         border: 1px solid #ddd;
     }
 
-    th, td {
+    th,
+    td {
         border: 1px solid #ddd;
         padding: 10px;
         text-align: left;
@@ -89,7 +91,8 @@ ob_start();
             font-size: 14px;
         }
 
-        th, td {
+        th,
+        td {
             padding: 8px;
         }
 
@@ -115,16 +118,17 @@ ob_start();
         </thead>
         <tbody>
             <?php while ($ad = $result->fetch_assoc()) { ?>
-            <tr>
-                <td><?= htmlspecialchars($ad['title']) ?></td>
-                <td><?= htmlspecialchars($ad['ad_id']) ?></td>
-                <td><?= htmlspecialchars($ad['description']) ?></td>
-                <td><?= htmlspecialchars($ad['price']) ?></td>
-                <td><?= htmlspecialchars($ad['username']) ?></td>
-                <td>
-                    <a href="view_ads.php?delete_ad=<?= $ad['ad_id'] ?>" class="delete-button" onclick="return confirm('Are you sure you want to delete this Ad?')">Delete</a>
-                </td>
-            </tr>
+                <tr>
+                    <td><?= htmlspecialchars($ad['title']) ?></td>
+                    <td><?= htmlspecialchars($ad['ad_id']) ?></td>
+                    <td><?= htmlspecialchars($ad['description']) ?></td>
+                    <td><?= htmlspecialchars($ad['price']) ?></td>
+                    <td><?= htmlspecialchars($ad['username']) ?></td>
+                    <td>
+                        <a href="view_ads.php?delete_ad=<?= $ad['ad_id'] ?>" class="delete-button"
+                            onclick="return confirm('Are you sure you want to delete this Ad?')">Delete</a>
+                    </td>
+                </tr>
             <?php } ?>
         </tbody>
     </table>

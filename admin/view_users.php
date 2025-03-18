@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../config.php';
+include '../alertFunction.php';
 
 
 if (!isset($_SESSION['admin_logged_in'])) {
@@ -49,7 +50,8 @@ ob_start();
         border: 1px solid #ddd;
     }
 
-    th, td {
+    th,
+    td {
         border: 1px solid #ddd;
         padding: 10px;
         text-align: left;
@@ -96,14 +98,15 @@ ob_start();
         </thead>
         <tbody>
             <?php while ($user = $result->fetch_assoc()) { ?>
-            <tr>
-                <td><?= htmlspecialchars($user['username']) ?></td>
-                <td><?= htmlspecialchars($user['email']) ?></td>
-                <td><?= htmlspecialchars($user['contact_number']) ?></td>
-                <td>
-                    <a href="view_users.php?delete_user=<?= $user['user_id'] ?>" class="delete-button" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
-                </td>
-            </tr>
+                <tr>
+                    <td><?= htmlspecialchars($user['username']) ?></td>
+                    <td><?= htmlspecialchars($user['email']) ?></td>
+                    <td><?= htmlspecialchars($user['contact_number']) ?></td>
+                    <td>
+                        <a href="view_users.php?delete_user=<?= $user['user_id'] ?>" class="delete-button"
+                            onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
+                    </td>
+                </tr>
             <?php } ?>
         </tbody>
     </table>

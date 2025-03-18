@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../config.php';
+include '../alertFunction.php';
 
 if (!isset($_SESSION['admin_logged_in'])) {
     header("Location: admin_login.php");
@@ -13,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $link = !empty($_POST['link']) ? $_POST['link'] : NULL;
     $image = NULL;
 
- 
+
     if (!empty($_FILES['image']['name'])) {
         $targetDir = "uploads/";
         $imageName = time() . "_" . basename($_FILES["image"]["name"]);
@@ -31,20 +32,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-       
+
         while ($row = $result->fetch_assoc()) {
             $user_id = $row['user_id'];
-            
-      
+
+
             $stmt = $conn->prepare("INSERT INTO notifications (user_id, message, link, image) VALUES (?, ?, ?, ?)");
             $stmt->bind_param("isss", $user_id, $message, $link, $image);
 
             if (!$stmt->execute()) {
                 echo "<script>alert('Error sending notification to user ID: $user_id');</script>";
-                continue; 
+                continue;
             }
         }
-        
+
         echo "<script>alert('Notification sent successfully to all users!'); window.location='admin_send_notification.php';</script>";
     } else {
         echo "<script>alert('No users found!');</script>";
