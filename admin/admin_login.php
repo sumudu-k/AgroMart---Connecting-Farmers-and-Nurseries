@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../config.php';
+include '../alertFunction.php';
 
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
@@ -40,7 +41,7 @@ if (isset($_POST['login'])) {
         }
 
         body {
-            
+
             color: #333;
             position: relative;
             min-height: 100vh;
@@ -63,11 +64,12 @@ if (isset($_POST['login'])) {
             z-index: -1;
         }
 
-        .login-container{
+        .login-container {
             min-width: 600px;
             margin: 50px auto;
             padding: 20px;
-            background-color: rgba(240, 255, 232, 0.2); /* Light green with transparency */
+            background-color: rgba(240, 255, 232, 0.2);
+            /* Light green with transparency */
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             position: relative;
@@ -137,7 +139,7 @@ if (isset($_POST['login'])) {
         }
 
 
-        .forgot-password a{
+        .forgot-password a {
             color: #007a33;
             text-decoration: none;
             font-size: 0.9rem;
@@ -147,7 +149,6 @@ if (isset($_POST['login'])) {
             text-decoration: underline;
             color: #f09319;
         }
-
     </style>
 </head>
 
