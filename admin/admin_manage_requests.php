@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../config.php';
+include '../alertFunction.php';
 
 if (!isset($_SESSION['admin_logged_in'])) {
     header("Location: admin_login.php");
@@ -89,7 +90,8 @@ ob_start();
         margin-top: 40px;
     }
 
-    th, td {
+    th,
+    td {
         padding: 12px;
         text-align: left;
         border-bottom: 1px solid #ddd;
@@ -119,7 +121,7 @@ ob_start();
     }
 
     tr:hover {
-        background-color: #e6ffe6; 
+        background-color: #e6ffe6;
     }
 
     .delete-button {
@@ -168,8 +170,6 @@ ob_start();
         background-color: #fff;
         border-radius: 5px;
     }
-
-
 </style>
 
 <div class="request-container">
@@ -201,19 +201,19 @@ ob_start();
             </thead>
             <tbody>
                 <?php while ($row = $result->fetch_assoc()) { ?>
-                <tr>
-                    <td data-label="ID"><?= htmlspecialchars($row['request_id']); ?></td>
-                    <td data-label="Subject"><?= htmlspecialchars($row['subject']); ?></td>
-                    <td data-label="Username"><?= htmlspecialchars($row['username']); ?></td>
-                    <td data-label="Description"><?= htmlspecialchars($row['description']); ?></td>
-                    <td data-label="Contact"><?= htmlspecialchars($row['contact']); ?></td>
-                    <td data-label="District"><?= htmlspecialchars($row['district']); ?></td>
-                    <td data-label="Posted On"><?= htmlspecialchars($row['created_at']); ?></td>
-                    <td data-label="Actions">
-                        <a href="admin_manage_requests.php?delete=<?= htmlspecialchars($row['request_id']); ?>"
-                           onclick="return confirm('Are you sure you want to delete this request?')">Delete</a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td data-label="ID"><?= htmlspecialchars($row['request_id']); ?></td>
+                        <td data-label="Subject"><?= htmlspecialchars($row['subject']); ?></td>
+                        <td data-label="Username"><?= htmlspecialchars($row['username']); ?></td>
+                        <td data-label="Description"><?= htmlspecialchars($row['description']); ?></td>
+                        <td data-label="Contact"><?= htmlspecialchars($row['contact']); ?></td>
+                        <td data-label="District"><?= htmlspecialchars($row['district']); ?></td>
+                        <td data-label="Posted On"><?= htmlspecialchars($row['created_at']); ?></td>
+                        <td data-label="Actions">
+                            <a href="admin_manage_requests.php?delete=<?= htmlspecialchars($row['request_id']); ?>"
+                                onclick="return confirm('Are you sure you want to delete this request?')">Delete</a>
+                        </td>
+                    </tr>
                 <?php } ?>
             </tbody>
         </table>
