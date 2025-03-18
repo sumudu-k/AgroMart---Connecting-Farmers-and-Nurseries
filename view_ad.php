@@ -448,7 +448,7 @@ if ($user_id) {
                     </button>
                 </form>
             <?php else: ?>
-                <p><a href="login.php">Log in</a> to add this ad to your wishlist.</p>
+                <p><a href="#" onclick="showAlert('Please login to see Wishlist','error','#ff0000')">add to wishlsit</a></p>
             <?php endif; ?>
         </div>
     </div>
