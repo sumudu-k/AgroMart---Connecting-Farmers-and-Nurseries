@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../config.php';
+include '../alertFunction.php';
 
 if (!isset($_SESSION['admin_logged_in'])) {
     header("Location: admin_login.php");
@@ -86,35 +87,41 @@ ob_start();
         margin-top: 40px;
     }
 
-    th, td {
+    th,
+    td {
         padding: 12px;
         text-align: left;
         border-bottom: 1px solid #ddd;
         vertical-align: middle;
         border-right: 2px solid rgba(51, 51, 51, 0.2);
     }
-    
-    th:nth-child(1), td:nth-child(1) { 
+
+    th:nth-child(1),
+    td:nth-child(1) {
         width: 40%;
         max-width: 200px;
     }
 
-    th:nth-child(2), td:nth-child(2) {
+    th:nth-child(2),
+    td:nth-child(2) {
         width: 15%;
         text-align: center;
     }
 
-    th:nth-child(3), td:nth-child(3) { 
+    th:nth-child(3),
+    td:nth-child(3) {
         width: 20%;
         text-align: center;
     }
 
-    th:nth-child(4), td:nth-child(4) {
+    th:nth-child(4),
+    td:nth-child(4) {
         width: 15%;
         text-align: center;
     }
 
-    th:nth-child(5), td:nth-child(5) { 
+    th:nth-child(5),
+    td:nth-child(5) {
         width: 10%;
         text-align: center;
     }
@@ -136,7 +143,7 @@ ob_start();
         font-weight: 600;
         color: #333;
     }
-    
+
 
     th:last-child {
         border-right: none;
@@ -148,7 +155,7 @@ ob_start();
     }
 
     tr:hover {
-        background-color: #e6ffe6; 
+        background-color: #e6ffe6;
     }
 
     .delete-link {
@@ -168,7 +175,6 @@ ob_start();
     .delete-link:hover {
         background-color: #d32f2f;
     }
-
 </style>
 
 <div class="dlt-notification-container">
@@ -196,9 +202,8 @@ ob_start();
                 </td>
                 <td data-label="Created At"><?= htmlspecialchars($row['created_at']); ?></td>
                 <td data-label="Action">
-                    <a href="?delete_created_at=<?= urlencode($row['created_at']); ?>"
-                       class="delete-link"
-                       onclick="return confirm('Delete this notification? All notifications with the same timestamp will be deleted.')">
+                    <a href="?delete_created_at=<?= urlencode($row['created_at']); ?>" class="delete-link"
+                        onclick="return confirm('Delete this notification? All notifications with the same timestamp will be deleted.')">
                         Delete
                     </a>
                 </td>
