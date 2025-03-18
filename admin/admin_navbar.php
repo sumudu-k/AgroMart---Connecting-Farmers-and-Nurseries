@@ -9,7 +9,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-
         }
 
         body {
@@ -89,24 +88,11 @@
         }
 
         .content-wrapper {
-            margin-left: 250px; 
-            width: calc(100% - 250px); 
-            padding: 20px; 
+            margin-left: 250px; /* Push content to the right of the sidebar */
+            width: calc(100% - 250px); /* Take up remaining width */
+            padding: 20px; /* Add some padding for spacing */
         }
 
-        
-        @media screen and (max-width: 768px) {
-            .nav {
-                width: 100%;
-                height: auto;
-                position: relative;
-            }
-
-            .content-wrapper {
-                margin-left: 0;
-                width: 100%;
-            }
-        }
     </style>
 </head>
 <body>
@@ -114,7 +100,7 @@
         <div class="top-sidebar">
             
             <h2>Admin Menu</h2>
-
+ 
             <?php if (isset($_SESSION['admin_username'])): ?>     
                 <span>Welcome, <?= htmlspecialchars($_SESSION['admin_username']); ?></span>
 
@@ -124,7 +110,7 @@
             <a href="view_users.php">Manage Users</a>
             <a href="view_ads.php">View & Delete Ads</a>
             <a href="admin_send_notification.php">Send Push Notifications</a>
-            <a href="admin_manage_notifications.php">Delete Push Notifications</a>
+            <a href="admin_manage_notifications.php">Manage Push Notifications</a>
             <a href="admin_manage_requests.php">Manage Requests</a>
             <a href="admin_approval.php">Admin Approval</a>
         </div>
@@ -137,10 +123,10 @@
         </div>
     </div>
 
-   
+    <!-- Content Wrapper for Page-Specific Content -->
     <div class="content-wrapper">
         <?php
-        
+        // This is where the page-specific content will be injected
         if (isset($content)) {
             echo $content;
         }
