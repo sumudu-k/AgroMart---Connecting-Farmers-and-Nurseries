@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../config.php';
+include '../alertFunction.php';
 
 if (!isset($_SESSION['admin_logged_in'])) {
     header("Location: admin_login.php");
@@ -36,7 +37,7 @@ ob_start();
         margin: 0;
         padding: 0;
     }
-    
+
 
     body {
         color: #333;
@@ -86,7 +87,8 @@ ob_start();
         margin-top: 40px;
     }
 
-    th, td {
+    th,
+    td {
         padding: 12px;
         text-align: left;
         border-bottom: 1px solid #ddd;
@@ -114,10 +116,11 @@ ob_start();
     }
 
     tr:hover {
-        background-color: #e6ffe6; 
+        background-color: #e6ffe6;
     }
 
-    .approve-button, .reject-button {
+    .approve-button,
+    .reject-button {
         padding: 8px 16px;
         border: none;
         border-radius: 4px;
@@ -153,7 +156,6 @@ ob_start();
         background-color: #fff;
         border-radius: 5px;
     }
-
 </style>
 
 <div class="admin-approval-container">
