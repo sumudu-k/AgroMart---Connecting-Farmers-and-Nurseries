@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../config.php';
+include '../alertFunction.php';
 
 if (!isset($_SESSION['admin_logged_in'])) {
     header("Location: admin_login.php");
@@ -93,7 +94,7 @@ ob_start();
         text-align: center;
         color: #333;
         margin: 0 0 30px;
-        background-color:rgba(169, 230, 169, 0.45); 
+        background-color: rgba(169, 230, 169, 0.45);
         padding: 10px;
         border-radius: 5px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -103,7 +104,7 @@ ob_start();
         display: flex;
         gap: 20px;
         justify-content: center;
-        align-items: stretch; 
+        align-items: stretch;
         flex-wrap: wrap;
     }
 
@@ -127,7 +128,6 @@ ob_start();
         margin: 0;
         font-weight: bold;
     }
-
 </style>
 
 <div class="dashdoard-container">
