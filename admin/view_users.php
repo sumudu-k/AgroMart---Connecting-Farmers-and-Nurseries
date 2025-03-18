@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../config.php';
+include '../alertFunction.php';
 
 // Check if admin is logged in
 if (!isset($_SESSION['admin_logged_in'])) {
