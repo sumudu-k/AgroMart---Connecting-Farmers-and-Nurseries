@@ -1,30 +1,40 @@
 <?php
 session_start();
 include '../config.php';
+include '../alertFunction.php';
 
 if (!isset($_SESSION['admin_logged_in'])) {
     header("Location: admin_login.php");
     exit();
 }
 
-// Handle category deletion
+
 if (isset($_GET['category_id'])) {
     $category_id = $_GET['category_id'];
 
-    // $check_ads = $conn->query("SELECT * FROM ads WHERE category_id = $category_id");
-    // if ($check_ads->num_rows > 0) {
-    //     $_SESSION['error'] = "Category cannot be deleted as it has associated ads.";
-    //     header("Location: admin_dashboard.php");
-    //     exit();
-    // }
+    
+    $check_ads = $conn->prepare("SELECT COUNT(*) as total FROM ads WHERE category_id = ?");
+    $check_ads->bind_param("i", $category_id);
+    $check_ads->execute();
+    $result = $check_ads->get_result();
+    $row = $result->fetch_assoc();
 
-    $delete_category = $conn->query("DELETE FROM categories WHERE category_id = $category_id");
-
-    if ($delete_category) {
-        echo "Category deleted successfully.";
-    } else {
-        echo "Failed to delete the category.";
+    if ($row['total'] > 0) {
+        $_SESSION['error'] = "Category cannot be deleted as it has associated ads.";
+        header("Location: admin_dashboard.php");
+        exit();
     }
+
+    
+    $delete_category = $conn->prepare("DELETE FROM categories WHERE category_id = ?");
+    $delete_category->bind_param("i", $category_id);
+
+    if ($delete_category->execute()) {
+        $_SESSION['success'] = "Category deleted successfully.";
+    } else {
+        $_SESSION['error'] = "Failed to delete the category.";
+    }
+    header("Location: delete_category.php"); // Redirect to refresh the page
     exit();
 }
 
@@ -33,71 +43,123 @@ ob_start();
 ?>
 
 <style>
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
+    body {
+        font-family: "Poppins", Arial, sans-serif;
+        color: #333;
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background-color: #f4f4f4;
+    }
 
-th,
-td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("../images/B1.jpg");
+        background-size: cover;
+        opacity: 0.2;
+        z-index: -1;
+    }
 
-th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-}
+    .dlt-category-container {
+        max-width: 90%;
+        margin: 20px auto;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1;
+    }
 
-.delete-button {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.delete-button:hover {
-    background-color: #d32f2f;
-}
-
-@media screen and (max-width: 768px) {
-    .container {
-        padding: 15px;
+    .dlt-category-container h1 {
+        text-align: center;
+        font-size: 2rem;
+        color: #333;
+        padding: 10px 0;
+        border-bottom: 2px solid #007a33;
     }
 
     table {
-        font-size: 14px;
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-top: 40px;
     }
 
-    th,
-    td {
-        padding: 8px;
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        vertical-align: middle;
+    }
+
+    th {
+        text-align: center;
+        background-color: #a9e6a9;
+        font-weight: 600;
+        color: #333;
+        border-right: 2px solid rgba(51, 51, 51, 0.2);
+    }
+
+    th:last-child {
+        border-right: none;
+    }
+    
+    td:last-child {
+        text-align: center;
+    }
+
+    tr {
+        transition: background-color 0.2s ease;
+    }
+
+    tr:hover {
+        background-color: #e6ffe6; 
     }
 
     .delete-button {
-        font-size: 12px;
-        padding: 6px 12px;
+        background-color: #f44336;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
     }
-}
+
+    .delete-button:hover {
+        background-color: #d32f2f;
+    }
 </style>
 
-<div class="container">
+<div class="dlt-category-container">
+    <h1>Delete Category</h1>
+    <?php if (isset($_SESSION['success'])): ?>
+        <div class="success-message"><?= htmlspecialchars($_SESSION['success']); ?></div>
+        <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['error'])): ?>
+        <div class="error-message"><?= htmlspecialchars($_SESSION['error']); ?></div>
+        <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
+
     <table>
         <thead>
             <tr>
@@ -111,10 +173,12 @@ th {
             while ($category = $categories->fetch_assoc()):
             ?>
             <tr>
-                <td><?= htmlspecialchars($category['category_name']); ?></td>
-                <td>
-                    <a href="delete_category.php?category_id=<?= $category['category_id']; ?>" class="delete-button"
-                        onclick="return confirm('Are you sure you want to delete this category?')">Delete
+                <td data-label="Category Name"><?= htmlspecialchars($category['category_name']); ?></td>
+                <td data-label="Action">
+                    <a href="delete_category.php?category_id=<?= $category['category_id']; ?>" 
+                       class="delete-button" 
+                       onclick="return confirm('Are you sure you want to delete this category?')">
+                        Delete
                     </a>
                 </td>
             </tr>
@@ -124,7 +188,6 @@ th {
 </div>
 
 <?php
-
 $content = ob_get_clean();
 include '../admin/admin_navbar.php';
 ?>

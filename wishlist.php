@@ -116,6 +116,9 @@ $wishlist_result = $stmt->get_result();
 
     }
 
+       
+
+
     .wishlist-item {
         background-color: #fff;
         border: 1px solid #ddd;
@@ -288,15 +291,18 @@ $wishlist_result = $stmt->get_result();
                 <?php if ($wishlist_result->num_rows > 0): ?>
                 <?php while ($item = $wishlist_result->fetch_assoc()): ?>
                 <div class="wishlist-item">
+                <a href="view_ad.php?ad_id=<?= $item['ad_id']; ?>" class="wishlist-link">
                     <img src="<?= htmlspecialchars($item['image'] ?? 'default.jpg'); ?>" alt="Product Image">
                     <h3><?= htmlspecialchars($item['title']); ?></h3>
                     <p>Category: <?= htmlspecialchars($item['category_name']); ?></p>
                     <p>Price: Rs <?= htmlspecialchars($item['price']); ?></p>
+                </a>
                     <form method="post">
                         <input type="hidden" name="ad_id" value="<?= $item['ad_id']; ?>">
                         <button type="submit">Remove from Wishlist</button>
                     </form>
                 </div>
+              
                 <?php endwhile; ?>
                 <?php else: ?>
                 <p class="empty-message">Your wishlist is empty.</p>

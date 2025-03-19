@@ -303,18 +303,16 @@ if (isset($_POST['submit'])) {
         <form method="post" class="ad-form">
             <div class="form-group">
                 <label for="subject">Subject</label>
-                <input type="text" name="subject" id="subject" placeholder="Enter subject here"
+                <input type="text" name="subject" id="subject" placeholder="Enter subject here. Max 150 characters"
                     value="<?= isset($_SESSION['u-subject']) ? htmlspecialchars($_SESSION['u-subject']) : '' ?>">
             </div>
-            <span>Maximum Allowed Characters 150</span>
 
             <div class="form-group">
                 <label for="description">Description</label>
                 <textarea name="description" id="description"
-                    placeholder="Describe your request here"><?= isset($_SESSION['u-description']) ? htmlspecialchars($_SESSION['u-description']) : '' ?></textarea>
-
+                    placeholder="Describe your request here. Max 700 characters"><?= isset($_SESSION['u-description']) ? htmlspecialchars($_SESSION['u-description']) : '' ?></textarea>
             </div>
-            <span>Maximum Allowed Characters 700</span>
+
 
             <div class="form-group">
                 <label for="contact">Contact Number</label>
