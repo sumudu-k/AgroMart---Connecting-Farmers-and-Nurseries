@@ -43,45 +43,59 @@ $unread_count = $row['unread_count'];
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
     }
 
     body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
+        color: #333;
+        position: relative;
+        min-height: 100vh;
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
     }
 
-    .container {
+    /* Add background image */
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("images/B1.jpg");
+        background-size: cover;
+        opacity: 0.2;
+        z-index: -1;
+    }
+
+    h1 {
+        background-color: #dbffc7;
+        text-align: center;
+        padding: 10px 0;
+        font-size: 2rem;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 1;
+    }
+
+    .notification-container {
         width: 75%;
-        max-width: 1200px;
         background: #fff;
         padding: 30px;
-        border-radius: 15px;
+        border-radius: 10px;
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        margin: 20px auto;
+        flex: 1;
     }
 
-    h2 {
+    p{
         text-align: center;
+        font-size: 1.3rem;
         color: #333;
-        margin-bottom: 20px;
-        font-size: 2rem;
-        font-weight: bold;
-    }
-
-    .badge {
-        background: red;
-        color: white;
-        padding: 5px 10px;
-        font-size: 14px;
-        border-radius: 50%;
-        font-weight: bold;
     }
 
     .card {
-        background: rgb(209, 46, 46);
         margin-bottom: 20px;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(228, 228, 228, 0.1);
@@ -90,7 +104,7 @@ $unread_count = $row['unread_count'];
     }
 
     .card:hover {
-        transform: translateY(-5px);
+        transform: translateY(-2px);
     }
 
     .card-body {
@@ -99,19 +113,21 @@ $unread_count = $row['unread_count'];
     }
 
     .card-body p {
-        margin: 0 0 10px;
+        margin: 0 0 15px;
         font-size: 1rem;
         line-height: 1.6;
     }
 
     .card-body a {
-        color: #007bff;
-        text-decoration: none;
-        font-weight: bold;
+        color: #006400;
+        text-decoration: underline;
+        letter-spacing: 2px;
+        font-weight: 600;
+        transition: color 0.3s ease;
     }
 
     .card-body a:hover {
-        text-decoration: underline;
+        color: #f09319;
     }
 
     .card-body img {
@@ -128,8 +144,6 @@ $unread_count = $row['unread_count'];
         text-align: right;
         font-size: 0.9rem;
         color: #666;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
     }
 
     .card-footer small {
@@ -138,16 +152,30 @@ $unread_count = $row['unread_count'];
         font-size: 0.8rem;
         font-weight: bold;
     }
+
+    @media screen and (max-width: 480px) {
+        .notification-container {
+            width: 90%;
+            padding: 10px;
+        }
+
+        .card-body img {
+            border-radius: 5px;
+        }
+        }
+
+        @media screen and (min-width: 481px) and (max-width: 1200px) {
+            .notification-container {
+                width: 90%;
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <h2>Notifications
-            <?php if ($unread_count > 0): ?>
-            <span class="badge"><?= $unread_count ?></span>
-            <?php endif; ?>
-        </h2>
+    <h1>Notifications</h1>
+    <div class="notification-container">
         <?php if (empty($notifications)): ?>
         <p>No notifications available.</p>
         <?php else: ?>

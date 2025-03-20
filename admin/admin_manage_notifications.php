@@ -18,7 +18,6 @@ if (isset($_GET['delete_created_at'])) {
     $stmt_delete->bind_param("s", $created_at);
     $stmt_delete->execute();
 
-    echo "<script>alert('Notification deleted!'); window.location='admin_manage_notifications.php';</script>";
 }
 
 // Fetch unique notifications
@@ -203,7 +202,7 @@ ob_start();
                 <td data-label="Created At"><?= htmlspecialchars($row['created_at']); ?></td>
                 <td data-label="Action">
                     <a href="?delete_created_at=<?= urlencode($row['created_at']); ?>" class="delete-link"
-                        onclick="return confirm('Delete this notification? All notifications with the same timestamp will be deleted.')">
+                        onclick="return confirm('Delete this notification?')">
                         Delete
                     </a>
                 </td>

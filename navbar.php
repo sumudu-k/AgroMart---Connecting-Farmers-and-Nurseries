@@ -351,7 +351,7 @@ function searchProducts(query) {
 
         <ul id="menuList">
             <?php if (!isset($_SESSION['username'])): ?>
-            <li><a href="#" onclick="showAlert('Please login to add a product request','error','#ff0000')">Product Requests</a></li>
+            <li><a href="requests.php">Product Requests</a></li>
             <li><a href="#" onclick="showAlert('Please login to post an Ad','error','#ff0000')" class="place-ad">Post Ad</a></li>
             <li><a href="#" onclick="showAlert('Please login to see Wishlist','error','#ff0000')"><i class="fas fa-heart nav-icon" title="Wishlist"></i></a></li>
             <li><a href="#" onclick="showAlert('Please login to see Notifications','error','#ff0000')">
@@ -363,7 +363,7 @@ function searchProducts(query) {
             </li>
 
             <?php else: ?>
-            <li><a href="post_request.php">Product Requests</a></li>
+            <li><a href="requests.php">Product Requests</a></li>
             <li><a href="post_ad.php" class="place-ad">Post Ad</a></li>
             <li><a href="wishlist.php"><i class="fas fa-heart nav-icon" title="Wishlist"></i></a></li>
             <li><a href="notifications.php" class="notification">
