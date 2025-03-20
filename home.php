@@ -270,6 +270,13 @@ $ads_result = $conn->query($ads_query);
             color: #555;
         }
 
+        .ad-details p:first-child {
+            font-weight: bold;
+            font-size: 18px;
+            color: #b03052;
+
+        }
+
         .view-all-btn {
             text-align: center;
             margin: 15px 0 30px 0;
