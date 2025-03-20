@@ -113,6 +113,7 @@
             <a href="admin_manage_notifications.php">Manage Push Notifications</a>
             <a href="admin_manage_requests.php">Manage Requests</a>
             <a href="admin_approval.php">Admin Approval</a>
+            <a href="edit_category.php">Edit categories</a>
         </div>
         <div class="bottom-sidebar">
                 <a href="admin_logout.php" class="btn-logout">Logout</a>

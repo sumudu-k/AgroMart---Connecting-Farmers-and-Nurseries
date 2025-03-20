@@ -67,8 +67,6 @@ $ads_result = $conn->query($ads_query);
         }
 
 
-        /*category Section */
-        /* all categories Container */
         .category-container {
             display: flex;
             flex-wrap: wrap;
@@ -270,6 +268,13 @@ $ads_result = $conn->query($ads_query);
             line-height: 1.4;
             font-size: 14px;
             color: #555;
+        }
+
+        .ad-details p:first-child {
+            font-weight: bold;
+            font-size: 18px;
+            color: #b03052;
+
         }
 
         .view-all-btn {
@@ -602,10 +607,10 @@ $ads_result = $conn->query($ads_query);
 
     <!-- home page banner slider -->
     <div class="banner-image">
-        <img class="banner-slides active" src="images/cover.png" alt="Slide 1">
+        <img class="banner-slides active" src="images/1.jpg" alt="Slide 1">
         <img class="banner-slides"
-            src="images/lettuce-plant-on-field-vegetable-and-agriculture-sunset-and-light-free-photo.jpg" alt="Slide 2">
-        <img class="banner-slides" src="images/iStock-531690340_c_valentinrussanov.webp" alt="Slide 3">
+            src="images/2.jpg" alt="Slide 2">
+        <img class="banner-slides" src="images/3.jpg" alt="Slide 3">
     </div>
 
     <script>

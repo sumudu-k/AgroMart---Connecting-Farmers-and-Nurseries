@@ -207,7 +207,7 @@ $result = $conn->query($sql);
         <?php if ($result->num_rows > 0): ?>
             <?php while ($row = $result->fetch_assoc()): ?>
                 <div class="request-card">
-                    <strong><?= htmlspecialchars($row['subject']); ?> by <?= htmlspecialchars($row['username']); ?></strong>
+                    <strong><?= htmlspecialchars($row['subject']); ?></strong>
                     <p><?= htmlspecialchars($row['description']); ?></p>
                     <p>Contact Number: <?= htmlspecialchars($row['contact']); ?></p>
                     <p>Connect via:

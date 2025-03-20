@@ -87,16 +87,17 @@ if ($user_id) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title><?= htmlspecialchars($ad['title']); ?></title>
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
-            font-family: Arial, sans-serif;
             color: #333;
             position: relative;
             min-height: 100vh;
@@ -130,7 +131,7 @@ if ($user_id) {
         }
 
         .ad-image {
-            flex: 1 1 45%;
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -177,10 +178,9 @@ if ($user_id) {
         }
 
         .ad-details {
-            flex: 1 1 45%;
-            min-width: 300px;
+            flex: 1;
             padding: 20px;
-            background-color: #f0ffe8;
+            background-color: rgba(240, 255, 232, 0.8);
             border-radius: 10px;
         }
 
@@ -199,7 +199,23 @@ if ($user_id) {
 
         .ad-details .price {
             font-weight: bold;
+            font-size: 1.5rem;
             color: #b03052;
+        }
+
+        .ad-details .contact-num a {
+            text-decoration: none;
+            font-weight: bold;
+            color: #25D366;
+        }
+
+        .ad-details .contact-num a:hover {
+            color: #ff8c00;
+        }
+
+        .ad-details .contact-num .fa-whatsapp {
+            margin-left: 5px;
+            font-size: 20px;
         }
 
         .ad-details p {
@@ -223,9 +239,53 @@ if ($user_id) {
             color: #ff8c00;
         }
 
+
+
+
+        .ad-details .wishlist-form button {
+            font-size: 16px;
+            background-color: #f09319;
+            color: white;
+            text-decoration: none;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .ad-details .wishlist-form button:hover {
+            background-color: #006400;
+        }
+
+        .ad-details .wishlist-login-btn {
+            margin-top: 35px;
+            
+        }
+
+
+        .ad-details .wishlist-login-btn a {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #f09319;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin-top: 15px;
+            transition: background-color 0.2s;
+            text-decoration: none;
+        }
+
+        .ad-details .wishlist-login-btn a:hover {
+            background-color: #006400;
+            color: white;
+        }
+
         .similarProducts {
             max-width: 75%;
-            background-color: #f0ffe8;
+            background-color: rgba(240, 255, 232, 0.8);
             margin: 20px auto 30px auto;
             padding: 20px;
             border-radius: 10px;
@@ -432,8 +492,12 @@ if ($user_id) {
             <h1><?= htmlspecialchars($ad['title']); ?></h1>
             <p class="ad-description"><?= htmlspecialchars($ad['description']); ?></p>
             <p><strong>Price:</strong> <span class="price">Rs <?= htmlspecialchars($ad['price']); ?></span></p>
-            <p><strong>Contact Number:</strong> <a
-                    href="https://wa.me/+94<?= htmlspecialchars($ad['phone_number']); ?>"><?= htmlspecialchars($ad['phone_number']); ?></a>
+            <p><strong>Contact Number:</strong> 
+                <span class="contact-num">
+                    <a href="https://wa.me/+94<?= htmlspecialchars($ad['phone_number']); ?>"><?= htmlspecialchars($ad['phone_number']); ?> 
+                        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                    </a>
+                </span>
             </p>
             <p><strong>Category:</strong> <?= htmlspecialchars($ad['category_name']); ?></p>
             <p><strong>Posted On:</strong> <?= htmlspecialchars(date('Y-m-d h:i A', strtotime($ad['created_at']))) ?>
@@ -441,14 +505,14 @@ if ($user_id) {
             <p><strong>District:</strong> <?= htmlspecialchars($ad['district']); ?></p>
 
             <?php if ($user_id): ?>
-                <form method="post" action="wishlist.php">
+                <form method="post" action="wishlist.php" class="wishlist-form">
                     <input type="hidden" name="ad_id" value="<?= $ad_id; ?>">
                     <button type="submit" class="wishlist-button">
                         <?= $is_wishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'; ?>
                     </button>
                 </form>
             <?php else: ?>
-                <p><a href="#" onclick="showAlert('Please login to see Wishlist','error','#ff0000')">add to wishlsit</a></p>
+                <p class="wishlist-login-btn"><a href="#" onclick="showAlert('Please login to see Wishlist','error','#ff0000')">add to wishlsit</a></p>
             <?php endif; ?>
         </div>
     </div>
