@@ -34,7 +34,9 @@ $result = $conn->query($ads_sql);
 </head>
 
 <body>
+
     <div class="container">
+        <!-- ads container -->
         <div class="ads-container" id="ads-container">
             <?php if ($result->num_rows > 0): ?>
                 <?php while ($ad = $result->fetch_assoc()):
@@ -43,6 +45,7 @@ $result = $conn->query($ads_sql);
                         $description = substr($description, 0, 200) . '...';
                     }
                 ?>
+                    <!-- ad card container -->
                     <div class="ad-card" onclick="window.location.href='view_ad.php?ad_id=<?= $ad['ad_id']; ?>'">
                         <img src="<?= htmlspecialchars($ad['image'] ?? 'images/placeholder/No_Image_AD.png'); ?>"
                             alt="Product Image">

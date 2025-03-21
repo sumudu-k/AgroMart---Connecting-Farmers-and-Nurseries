@@ -107,6 +107,7 @@ h3 {
   object-fit: cover;
 }
 
+/* image deletign btn */
 .image-wrapper button {
   position: absolute;
   top: 5px;
@@ -149,6 +150,7 @@ button {
 }
 
 /* responsive styles */
+/* modile devices */
 @media screen and (max-width: 480px) {
   h2 {
     font-size: 1.5rem;
@@ -191,6 +193,7 @@ button {
   }
 }
 
+/* tablets */
 @media screen and (min-width: 481px) and (max-width: 1200px) {
   h2 {
     font-size: 1.8rem;

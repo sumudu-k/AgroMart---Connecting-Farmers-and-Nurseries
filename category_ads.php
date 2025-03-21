@@ -4,7 +4,6 @@ include 'config.php';
 include 'navbar.php';
 
 
-//$category_id = isset($_GET['category_id_qp']) ? (int) $_GET['category_id_qp'] : 0;
 $category_id = $_GET['category_id_qp'];
 $category_name = 'Category';
 
@@ -48,6 +47,7 @@ if (isset($_GET['category_id_qp'])) {
     <div class="main-content">
         <h2 class="title"> <?php echo $category_name; ?></h2>
 
+        <!-- category ads container -->
         <div class="container">
             <div class="ads-container">
                 <?php
@@ -67,6 +67,7 @@ if (isset($_GET['category_id_qp'])) {
                             $description .= '...';
                         }
                 ?>
+                        <!-- ad card container -->
                         <div class="ad-card">
                             <a href="view_ad.php?ad_id=<?= $ad_id; ?>">
                                 <?php if ($image): ?>

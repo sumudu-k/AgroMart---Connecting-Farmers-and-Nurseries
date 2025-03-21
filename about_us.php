@@ -21,10 +21,8 @@ include 'navbar.php';
         <h1>Welcome to Our AgroMart Marketplace</h1>
     </div>
 
-
+    <!-- about us container -->
     <div class="container">
-
-
         <p>We are a dedicated online platform connecting farmers, nursery owners, and plant enthusiasts across Sri
             Lanka. Our mission is to bridge the gap between sellers and buyers, making it easier to access high-quality
             plants, seeds, and agricultural products at affordable prices.</p>

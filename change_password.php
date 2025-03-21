@@ -96,6 +96,8 @@ if (isset($_POST['submit'])) {
     <?php include 'navbar.php'; ?>
     <div class="main-content">
         <h1>Change Password</h1>
+
+        <!-- password change container -->
         <div class="container">
             <form action="change_password.php" method="post">
                 <div class="form-group">

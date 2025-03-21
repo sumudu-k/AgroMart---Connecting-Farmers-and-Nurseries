@@ -150,6 +150,8 @@ if (isset($_POST['submit'])) {
 <body>
     <div class="main-content">
         <h2>Edit Your Advertisement</h2>
+
+        <!-- edit ad form -->
         <form action="edit_ad.php?ad_id=<?= $ad_id ?>" method="POST" enctype="multipart/form-data" class="ad-form">
             <div class="form-group">
                 <label for="title">Ad Title</label>
@@ -233,6 +235,7 @@ if (isset($_POST['submit'])) {
             </div>
             <?php endwhile; ?>
 
+            
             <h3>Add New Images</h3>
             <div class="form-group">
                 <input type="file" name="new_images[]" multiple>
