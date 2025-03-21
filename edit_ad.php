@@ -132,248 +132,13 @@ if (isset($_POST['submit'])) {
 <!DOCTYPE html>
 <html lang="en">
 <?php include 'navbar.php'; ?>
-
+<link rel="stylesheet" href="css/edit_ad.css">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="removeImage.js" defer></script>
     <title>Edit Ad - AgroMart</title>
 
-    <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: "Poppins", Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        position: relative;
-        overflow-x: hidden;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-    }
-
-    body::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url("images/B1.jpg");
-        background-size: cover;
-        opacity: 0.5;
-        z-index: -1;
-    }
-
-    .main-content {
-        flex: 1;
-    }
-
-    h2 {
-        background-color: #dbffc7;
-        text-align: center;
-        padding: 10px 0;
-        font-size: 2rem;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        position: relative;
-        z-index: 1;
-    }
-
-    .ad-form {
-        max-width: 50%;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: rgba(196, 196, 196, 0.3);
-        backdrop-filter: blur(10px);
-        border-radius: 5px;
-        position: relative;
-        z-index: 1;
-    }
-
-    .form-group {
-        display: flex;
-        align-items: center;
-        margin-bottom: 15px;
-    }
-
-    .form-group label {
-        flex: 0.2;
-        width: 150px;
-        text-align: right;
-        padding-right: 10px;
-        font-weight: bold;
-    }
-
-    input,
-    select,
-    textarea {
-        flex: 0.8;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-        outline: none;
-        border-color: #007a33;
-    }
-
-    textarea {
-        height: 200px;
-    }
-
-    h3 {
-        margin-bottom: 10px;
-        color: #333;
-    }
-
-    /* image section */
-    .image-wrapper {
-        display: inline-block;
-        text-align: center;
-        justify-content: center;
-        position: relative;
-        margin: 10px;
-    }
-
-    .image-wrapper img {
-        width: 200px;
-        height: 200px;
-        object-fit: cover;
-    }
-
-    .image-wrapper button {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        background-color: red;
-        color: white;
-        border: 2px solid white;
-        border-radius: 50%;
-        padding: 5px 8px;
-        cursor: pointer;
-        font-weight: bold;
-        font-size: 14px;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    .image-wrapper button:hover {
-        background-color: rgb(180, 0, 0);
-        transform: scale(1.1);
-    }
-
-    .image-wrapper button:active {
-        transform: scale(0.95);
-    }
-
-    .hidden {
-        display: none;
-    }
-
-    /*submit button */
-    button {
-        display: block;
-        margin: 20px auto;
-        padding: 10px 20px;
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-
-    /* responsive styles */
-    @media screen and (max-width: 480px) {
-        h2 {
-            font-size: 1.5rem;
-            padding: 15px 5%;
-        }
-
-        .ad-form {
-            max-width: 95%;
-            padding: 15px;
-        }
-
-        .form-group {
-            flex-direction: column;
-            align-items: stretch;
-        }
-
-        .form-group label {
-            width: auto;
-            text-align: left;
-            padding-right: 0;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-        }
-
-        input,
-        select,
-        textarea {
-            font-size: 0.9rem;
-            padding: 6px;
-        }
-
-        .image-wrapper img {
-            width: 150px;
-            height: 150px;
-        }
-
-        button[type="submit"] {
-            font-size: 14px;
-            padding: 8px 15px;
-        }
-    }
-
-    @media screen and (min-width: 481px) and (max-width: 1200px) {
-        h2 {
-            font-size: 1.8rem;
-            padding: 20px 8%;
-        }
-
-        .ad-form {
-            max-width: 80%;
-        }
-
-        .form-group {
-            flex-direction: column;
-            align-items: stretch;
-        }
-
-        .form-group label {
-            width: auto;
-            text-align: left;
-            padding-right: 0;
-            margin-bottom: 5px;
-            font-size: 0.95rem;
-        }
-
-        input,
-        select,
-        textarea {
-            font-size: 0.95rem;
-            padding: 7px;
-        }
-
-        .image-wrapper img {
-            width: 180px;
-            height: 180px;
-        }
-
-        button[type="submit"] {
-            font-size: 15px;
-            padding: 9px 18px;
-        }
-    }
-    </style>
     <script>
     function removeImage(button) {
         button.parentElement.classList.add('hidden');
@@ -385,6 +150,8 @@ if (isset($_POST['submit'])) {
 <body>
     <div class="main-content">
         <h2>Edit Your Advertisement</h2>
+
+        <!-- edit ad form -->
         <form action="edit_ad.php?ad_id=<?= $ad_id ?>" method="POST" enctype="multipart/form-data" class="ad-form">
             <div class="form-group">
                 <label for="title">Ad Title</label>
@@ -468,6 +235,7 @@ if (isset($_POST['submit'])) {
             </div>
             <?php endwhile; ?>
 
+            
             <h3>Add New Images</h3>
             <div class="form-group">
                 <input type="file" name="new_images[]" multiple>

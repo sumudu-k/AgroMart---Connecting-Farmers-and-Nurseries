@@ -5,7 +5,7 @@ session_start();
 ob_start();
 include '../config.php';
 
-//check if the token is valid
+
 if (isset($_GET['token'])) {
     $token = $_GET['token'];
 
