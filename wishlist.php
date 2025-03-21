@@ -4,17 +4,14 @@ ob_start();
 include 'config.php';
 
 if (!isset($_SESSION['user_id'])) {
-    //showAlert('Please log in to access your wishlist.', 'error', '#ff0000', 'login.php');
     exit;
 }
 
 $user_id = $_SESSION['user_id'];
 
-// handle add/remove wishlist actions
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['ad_id'])) {
     $ad_id = $_POST['ad_id'];
 
-    // check if the ad is already in the wishlist
     $check_sql = "SELECT * FROM wishlist WHERE user_id = ? AND ad_id = ?";
     $stmt = $conn->prepare($check_sql);
     $stmt->bind_param("ii", $user_id, $ad_id);
@@ -22,19 +19,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['ad_id'])) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // remove from wishlist
         $delete_sql = "DELETE FROM wishlist WHERE user_id = ? AND ad_id = ?";
         $stmt = $conn->prepare($delete_sql);
         $stmt->bind_param("ii", $user_id, $ad_id);
         $stmt->execute();
-        //showAlert('Removed from wishlist!', 'success', '#008000', 'wishlist.php');
     } else {
-        //add to wishlist
         $insert_sql = "INSERT INTO wishlist (user_id, ad_id) VALUES (?, ?)";
         $stmt = $conn->prepare($insert_sql);
         $stmt->bind_param("ii", $user_id, $ad_id);
         $stmt->execute();
-        //showAlert('Added to wishlist!', 'success', '#008000', 'wishlist.php');
     }
 }
 
@@ -70,7 +63,7 @@ $wishlist_result = $stmt->get_result();
                 <?php if ($wishlist_result->num_rows > 0): ?>
                 <?php while ($item = $wishlist_result->fetch_assoc()): ?>
                 <div class="wishlist-item">
-                <a href="view_ad.php?ad_id=<?= $item['ad_id']; ?>" class="wishlist-link">
+                <a href="view_ad.php?ad_id=<?= $item['ad_id']; ?>">
                     <img src="<?= htmlspecialchars($item['image'] ?? 'default.jpg'); ?>" alt="Product Image">
                     <h3><?= htmlspecialchars($item['title']); ?></h3>
                     <p>Category: <?= htmlspecialchars($item['category_name']); ?></p>
