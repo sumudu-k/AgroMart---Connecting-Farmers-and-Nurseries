@@ -8,7 +8,6 @@ if (!isset($_SESSION['admin_logged_in'])) {
     exit();
 }
 
-// Fetch categories from the database
 $query = "SELECT * FROM categories";
 $result = $conn->query($query);
 
@@ -16,68 +15,69 @@ ob_start();
 ?>
 
 <style>
-    * {
-        font-family: "Poppins", Arial, sans-serif;
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
+* {
+    font-family: "Poppins", Arial, sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-    body {
-        color: #333;
-        background-color: #f4f4f4;
-    }
+body {
+    color: #333;
+    background-color: #f4f4f4;
+}
 
-    .category-container {
-        max-width: 90%;
-        margin: 20px auto;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        background-color: #fff;
-    }
+.category-container {
+    max-width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
 
-    h1 {
-        text-align: center;
-        font-size: 2rem;
-        padding: 10px 0;
-        border-bottom: 2px solid #007a33;
-    }
+h1 {
+    text-align: center;
+    font-size: 2rem;
+    padding: 10px 0;
+    border-bottom: 2px solid #007a33;
+}
 
-    table {
-        width: 100%;
-        margin-top: 20px;
-        border-collapse: collapse;
-    }
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
 
-    th, td {
-        padding: 12px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
+th,
+td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
 
-    th {
-        background-color: #a9e6a9;
-        text-align: center;
-    }
+th {
+    background-color: #a9e6a9;
+    text-align: center;
+}
 
-    td:last-child {
-        text-align: center;
-    }
+td:last-child {
+    text-align: center;
+}
 
-    .edit-button {
-        padding: 8px 16px;
-        background-color: #007a33;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        text-decoration: none;
-    }
+.edit-button {
+    padding: 8px 16px;
+    background-color: #007a33;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
 
-    .edit-button:hover {
-        background-color: #005922;
-    }
+.edit-button:hover {
+    background-color: #005922;
+}
 </style>
 
 <div class="category-container">
