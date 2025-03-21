@@ -106,11 +106,9 @@ if (isset($_POST['update'])) {
     <div class="main-content">
         <h1>My Account</h1>
         <div class='accountFunctionBtn'>
-            <button><a href="post_ad.php">Post an Ad</a></button>
             <button><a href="my_ads.php">My Ads</a></button>
             <button><a href="post_request.php">Post a Product Request</a></button>
             <button><a href="my_requests.php">My Product Requests</a></button>
-            <button><a href="wishlist.php">My Wish List</a></button>
         </div>
 
         <div class="container">
