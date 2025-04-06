@@ -1,1 +1,4 @@
 .htaccess
+/vendor
+composer.json
+composer.lock
