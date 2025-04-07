@@ -11,6 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
+
 function isValidContact($contact_number)
 {
     return preg_match('/^0\d{9}$/', $contact_number);
@@ -22,6 +23,24 @@ $stmt->bind_param('i', $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $userData = $result->fetch_assoc();
+
+
+// check user verified
+$verifysql = "SELECT * FROM verification_requests WHERE status='approved' AND user_id=?";
+$stmt = $conn->prepare($verifysql);
+$stmt->bind_param('i', $user_id);
+$stmt->execute();
+$verified_result = $stmt->get_result();
+if ($verifiedUser = $verified_result->fetch_assoc()) {
+    $bool = 0;
+    if ($verifiedUser['status'] == "approved") {
+        $bool = 1;
+    } else {
+        $bool = 0;
+    }
+};
+
+
 
 if (isset($_POST['update'])) {
     $username = $_POST['username'];
@@ -98,7 +117,7 @@ if (isset($_POST['update'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - AgroMart</title>
     <link rel="stylesheet" href="css/profile.css">
-    
+
     <script src='alertFunction.js'></script>
 </head>
 
@@ -109,11 +128,28 @@ if (isset($_POST['update'])) {
             <button><a href="my_ads.php">My Ads</a></button>
             <button><a href="post_request.php">Post a Product Request</a></button>
             <button><a href="my_requests.php">My Product Requests</a></button>
+            <button><a href="verify.php">Be a verified seller</a></button>
         </div>
 
         <div class="container">
             <h2>Edit Profile</h2>
+
             <form action="profile.php" method="post">
+                <?php
+                if ($verifiedUser): ?>
+                <h3 style="background-color:green; color:white; padding:5px 10px;">You are verified</h3>
+                <?php
+                else : ?>
+                <h3 style="background-color:darkorange; color:white; padding:5px 10px;">You are not verified</h3>
+                <?php endif;
+
+                if ($userData['status'] == 'y'): ?>
+                <h3 style="background-color:darkorange; ">Your account is blocked. Please contact the admin </h3>
+                <?php endif
+                ?>
+
+
+
                 <div class="form-group">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username"

@@ -8,26 +8,42 @@ if (!isset($_SESSION['admin_logged_in'])) {
     exit();
 }
 
-if (isset($_GET['delete_user'])) {
-    $user_id = $_GET['delete_user'];
-    if ($user_id == $_SESSION['admin_id']) {
-        $_SESSION['error'] = "You cannot delete your own account!";
-        header("Location: view_users.php");
+if (isset($_GET['block_user'])) {
+    $user_id = $_GET['block_user'];
+    $sql_block = "UPDATE users SET status = 'y' WHERE user_id=? ";
+    $stmt_block = $conn->prepare($sql_block);
+    $stmt_block->bind_param('i', $user_id);
+    if ($stmt_block->execute()) {
+        echo "<script>
+                alert('User blocked successfully!');
+              </script>";
+        header('Location:view_users.php');
+        exit();
+    } else {
+        echo "<script>alert('Failed to block user.');</script>";
+        header('Location:view_users.php');
         exit();
     }
-
-    $stmt = $conn->prepare("DELETE FROM users WHERE user_id = ?");
-    $stmt->bind_param('i', $user_id);
-    if ($stmt->execute()) {
-        echo "<script>
-                alert('User deleted successfully!');
-              </script>";
-    } else {
-        echo "<script>alert('Failed to delete user.');</script>";
-    }
-    header("Location: view_users.php");
-    exit();
 }
+
+if (isset($_GET['unblock_user'])) {
+    $user_id = $_GET['unblock_user'];
+    $sql_unblock = "UPDATE users SET status = 'n' WHERE user_id=? ";
+    $stmt_unblock = $conn->prepare($sql_unblock);
+    $stmt_unblock->bind_param('i', $user_id);
+    if ($stmt_unblock->execute()) {
+        echo "<script>
+                alert('User Unblocked successfully!');
+              </script>";
+        header('Location:view_users.php');
+        exit();
+    } else {
+        echo "<script>alert('Failed to Unblock user.');</script>";
+        header('Location:view_users.php');
+        exit();
+    }
+}
+
 
 $result = $conn->query("SELECT * FROM users");
 
@@ -122,8 +138,8 @@ tr:hover {
     background-color: #e6ffe6;
 }
 
-.delete-button {
-    background-color: #f44336;
+.block-button {
+    background-color: rgb(0, 172, 37);
     color: white;
     border: none;
     padding: 8px 16px;
@@ -136,8 +152,26 @@ tr:hover {
     transition: background-color 0.2s ease;
 }
 
-.delete-button:hover {
-    background-color: #d32f2f;
+.block-button:hover {
+    background-color: rgb(0, 136, 23);
+}
+
+.unblock-button {
+    background-color: rgb(233, 48, 48);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.unblock-button:hover {
+    background-color: rgb(184, 18, 18);
 }
 </style>
 
@@ -147,6 +181,7 @@ tr:hover {
     <table>
         <thead>
             <tr>
+                <th>User ID</th>
                 <th>Username</th>
                 <th>Email</th>
                 <th>Contact Number</th>
@@ -156,12 +191,18 @@ tr:hover {
         <tbody>
             <?php while ($user = $result->fetch_assoc()) { ?>
             <tr>
+                <td data-label="User ID"><?= htmlspecialchars($user['user_id']) ?></td>
                 <td data-label="Username"><?= htmlspecialchars($user['username']) ?></td>
                 <td data-label="Email"><?= htmlspecialchars($user['email']) ?></td>
                 <td data-label="Contact Number"><?= htmlspecialchars($user['contact_number']) ?></td>
                 <td data-label="Action">
-                    <a href="view_users.php?delete_user=<?= $user['user_id'] ?>" class="delete-button"
-                        onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
+                    <?php if ($user['status'] == 'y'): ?>
+                    <a href="view_users.php?unblock_user=<?= $user['user_id'] ?>" class="unblock-button"
+                        onclick="return confirm('Are you sure you want to UNBLOCK this user?')">UNBLOCK</a>
+                    <?php else : ?>
+                    <a href="view_users.php?block_user=<?= $user['user_id'] ?>" class="block-button"
+                        onclick="return confirm('Are you sure you want to BLOCK this user?')">BLOCK</a>
+                    <?php endif ?>
                 </td>
             </tr>
             <?php } ?>

@@ -6,7 +6,31 @@ include 'navbar.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: home.php");
+    exit();
 }
+
+// check user blocked or not
+$user_id = $_SESSION['user_id'];
+
+$sql_block_ckeck = "SELECT * FROM users WHERE user_id=?";
+$stmt_block_ckeck = $conn->prepare($sql_block_ckeck);
+$stmt_block_ckeck->bind_param('i', $user_id);
+$stmt_block_ckeck->execute();
+$result_block_check = $stmt_block_ckeck->get_result();
+$block_result = $result_block_check->fetch_assoc();
+
+if ($block_result['status'] == 'y') {
+    echo "<script>
+        window.onload = function() {
+            showAlert('Your account has been blocked. You can not post ads', 'error', '#ff0000');
+        };
+        setTimeout(function() {
+            window.location.href = 'profile.php';
+        }, 2000);
+        </script>";
+}
+
+
 
 function isValidContact($phone_number)
 {
@@ -210,8 +234,14 @@ if (isset($_POST['submit'])) {
             </div>
             <span><i class="fa fa-exclamation-circle" aria-hidden="true" id="icon"></i>You can upload maximum 5
                 images</span>
-
+            <?php
+            if ($block_result['status'] == 'y'):
+            ?>
+            <button disabled type="submit" name="submit">Submit Ad</button>
+            <?php else:
+            ?>
             <button type="submit" name="submit">Submit Ad</button>
+            <?php endif; ?>
         </form>
     </div>
     <?php include 'footer.php'; ?>
