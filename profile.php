@@ -11,6 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
+
 function isValidContact($contact_number)
 {
     return preg_match('/^0\d{9}$/', $contact_number);
@@ -22,6 +23,7 @@ $stmt->bind_param('i', $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $userData = $result->fetch_assoc();
+
 
 // check user verified
 $verifysql = "SELECT * FROM verification_requests WHERE status='approved' AND user_id=?";
@@ -131,14 +133,23 @@ if (isset($_POST['update'])) {
 
         <div class="container">
             <h2>Edit Profile</h2>
-            <?php
-            if ($verifiedUser) {
-                echo "you are verified";
-            } else {
-                echo "you are not verified";
-            }
-            ?>
+
             <form action="profile.php" method="post">
+                <?php
+                if ($verifiedUser): ?>
+                <h3 style="background-color:green; color:white; padding:5px 10px;">You are verified</h3>
+                <?php
+                else : ?>
+                <h3 style="background-color:darkorange; color:white; padding:5px 10px;">You are not verified</h3>
+                <?php endif;
+
+                if ($userData['status'] == 'y'): ?>
+                <h3 style="background-color:darkorange; ">Your account is blocked. Please contact the admin </h3>
+                <?php endif
+                ?>
+
+
+
                 <div class="form-group">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username"

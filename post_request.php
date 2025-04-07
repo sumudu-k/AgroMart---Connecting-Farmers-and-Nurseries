@@ -9,6 +9,27 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+// check user blocked or not
+$user_id = $_SESSION['user_id'];
+
+$sql_block_ckeck = "SELECT * FROM users WHERE user_id=?";
+$stmt_block_ckeck = $conn->prepare($sql_block_ckeck);
+$stmt_block_ckeck->bind_param('i', $user_id);
+$stmt_block_ckeck->execute();
+$result_block_check = $stmt_block_ckeck->get_result();
+$block_result = $result_block_check->fetch_assoc();
+
+if ($block_result['status'] == 'y') {
+    echo "<script>
+        window.onload = function() {
+            showAlert('Your account has been blocked. You can not post product requests', 'error', '#ff0000');
+        };
+        setTimeout(function() {
+            window.location.href = 'profile.php';
+        }, 2000);
+        </script>";
+}
+
 function isValidContact($contact_number)
 {
     return preg_match('/^0\d{9}$/', $contact_number);
@@ -154,7 +175,16 @@ if (isset($_POST['submit'])) {
                 </select>
             </div>
 
+            <?php
+            if ($block_result['status'] == 'y'):
+            ?>
+            <button disabled type="submit" name="submit">Submit Request</button>
+            <?php else:
+            ?>
             <button type="submit" name="submit">Submit Request</button>
+            <?php endif; ?>
+
+
         </form>
     </div>
     <?php include 'footer.php'; ?>
