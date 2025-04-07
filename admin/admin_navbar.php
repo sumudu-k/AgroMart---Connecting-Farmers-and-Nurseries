@@ -107,6 +107,7 @@
 
             <a href="admin_dashboard.php">Dashboard</a>
             <a href="add_category.php">Add Category</a>
+            <a href="edit_category.php">Edit categories</a>
             <a href="delete_category.php">Delete Category</a>
             <a href="view_users.php">Manage Users</a>
             <a href="view_ads.php">View & Delete Ads</a>
@@ -114,7 +115,7 @@
             <a href="admin_manage_notifications.php">Manage Push Notifications</a>
             <a href="admin_manage_requests.php">Manage Requests</a>
             <a href="admin_approval.php">Admin Approval</a>
-            <a href="edit_category.php">Edit categories</a>
+            <a href="seller_verify.php">Seller Verify</a>
         </div>
         <div class="bottom-sidebar">
             <a href="admin_logout.php" class="btn-logout">Logout</a>

@@ -1,4 +1,4 @@
 Options -Indexes
 RewriteEngine On
 
-ErrorDocument 404 http://localhost/Project-AgroMart/Project-AgroMart/404.php
+ErrorDocument 404 http://localhost/AgroMart/404.php

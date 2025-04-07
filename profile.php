@@ -23,6 +23,23 @@ $stmt->execute();
 $result = $stmt->get_result();
 $userData = $result->fetch_assoc();
 
+// check user verified
+$verifysql = "SELECT * FROM verification_requests WHERE status='approved' AND user_id=?";
+$stmt = $conn->prepare($verifysql);
+$stmt->bind_param('i', $user_id);
+$stmt->execute();
+$verified_result = $stmt->get_result();
+if ($verifiedUser = $verified_result->fetch_assoc()) {
+    $bool = 0;
+    if ($verifiedUser['status'] == "approved") {
+        $bool = 1;
+    } else {
+        $bool = 0;
+    }
+};
+
+
+
 if (isset($_POST['update'])) {
     $username = $_POST['username'];
     $email = $_POST['email'];
@@ -98,7 +115,7 @@ if (isset($_POST['update'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - AgroMart</title>
     <link rel="stylesheet" href="css/profile.css">
-    
+
     <script src='alertFunction.js'></script>
 </head>
 
@@ -109,10 +126,18 @@ if (isset($_POST['update'])) {
             <button><a href="my_ads.php">My Ads</a></button>
             <button><a href="post_request.php">Post a Product Request</a></button>
             <button><a href="my_requests.php">My Product Requests</a></button>
+            <button><a href="verify.php">Be a verified seller</a></button>
         </div>
 
         <div class="container">
             <h2>Edit Profile</h2>
+            <?php
+            if ($verifiedUser) {
+                echo "you are verified";
+            } else {
+                echo "you are not verified";
+            }
+            ?>
             <form action="profile.php" method="post">
                 <div class="form-group">
                     <label for="username">Username</label>
