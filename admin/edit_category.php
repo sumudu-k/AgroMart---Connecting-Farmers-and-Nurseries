@@ -84,6 +84,7 @@ td:last-child {
     <h1>Manage Categories</h1>
     <table>
         <tr>
+            <th>No</th>
             <th>Category Name</th>
             <th>Image</th>
             <th>Action</th>
@@ -91,8 +92,10 @@ td:last-child {
 
         <?php
         if ($result->num_rows > 0) {
+            $counter = 1;
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>
+                        <td>" . $counter++ . "</td>
                         <td>" . htmlspecialchars($row['category_name']) . "</td>
                         <td><img src='" . htmlspecialchars($row['category_image']) . "' width='50' height='50'></td>
                         <td><a href='update_category.php?id=" . $row['category_id'] . "' class='edit-button'>Edit</a></td>

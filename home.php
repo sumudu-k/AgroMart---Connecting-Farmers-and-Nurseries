@@ -6,6 +6,15 @@ include 'navbar.php';
 $query = "SELECT * FROM categories";
 $result = $conn->query($query);
 
+// retrieve most viewd ads
+$sql_most_viewed = "SELECT ads.*,
+categories.category_name,
+(select image_path from ad_images where ad_id=ads.ad_id limit 1) as image
+from ads
+join categories on ads.category_id= categories.category_id
+order by ads.view_count desc limit 2 ";
+$most_viewed_result = $conn->query($sql_most_viewed);
+
 
 $ads_query = "
     SELECT ads.*, 
@@ -35,30 +44,29 @@ $ads_result = $conn->query($ads_query);
     <!-- home page banner slider -->
     <div class="banner-image">
         <img class="banner-slides active" src="images/1.jpg" alt="Slide 1">
-        <img class="banner-slides"
-            src="images/2.jpg" alt="Slide 2">
+        <img class="banner-slides" src="images/2.jpg" alt="Slide 2">
         <img class="banner-slides" src="images/3.jpg" alt="Slide 3">
     </div>
 
     <script>
-        let slideIndex = 0;
-        const slides = document.getElementsByClassName("banner-slides");
+    let slideIndex = 0;
+    const slides = document.getElementsByClassName("banner-slides");
 
-        function showSlides() {
-            for (let i = 0; i < slides.length; i++) {
-                slides[i].classList.remove("active");
-            }
-
-            slideIndex++;
-
-            if (slideIndex > slides.length) {
-                slideIndex = 1
-            }
-            slides[slideIndex - 1].classList.add("active");
-            setTimeout(showSlides, 3000);
+    function showSlides() {
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].classList.remove("active");
         }
 
-        showSlides();
+        slideIndex++;
+
+        if (slideIndex > slides.length) {
+            slideIndex = 1
+        }
+        slides[slideIndex - 1].classList.add("active");
+        setTimeout(showSlides, 3000);
+    }
+
+    showSlides();
     </script>
 
     <div class="main-container">
@@ -68,14 +76,32 @@ $ads_result = $conn->query($ads_query);
             <h1 class="category-title">Categories</h1>
 
             <?php while ($category = $result->fetch_assoc()): ?>
-                <div class="category-card">
-                    <a href="category_ads.php?category_id_qp=<?php echo $category['category_id']; ?>">
-                        <img src="uploads/<?php echo $category['category_image']; ?>"
-                            alt="<?php echo $category['category_name']; ?>">
-                    </a>
-                    <h3 class="category-name"><?php echo $category['category_name']; ?></h3>
-                </div>
+            <div class="category-card">
+                <a href="category_ads.php?category_id_qp=<?php echo $category['category_id']; ?>">
+                    <img src="uploads/<?php echo $category['category_image']; ?>"
+                        alt="<?php echo $category['category_name']; ?>">
+                </a>
+                <h3 class="category-name"><?php echo $category['category_name']; ?></h3>
+            </div>
             <?php endwhile; ?>
+        </div>
+
+        <div class="popular">
+            <h3>Most Viewed</h3>
+            <?php while ($trending = $most_viewed_result->fetch_assoc()): ?>
+            <a href="view_ad.php?ad_id=<?= $trending['ad_id'] ?>">
+                <div>
+                    <h4><?= htmlspecialchars($trending['view_count']) ?></h4>
+                    <h4><?= htmlspecialchars($trending['title']) ?></h4>
+                    <p><?= htmlspecialchars($trending['price']) ?></p>
+                    <p><?= htmlspecialchars($trending['district']) ?></p>
+                    <p><?= htmlspecialchars($trending['category_name']) ?></p>
+                    <p><img src="<?= htmlspecialchars($trending['image']) ?>" alt=""></p>
+                    <p><?= htmlspecialchars(date('Y-m-d h:i A', strtotime($trending['created_at']))); ?></p>
+                </div>
+            </a>
+            <?php endwhile; ?>
+            <a href="popular.php"> View Trending</a>
         </div>
 
         <!-- welcome section -->
@@ -97,22 +123,22 @@ $ads_result = $conn->query($ads_query);
             <h1 class="ads-title">Find What You Want Here</h1>
             <div class="sugestion-ads">
                 <?php if ($ads_result->num_rows > 0): ?>
-                    <?php while ($ad = $ads_result->fetch_assoc()): ?>
-                        <div class="ad-card" onclick="window.location.href='view_ad.php?ad_id=<?= $ad['ad_id']; ?>'">
-                            <img src="<?= htmlspecialchars($ad['image'] ?? 'images/placeholder/No_Image_AD.png'); ?>"
-                                alt="Product Image">
-                            <h4><?= htmlspecialchars($ad['title']); ?></h4>
-                            <p class="description"><?= htmlspecialchars(substr($ad['description'], 0, 100)) . '...'; ?></p>
-                            <div class="ad-details">
-                                <p>Rs <?= htmlspecialchars($ad['price']); ?></p>
-                                <p><strong>District:</strong> <?= htmlspecialchars($ad['district']); ?></p>
-                                <p><strong>Posted on:</strong>
-                                    <?= htmlspecialchars(date('Y-m-d h:i A', strtotime($ad['created_at']))); ?></p>
-                            </div>
-                        </div>
-                    <?php endwhile; ?>
+                <?php while ($ad = $ads_result->fetch_assoc()): ?>
+                <div class="ad-card" onclick="window.location.href='view_ad.php?ad_id=<?= $ad['ad_id']; ?>'">
+                    <img src="<?= htmlspecialchars($ad['image'] ?? 'images/placeholder/No_Image_AD.png'); ?>"
+                        alt="Product Image">
+                    <h4><?= htmlspecialchars($ad['title']); ?></h4>
+                    <p class="description"><?= htmlspecialchars(substr($ad['description'], 0, 100)) . '...'; ?></p>
+                    <div class="ad-details">
+                        <p>Rs <?= htmlspecialchars($ad['price']); ?></p>
+                        <p><strong>District:</strong> <?= htmlspecialchars($ad['district']); ?></p>
+                        <p><strong>Posted on:</strong>
+                            <?= htmlspecialchars(date('Y-m-d h:i A', strtotime($ad['created_at']))); ?></p>
+                    </div>
+                </div>
+                <?php endwhile; ?>
                 <?php else: ?>
-                    <p>No ads available at the moment.</p>
+                <p>No ads available at the moment.</p>
                 <?php endif; ?>
             </div>
             <div class="view-all-btn">

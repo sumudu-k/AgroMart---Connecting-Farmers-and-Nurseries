@@ -3,6 +3,7 @@ session_start();
 include 'config.php';
 include 'navbar.php';
 
+
 if (isset($_GET['ad_id'])) {
     $ad_id = $_GET['ad_id'];
 
@@ -31,6 +32,25 @@ if (isset($_GET['ad_id'])) {
         }, 2000);
     </script>";
     }
+
+    // retrieve existing view count
+    $sql_view_count = "SELECT * FROM ads WHERE ad_id=?";
+    $stmt_view_count = $conn->prepare($sql_view_count);
+    $stmt_view_count->bind_param('i', $ad_id);
+    $stmt_view_count->execute();
+    $result_view_count = $stmt_view_count->get_result();
+    $views_count = $result_view_count->fetch_assoc();
+    if (empty($views_count['view_count'])) {
+        $views_count['view_count'] = 1;
+    }
+    echo $views_count['view_count'] . ' Views ';
+
+    // save the view count
+    $ad_views = $views_count['view_count'] + 1;
+    $sql_view = "UPDATE ads SET view_count=? WHERE ad_id=?";
+    $stmt_view = $conn->prepare($sql_view);
+    $stmt_view->bind_param('ii', $ad_views, $ad_id);
+    $stmt_view->execute();
 
     $img_sql = "SELECT image_path FROM ad_images WHERE ad_id = ?";
     $stmt_img = $conn->prepare($img_sql);
