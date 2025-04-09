@@ -94,6 +94,17 @@ $ads_result = $conn->query($ads_query);
                     <h4><?= htmlspecialchars($trending['view_count']) ?></h4>
                     <h4><?= htmlspecialchars($trending['title']) ?></h4>
                     <p><?= htmlspecialchars($trending['price']) ?></p>
+                    <?php if ($trending['quantity'] == 0): ?>
+                    <p style="color:white; background-color:red; padding:5px 10px;">Almost soldout</p>
+
+                    <?php elseif ($trending['quantity'] <= 10): ?>
+                    <p style="color:white; background-color:orange; padding:5px 10px;"> <?= $trending['quantity'] ?>
+                        Items
+                        left</p>
+
+                    <?php else: ?>
+                    <p> <?= $trending['quantity'] ?> Items on stock</p>
+                    <?php endif; ?>
                     <p><?= htmlspecialchars($trending['district']) ?></p>
                     <p><?= htmlspecialchars($trending['category_name']) ?></p>
                     <p><img src="<?= htmlspecialchars($trending['image']) ?>" alt=""></p>
@@ -131,6 +142,16 @@ $ads_result = $conn->query($ads_query);
                     <p class="description"><?= htmlspecialchars(substr($ad['description'], 0, 100)) . '...'; ?></p>
                     <div class="ad-details">
                         <p>Rs <?= htmlspecialchars($ad['price']); ?></p>
+                        <?php if ($ad['quantity'] == 0): ?>
+                        <p style="color:white; background-color:red; padding:5px 10px;">Almost soldout</p>
+
+                        <?php elseif ($ad['quantity'] <= 10): ?>
+                        <p style="color:white; background-color:orange; padding:5px 10px;"> <?= $ad['quantity'] ?> Items
+                            left</p>
+
+                        <?php else: ?>
+                        <p> <?= $ad['quantity'] ?> Items on stock</p>
+                        <?php endif; ?>
                         <p><strong>District:</strong> <?= htmlspecialchars($ad['district']); ?></p>
                         <p><strong>Posted on:</strong>
                             <?= htmlspecialchars(date('Y-m-d h:i A', strtotime($ad['created_at']))); ?></p>

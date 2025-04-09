@@ -30,11 +30,12 @@ if (isset($_POST['submit'])) {
     $title = $_POST['title'];
     $description = $_POST['description'];
     $price = $_POST['price'];
+    $quantity = $_POST['quantity'];
     $phone_number = $_POST['phone_number'];
     $category_id = $_POST['category'];
     $district = $_POST['district'];
 
-    if (empty($title) || empty($description) || empty($district) || empty($category_id) || empty($price) || empty($phone_number)) {
+    if (empty($title) || empty($description) || empty($district) || empty($category_id) || empty($price) || empty($phone_number)  || empty($quantity)) {
         echo "<script>
         window.onload = function() {
             showAlert('Please fill all fields!', 'error', '#ff0000');
@@ -76,11 +77,17 @@ if (isset($_POST['submit'])) {
                 showAlert('Price must be a number!', 'error', '#ff0000');
             };
         </script>";
+    } elseif (is_numeric($quantity) == false) {
+        echo "<script>
+            window.onload = function() {
+                showAlert('Quantity must be a number!', 'error', '#ff0000');
+            };
+        </script>";
     } else {
 
-        $update_sql = "UPDATE ads SET title = ?, description = ?, price = ?, phone_number = ?, category_id = ?, district = ? WHERE ad_id = ?";
+        $update_sql = "UPDATE ads SET title = ?, description = ?, price = ?, quantity = ?, phone_number = ?, category_id = ?, district = ? WHERE ad_id = ?";
         $stmt = $conn->prepare($update_sql);
-        $stmt->bind_param("ssdsisi", $title, $description, $price, $phone_number, $category_id, $district, $ad_id);
+        $stmt->bind_param("ssdisisi", $title, $description, $price, $quantity, $phone_number, $category_id, $district, $ad_id);
         $stmt->execute();
 
         if (!empty($_FILES['new_images']['name'][0])) {
@@ -133,6 +140,7 @@ if (isset($_POST['submit'])) {
 <html lang="en">
 <?php include 'navbar.php'; ?>
 <link rel="stylesheet" href="css/edit_ad.css">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -166,6 +174,11 @@ if (isset($_POST['submit'])) {
             <div class="form-group">
                 <label for="price">Price</label>
                 <input type="text" name="price" value="<?= htmlspecialchars($ad['price']) ?>">
+            </div>
+
+            <div class="form-group">
+                <label for="price">Quantity</label>
+                <input type="text" name="quantity" value="<?= htmlspecialchars($ad['quantity']) ?>">
             </div>
 
             <div class="form-group">
@@ -235,7 +248,7 @@ if (isset($_POST['submit'])) {
             </div>
             <?php endwhile; ?>
 
-            
+
             <h3>Add New Images</h3>
             <div class="form-group">
                 <input type="file" name="new_images[]" multiple>
