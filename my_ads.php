@@ -14,6 +14,14 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
+
+$check_boosted = $conn->query("UPDATE ads 
+SET boosted = 0 ,
+ boosted_at=null
+WHERE boosted = 1 
+AND boosted_at < NOW() - INTERVAL 5 MINUTE;");
+
+
 $sql = "SELECT ads.*, GROUP_CONCAT(ad_images.image_path) AS images 
         FROM ads 
         LEFT JOIN ad_images ON ads.ad_id = ad_images.ad_id 
@@ -23,6 +31,34 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
+
+// boost
+if (isset($_POST['boost'])) {
+    $ad_id = $_POST['ad_id']; // Get the ad ID from the form
+    $sql_boost = "UPDATE ads SET boosted='1', boosted_at=now() WHERE ad_id=?";
+    $stmt_boost = $conn->prepare($sql_boost);
+    $stmt_boost->bind_param('i', $ad_id);
+    if ($stmt_boost->execute()) {
+        echo "<script>alert('Ad boosted successfully!');</script>";
+    } else {
+        echo "<script>alert('Failed to boost ad.');</script>";
+    }
+    header('Location:my_ads.php');
+}
+
+// unboost
+if (isset($_POST['unboost'])) {
+    $ad_id = $_POST['ad_id']; // Get the ad ID from the form
+    $sql_boost = "UPDATE ads SET boosted='0', boosted_at=null WHERE ad_id=?";
+    $stmt_boost = $conn->prepare($sql_boost);
+    $stmt_boost->bind_param('i', $ad_id);
+    if ($stmt_boost->execute()) {
+        echo "<script>alert('Ad unboosted !');</script>";
+    } else {
+        echo "<script>alert('Failed to unboost ad.');</script>";
+    }
+    header('Location:my_ads.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -46,6 +82,7 @@ $result = $stmt->get_result();
                 ?>
             <div class="ad-card">
                 <div class="details">
+                    <p><?= htmlspecialchars($row['ad_id']) ?></p>
                     <img src="<?= htmlspecialchars($first_image) ?>" alt="Ad Image">
                     <h4><?= htmlspecialchars($row['title']) ?></h4>
                     <p><?= htmlspecialchars($row['description']) ?></p>
@@ -63,11 +100,34 @@ $result = $stmt->get_result();
                     <?php endif; ?>
 
                     <P>Posted on:<?= htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></P>
+
+                    <?php if ($row['boosted'] == 1): ?>
+                    <p style="color:white; background-color:green; padding:5px 10px;">Boosted</p>
+                    <P>Boost will stop on <?= date('Y-m-d h:i A', strtotime($row['boosted_at'] . '+ 5 minutes')) ?></P>
+                    <?php endif; ?>
                 </div>
                 <div class="ad-buttons" style="margin-top: 10px;">
                     <a href="view_ad.php?ad_id=<?= $row['ad_id'] ?>" class="btn">View Ad</a>
                     <a href="edit_ad.php?ad_id=<?= $row['ad_id'] ?>" class="btn">Edit Ad</a>
                     <button class="btn btn-danger" onclick="confirmAlertAd(<?= $row['ad_id'] ?>)">Delete Ad</button>
+
+                    <?php if ($row['boosted'] == 1): ?>
+                    <form action="my_ads.php" method="post"
+                        onsubmit="return confirm('Are you sure you want to stop boost this ad?');">
+                        <input type="hidden" name="ad_id" value="<?= $row['ad_id'] ?>">
+                        <button class="btn btn-danger" type="submit" name="unboost">Stop Boost Ad</button>
+                    </form>
+                    <?php else: ?>
+                    <form action="my_ads.php" method="post"
+                        onsubmit="return confirm('Are you sure you want to boost this ad?');">
+                        <input type="hidden" name="ad_id" value="<?= $row['ad_id'] ?>">
+                        <button class="btn btn-danger" type="submit" name="boost">Boost Ad</button>
+                    </form>
+                    <?php endif; ?>
+
+
+
+
                 </div>
             </div>
             <?php endwhile; ?>
