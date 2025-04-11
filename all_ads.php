@@ -13,6 +13,13 @@ $total_ads_result = $conn->query($total_ads_sql);
 $total_ads = $total_ads_result->fetch_assoc()['total'];
 $total_pages = ceil($total_ads / $ads_per_page);
 
+$check_boosted = $conn->query("UPDATE ads 
+SET boosted = 0 ,
+ boosted_at=null
+WHERE boosted = 1 
+AND boosted_at < NOW() - INTERVAL 5 MINUTE;");
+
+
 $ads_sql = "
     SELECT ads.*, categories.category_name, 
         (SELECT image_path FROM ad_images WHERE ad_id = ads.ad_id LIMIT 1) AS image 
@@ -39,38 +46,43 @@ $result = $conn->query($ads_sql);
         <!-- ads container -->
         <div class="ads-container" id="ads-container">
             <?php if ($result->num_rows > 0): ?>
-                <?php while ($ad = $result->fetch_assoc()):
+            <?php while ($ad = $result->fetch_assoc()):
                     $description = $ad['description'];
                     if (strlen($description) > 200) {
                         $description = substr($description, 0, 200) . '...';
                     }
                 ?>
-                    <!-- ad card container -->
-                    <div class="ad-card" onclick="window.location.href='view_ad.php?ad_id=<?= $ad['ad_id']; ?>'">
-                        <img src="<?= htmlspecialchars($ad['image'] ?? 'images/placeholder/No_Image_AD.png'); ?>"
-                            alt="Product Image">
-                        <h4><?= htmlspecialchars($ad['title']); ?></h4>
-                        <div class="ad-details">
-                            <p class="description"><?= htmlspecialchars($description); ?></p>
-                            <p class="price">Rs <?= htmlspecialchars($ad['price']); ?></p>
-                            <p class="district"><?= htmlspecialchars($ad['district']); ?></p>
-                            <p class="date"><?= htmlspecialchars(date('Y-m-d h:i A', strtotime($ad['created_at']))) ?></p>
-                        </div>
+            <!-- ad card container -->
+            <div class="ad-card" onclick="window.location.href='view_ad.php?ad_id=<?= $ad['ad_id']; ?>'">
+                <img src="<?= htmlspecialchars($ad['image'] ?? 'images/placeholder/No_Image_AD.png'); ?>"
+                    alt="Product Image">
+                <h4><?= htmlspecialchars($ad['title']); ?></h4>
+                <div class="ad-details">
+                    <p class="description"><?= htmlspecialchars($description); ?></p>
+                    <p class="price">Rs <?= htmlspecialchars($ad['price']); ?></p>
+                    <p class="district"><?= htmlspecialchars($ad['district']); ?></p>
+
+                    <?php if ($ad['boosted'] == 1): ?>
+                    <p style="color:white; background-color:green; padding:5px 10px;">Boosted</p>
+                    <?php endif; ?>
+
+                    <p class="date"><?= htmlspecialchars(date('Y-m-d h:i A', strtotime($ad['created_at']))) ?></p>
+                </div>
 
 
 
-                    </div>
-                <?php endwhile; ?>
+            </div>
+            <?php endwhile; ?>
             <?php else: ?>
-                <p>No ads found.</p>
+            <p>No ads found.</p>
             <?php endif; ?>
         </div>
 
         <div class="pagination">
             <?php for ($page = 1; $page <= $total_pages; $page++): ?>
-                <a href="?page=<?= $page; ?>" class="<?= $page == $current_page ? 'active' : ''; ?>">
-                    <?= $page; ?>
-                </a>
+            <a href="?page=<?= $page; ?>" class="<?= $page == $current_page ? 'active' : ''; ?>">
+                <?= $page; ?>
+            </a>
             <?php endfor; ?>
         </div>
     </div>

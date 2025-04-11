@@ -168,6 +168,19 @@ $seller_name_get = $result_name->fetch_assoc();
             <p class="ad-description"><?= htmlspecialchars($ad['description']); ?></p>
 
             <p><strong>Price:</strong> <span class="price">Rs <?= htmlspecialchars($ad['price']); ?></span></p>
+
+            <!-- quantity -->
+            <?php if ($ad['quantity'] == 0): ?>
+            <p style="color:white; background-color:red; padding:5px 10px;">Almost soldout</p>
+
+            <?php elseif ($ad['quantity'] <= 10): ?>
+            <p style="color:white; background-color:orange; padding:5px 10px;"> <?= $ad['quantity'] ?> Items
+                left</p>
+
+            <?php else: ?>
+            <p> <?= $ad['quantity'] ?> Items on stock</p>
+            <?php endif; ?>
+
             <p><strong>Contact Number:</strong>
                 <span class="contact-num">
                     <a href="https://wa.me/+94<?= htmlspecialchars($ad['phone_number']); ?>"><?= htmlspecialchars($ad['phone_number']); ?>
@@ -203,7 +216,18 @@ $seller_name_get = $result_name->fetch_assoc();
                 <img src="<?= htmlspecialchars($similar_ad['image'] ?? 'images/placeholder/No_Image_AD.png'); ?>"
                     alt="Product Image">
                 <h4><?= htmlspecialchars($similar_ad['title']); ?></h4>
+                <h4><?= htmlspecialchars($similar_ad['district']); ?></h4>
                 <p>Rs <?= htmlspecialchars($similar_ad['price']); ?></p>
+                <?php if ($similar_ad['quantity'] == 0): ?>
+                <p style="color:white; background-color:red; padding:5px 10px;">Almost soldout</p>
+
+                <?php elseif ($similar_ad['quantity'] <= 10): ?>
+                <p style="color:white; background-color:orange; padding:5px 10px;"> <?= $similar_ad['quantity'] ?> Items
+                    left</p>
+
+                <?php else: ?>
+                <p> <?= $similar_ad['quantity'] ?> Items on stock</p>
+                <?php endif; ?>
             </div>
             <?php endwhile; ?>
         </div>

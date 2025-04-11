@@ -41,6 +41,7 @@ if (isset($_POST['submit'])) {
     $title = $_POST['title'];
     $description = $_POST['description'];
     $price = $_POST['price'];
+    $quantity = $_POST['quantity'];
     $phone_number = $_POST['phone_number'];
     $district = $_POST['district'];
     $user_id = $_SESSION['user_id'];
@@ -49,6 +50,7 @@ if (isset($_POST['submit'])) {
     $_SESSION['u-title'] = $title;
     $_SESSION['u-description'] = $description;
     $_SESSION['u-price'] = $price;
+    $_SESSION['u-quantity'] = $quantity;
     $_SESSION['u-phone_number'] = $phone_number;
 
 
@@ -100,6 +102,12 @@ if (isset($_POST['submit'])) {
                 showAlert('Price must be a number!', 'error', '#ff0000');
             };
         </script>";
+    } elseif (!is_numeric($quantity)) {
+        echo "<script>
+            window.onload = function() {
+                showAlert('quantity must be a number!', 'error', '#ff0000');
+            };
+        </script>";
     } elseif (max($_FILES['images']['size']) > 1048576) {
         echo "<script>
             window.onload = function() {
@@ -113,9 +121,9 @@ if (isset($_POST['submit'])) {
             };
         </script>";
     } else {
-        $ad_sql = "INSERT INTO ads (title, description, price, phone_number, user_id, category_id, district) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $ad_sql = "INSERT INTO ads (title, description, price, phone_number, user_id, category_id, district,quantity) VALUES (?, ?, ?, ?, ?, ?, ?,?)";
         $stmt = $conn->prepare($ad_sql);
-        $stmt->bind_param("ssdsiss", $title, $description, $price, $phone_number, $user_id, $category_id, $district);
+        $stmt->bind_param("ssdsissi", $title, $description, $price, $phone_number, $user_id, $category_id, $district, $quantity);
         $stmt->execute();
         $ad_id = $conn->insert_id;
 
@@ -226,6 +234,12 @@ if (isset($_POST['submit'])) {
                 <label for="price">Price</label>
                 <input type="text" name="price" placeholder="Rs"
                     value="<?= isset($_SESSION['u-price']) ? htmlspecialchars($_SESSION['u-price']) : '' ?>">
+            </div>
+
+            <div class="form-group">
+                <label for="price">Quantity</label>
+                <input type="text" name="quantity"
+                    value="<?= isset($_SESSION['u-quantity']) ? htmlspecialchars($_SESSION['u-quantity']) : '' ?>">
             </div>
 
             <div class="form-group">

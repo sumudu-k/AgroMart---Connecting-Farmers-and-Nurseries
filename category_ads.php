@@ -7,6 +7,12 @@ include 'navbar.php';
 $category_id = $_GET['category_id_qp'];
 $category_name = 'Category';
 
+$check_boosted = $conn->query("UPDATE ads 
+SET boosted = 0 ,
+ boosted_at=null
+WHERE boosted = 1 
+AND boosted_at < NOW() - INTERVAL 5 MINUTE;");
+
 if (isset($_GET['category_id_qp'])) {
     $query = "SELECT category_name FROM categories WHERE category_id = ?";
     $stmt = $conn->prepare($query);
@@ -67,22 +73,38 @@ if (isset($_GET['category_id_qp'])) {
                             $description .= '...';
                         }
                 ?>
-                        <!-- ad card container -->
-                        <div class="ad-card">
-                            <a href="view_ad.php?ad_id=<?= $ad_id; ?>">
-                                <?php if ($image): ?>
-                                    <img src="<?= htmlspecialchars($image['image_path']); ?>"
-                                        alt="<?= htmlspecialchars($ad['title']); ?>">
-                                <?php else: ?>
-                                    <img src="images/placeholder/No_Image_AD.png" alt="No Image Available">
-                                <?php endif; ?>
-                                <h4><?= htmlspecialchars($ad['title']); ?></h4>
-                                <p class="description"><?= $description; ?></p>
-                                <p>Price: <span class="price"> Rs <?= htmlspecialchars($ad['price']); ?></span></p>
-                                <p>District: <?= htmlspecialchars($ad['district']); ?></p>
-                                <p>Posted on: <?= date('F j, Y', strtotime($ad['created_at'])); ?></p>
-                            </a>
-                        </div>
+                <!-- ad card container -->
+                <div class="ad-card">
+                    <a href="view_ad.php?ad_id=<?= $ad_id; ?>">
+                        <?php if ($image): ?>
+                        <img src="<?= htmlspecialchars($image['image_path']); ?>"
+                            alt="<?= htmlspecialchars($ad['title']); ?>">
+                        <?php else: ?>
+                        <img src="images/placeholder/No_Image_AD.png" alt="No Image Available">
+                        <?php endif; ?>
+                        <h4><?= htmlspecialchars($ad['title']); ?></h4>
+
+                        <?php if ($ad['boosted'] == 1): ?>
+                        <p style="color:white; background-color:green; padding:5px 10px;">Boosted</p>
+                        <?php endif; ?>
+                        <p class="description"><?= $description; ?></p>
+                        <p>Price: <span class="price"> Rs <?= htmlspecialchars($ad['price']); ?></span></p>
+
+                        <?php if ($ad['quantity'] == 0): ?>
+                        <p style="color:white; background-color:red; padding:5px 10px;">Almost soldout</p>
+
+                        <?php elseif ($ad['quantity'] <= 10): ?>
+                        <p style="color:white; background-color:orange; padding:5px 10px;"> <?= $ad['quantity'] ?>
+                            Items
+                            left</p>
+
+                        <?php else: ?>
+                        <p> <?= $ad['quantity'] ?> Items on stock</p>
+                        <?php endif; ?>
+                        <p>District: <?= htmlspecialchars($ad['district']); ?></p>
+                        <p>Posted on: <?= date('F j, Y', strtotime($ad['created_at'])); ?></p>
+                    </a>
+                </div>
                 <?php
                     }
                 } else {
