@@ -116,6 +116,7 @@
             <a href="admin_manage_requests.php">Manage Requests</a>
             <a href="admin_approval.php">Admin Approval</a>
             <a href="seller_verify.php">Seller Verify</a>
+            <a href="ads_report.php">Ad Reports</a>
         </div>
         <div class="bottom-sidebar">
             <a href="admin_logout.php" class="btn-logout">Logout</a>
