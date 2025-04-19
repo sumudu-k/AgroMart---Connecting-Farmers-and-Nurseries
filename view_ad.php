@@ -3,7 +3,6 @@ session_start();
 include 'config.php';
 include 'navbar.php';
 
-
 if (isset($_GET['ad_id'])) {
     $ad_id = $_GET['ad_id'];
 
@@ -124,6 +123,25 @@ $stmt_name->bind_param('i', $seller_id);
 $stmt_name->execute();
 $result_name = $stmt_name->get_result();
 $seller_name_get = $result_name->fetch_assoc();
+
+
+// ad report
+
+if (isset($_POST['report'])) {
+    if (isset($_GET['ad_id'])) {
+        $sql = "INSERT into ad_reports (ad_id,user_id) values (?,?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ii', $ad_id, $user_id);
+        if ($stmt->execute()) {
+            echo "<script>
+        window.onload = function() {
+            showAlert('You reported ad successfully', 'success', '#008000');
+        };
+        </script>";
+        }
+    }
+};
+
 ?>
 
 <!DOCTYPE html>
@@ -156,13 +174,17 @@ $seller_name_get = $result_name->fetch_assoc();
         </div>
         <div class="ad-details">
             <h1><?= htmlspecialchars($ad['title']); ?></h1>
+            <form action="view_ad.php?ad_id=<?= $ad['ad_id'] ?>" method="post">
+                <button type="submit" name="report"
+                    onclick="return confirm('Are you sure you want report the ad?')">Report Ad</button>
+            </form>
 
             <h3>
                 <?= 'Seller: ' .  $seller_name_get['username']; ?>
             </h3>
             <?php
             if ($verify == 1): ?>
-            <span style="background-color:green; padding:5px 10px;color:white;"> Verified Seller</span>
+            <span style=" background-color:green; padding:5px 10px;color:white;"> Verified Seller</span>
             <?php endif;
             ?>
             <p class="ad-description"><?= htmlspecialchars($ad['description']); ?></p>
@@ -189,7 +211,8 @@ $seller_name_get = $result_name->fetch_assoc();
                 </span>
             </p>
             <p><strong>Category:</strong> <?= htmlspecialchars($ad['category_name']); ?></p>
-            <p><strong>Posted On:</strong> <?= htmlspecialchars(date('Y-m-d h:i A', strtotime($ad['created_at']))) ?>
+            <p><strong>Posted On:</strong>
+                <?= htmlspecialchars(date('Y-m-d h:i A', strtotime($ad['created_at']))) ?>
             </p>
             <p><strong>District:</strong> <?= htmlspecialchars($ad['district']); ?></p>
 
@@ -202,7 +225,8 @@ $seller_name_get = $result_name->fetch_assoc();
             </form>
             <?php else: ?>
             <p class="wishlist-login-btn"><a href="#"
-                    onclick="showAlert('Please login to see Wishlist','error','#ff0000')">add to wishlsit</a></p>
+                    onclick="showAlert('Please login to see Wishlist','error','#ff0000')">add to wishlsit</a>
+            </p>
             <?php endif; ?>
         </div>
     </div>

@@ -28,6 +28,10 @@ $notificationcount = "SELECT COUNT(DISTINCT message) AS total FROM notifications
 $notifications = $conn->query($notificationcount);
 $notifications = $notifications->fetch_assoc();
 
+$reports = "SELECT COUNT(*) as total FROM ad_reports";
+$reports = $conn->query($reports);
+$reports = $reports->fetch_assoc();
+
 ob_start();
 ?>
 
@@ -158,6 +162,9 @@ body::before {
             </div>
             <div class="stat-item">
                 <h3>Total Notifications: <br><?= htmlspecialchars($notifications['total']); ?></h3>
+            </div>
+            <div class="stat-item">
+                <h3>Total Reports: <br><?= htmlspecialchars($reports['total']); ?></h3>
             </div>
         </div>
     </div>
