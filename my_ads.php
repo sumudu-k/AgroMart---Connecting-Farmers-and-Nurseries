@@ -10,6 +10,8 @@ if (!isset($_SESSION['user_id'])) {
         showAlert('Please login to post an ad', 'error', '#ff0000');
     };
 </script>";
+    header('Location: login.php');
+    exit();
 }
 
 $user_id = $_SESSION['user_id'];

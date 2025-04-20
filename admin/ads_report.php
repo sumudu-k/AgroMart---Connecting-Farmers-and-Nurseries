@@ -2,7 +2,7 @@
 session_start();
 
 include '../config.php';
-//include 'admin_navbar.php';
+include 'admin_navbar.php';
 
 
 $sql = "SELECT ads.*, ad_reports.* 
@@ -68,7 +68,7 @@ if (isset($_POST['reject'])) {
         z-index: -1;
     }
 
-    .send-notification-container {
+    .report-container {
         max-width: 90%;
         margin: 20px auto;
         padding: 20px;
@@ -80,7 +80,7 @@ if (isset($_POST['reject'])) {
 </head>
 
 <body>
-    <div class="send-notification-container">
+    <div class="report-container">
         <h2>Reported Ads </h2>
         <?php if ($result->num_rows === 0): ?>
         <h2>No reports found</h2>
