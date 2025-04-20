@@ -2,3 +2,5 @@
 /vendor
 composer.json
 composer.lock
+notify_log.txt
+notify_errors.txt
