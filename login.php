@@ -31,6 +31,11 @@ if (isset($_POST['login'])) {
             if (password_verify($password, $user['password'])) {
                 $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['username'] = $user['username'];
+                $_SESSION['email'] = $user['email'];
+                $_SESSION['created_at'] = $user['created_at'];
+                $_SESSION['contact_number'] = $user['contact_number'];
+                $_SESSION['address'] = $user['address'];
+                $_SESSION['status'] = $user['status'];
                 echo "<script>
             window.onload = function() {
                 showAlert('Login Successful', 'success', '#008000');
