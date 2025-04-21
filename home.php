@@ -24,10 +24,12 @@ AND boosted_at < NOW() - INTERVAL 5 MINUTE;");
 $ads_query = "
     SELECT ads.*, 
         categories.category_name, 
-        (SELECT image_path FROM ad_images WHERE ad_id = ads.ad_id LIMIT 1) AS image 
+        (SELECT image_path FROM ad_images WHERE ad_id = ads.ad_id LIMIT 1 ) AS image 
     FROM ads 
     JOIN categories ON ads.category_id = categories.category_id 
+    WHERE ads.boosted = 1 
     ORDER BY RAND() LIMIT 8";
+
 $ads_result = $conn->query($ads_query);
 ?>
 
@@ -54,24 +56,24 @@ $ads_result = $conn->query($ads_query);
     </div>
 
     <script>
-    let slideIndex = 0;
-    const slides = document.getElementsByClassName("banner-slides");
+        let slideIndex = 0;
+        const slides = document.getElementsByClassName("banner-slides");
 
-    function showSlides() {
-        for (let i = 0; i < slides.length; i++) {
-            slides[i].classList.remove("active");
+        function showSlides() {
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");
+            }
+
+            slideIndex++;
+
+            if (slideIndex > slides.length) {
+                slideIndex = 1
+            }
+            slides[slideIndex - 1].classList.add("active");
+            setTimeout(showSlides, 3000);
         }
 
-        slideIndex++;
-
-        if (slideIndex > slides.length) {
-            slideIndex = 1
-        }
-        slides[slideIndex - 1].classList.add("active");
-        setTimeout(showSlides, 3000);
-    }
-
-    showSlides();
+        showSlides();
     </script>
 
     <div class="main-container">
@@ -81,41 +83,41 @@ $ads_result = $conn->query($ads_query);
             <h1 class="category-title">Categories</h1>
 
             <?php while ($category = $result->fetch_assoc()): ?>
-            <div class="category-card">
-                <a href="category_ads.php?category_id_qp=<?php echo $category['category_id']; ?>">
-                    <img src="uploads/<?php echo $category['category_image']; ?>"
-                        alt="<?php echo $category['category_name']; ?>">
-                </a>
-                <h3 class="category-name"><?php echo $category['category_name']; ?></h3>
-            </div>
+                <div class="category-card">
+                    <a href="category_ads.php?category_id_qp=<?php echo $category['category_id']; ?>">
+                        <img src="uploads/<?php echo $category['category_image']; ?>"
+                            alt="<?php echo $category['category_name']; ?>">
+                    </a>
+                    <h3 class="category-name"><?php echo $category['category_name']; ?></h3>
+                </div>
             <?php endwhile; ?>
         </div>
 
         <div class="popular">
             <h3>Most Viewed</h3>
             <?php while ($trending = $most_viewed_result->fetch_assoc()): ?>
-            <a href="view_ad.php?ad_id=<?= $trending['ad_id'] ?>">
-                <div>
-                    <h4><?= htmlspecialchars($trending['view_count']) ?></h4>
-                    <h4><?= htmlspecialchars($trending['title']) ?></h4>
-                    <p><?= htmlspecialchars($trending['price']) ?></p>
-                    <?php if ($trending['quantity'] == 0): ?>
-                    <p style="color:white; background-color:red; padding:5px 10px;">Almost soldout</p>
+                <a href="view_ad.php?ad_id=<?= $trending['ad_id'] ?>">
+                    <div>
+                        <h4><?= htmlspecialchars($trending['view_count']) ?></h4>
+                        <h4><?= htmlspecialchars($trending['title']) ?></h4>
+                        <p><?= htmlspecialchars($trending['price']) ?></p>
+                        <?php if ($trending['quantity'] == 0): ?>
+                            <p style="color:white; background-color:red; padding:5px 10px;">Almost soldout</p>
 
-                    <?php elseif ($trending['quantity'] <= 10): ?>
-                    <p style="color:white; background-color:orange; padding:5px 10px;"> <?= $trending['quantity'] ?>
-                        Items
-                        left</p>
+                        <?php elseif ($trending['quantity'] <= 10): ?>
+                            <p style="color:white; background-color:orange; padding:5px 10px;"> <?= $trending['quantity'] ?>
+                                Items
+                                left</p>
 
-                    <?php else: ?>
-                    <p> <?= $trending['quantity'] ?> Items on stock</p>
-                    <?php endif; ?>
-                    <p><?= htmlspecialchars($trending['district']) ?></p>
-                    <p><?= htmlspecialchars($trending['category_name']) ?></p>
-                    <p><img src="<?= htmlspecialchars($trending['image']) ?>" alt=""></p>
-                    <p><?= htmlspecialchars(date('Y-m-d h:i A', strtotime($trending['created_at']))); ?></p>
-                </div>
-            </a>
+                        <?php else: ?>
+                            <p> <?= $trending['quantity'] ?> Items on stock</p>
+                        <?php endif; ?>
+                        <p><?= htmlspecialchars($trending['district']) ?></p>
+                        <p><?= htmlspecialchars($trending['category_name']) ?></p>
+                        <p><img src="<?= htmlspecialchars($trending['image']) ?>" alt=""></p>
+                        <p><?= htmlspecialchars(date('Y-m-d h:i A', strtotime($trending['created_at']))); ?></p>
+                    </div>
+                </a>
             <?php endwhile; ?>
             <a href="popular.php"> View Trending</a>
         </div>
@@ -139,37 +141,37 @@ $ads_result = $conn->query($ads_query);
             <h1 class="ads-title">Find What You Want Here</h1>
             <div class="sugestion-ads">
                 <?php if ($ads_result->num_rows > 0): ?>
-                <?php while ($ad = $ads_result->fetch_assoc()): ?>
-                <div class="ad-card" onclick="window.location.href='view_ad.php?ad_id=<?= $ad['ad_id']; ?>'">
-                    <img src="<?= htmlspecialchars($ad['image'] ?? 'images/placeholder/No_Image_AD.png'); ?>"
-                        alt="Product Image">
-                    <h4><?= htmlspecialchars($ad['title']); ?></h4>
-                    <p class="description"><?= htmlspecialchars(substr($ad['description'], 0, 100)) . '...'; ?></p>
-                    <div class="ad-details">
-                        <p>Rs <?= htmlspecialchars($ad['price']); ?></p>
-                        <?php if ($ad['quantity'] == 0): ?>
-                        <p style="color:white; background-color:red; padding:5px 10px;">Almost soldout</p>
+                    <?php while ($ad = $ads_result->fetch_assoc()): ?>
+                        <div class="ad-card" onclick="window.location.href='view_ad.php?ad_id=<?= $ad['ad_id']; ?>'">
+                            <img src="<?= htmlspecialchars($ad['image'] ?? 'images/placeholder/No_Image_AD.png'); ?>"
+                                alt="Product Image">
+                            <h4><?= htmlspecialchars($ad['title']); ?></h4>
+                            <p class="description"><?= htmlspecialchars(substr($ad['description'], 0, 100)) . '...'; ?></p>
+                            <div class="ad-details">
+                                <p>Rs <?= htmlspecialchars($ad['price']); ?></p>
+                                <?php if ($ad['quantity'] == 0): ?>
+                                    <p style="color:white; background-color:red; padding:5px 10px;">Almost soldout</p>
 
-                        <?php elseif ($ad['quantity'] <= 10): ?>
-                        <p style="color:white; background-color:orange; padding:5px 10px;"> <?= $ad['quantity'] ?> Items
-                            left</p>
+                                <?php elseif ($ad['quantity'] <= 10): ?>
+                                    <p style="color:white; background-color:orange; padding:5px 10px;"> <?= $ad['quantity'] ?> Items
+                                        left</p>
 
-                        <?php else: ?>
-                        <p> <?= $ad['quantity'] ?> Items on stock</p>
-                        <?php endif; ?>
-                        <p><strong>District:</strong> <?= htmlspecialchars($ad['district']); ?></p>
+                                <?php else: ?>
+                                    <p> <?= $ad['quantity'] ?> Items on stock</p>
+                                <?php endif; ?>
+                                <p><strong>District:</strong> <?= htmlspecialchars($ad['district']); ?></p>
 
-                        <?php if ($ad['boosted'] == 1): ?>
-                        <p style="color:white; background-color:green; padding:5px 10px;">Boosted</p>
-                        <?php endif; ?>
+                                <?php if ($ad['boosted'] == 1): ?>
+                                    <p style="color:white; background-color:blue; padding:5px 10px;">Boosted</p>
+                                <?php endif; ?>
 
-                        <p><strong>Posted on:</strong>
-                            <?= htmlspecialchars(date('Y-m-d h:i A', strtotime($ad['created_at']))); ?></p>
-                    </div>
-                </div>
-                <?php endwhile; ?>
+                                <p><strong>Posted on:</strong>
+                                    <?= htmlspecialchars(date('Y-m-d h:i A', strtotime($ad['created_at']))); ?></p>
+                            </div>
+                        </div>
+                    <?php endwhile; ?>
                 <?php else: ?>
-                <p>No ads available at the moment.</p>
+                    <p>No ads available at the moment.</p>
                 <?php endif; ?>
             </div>
             <div class="view-all-btn">

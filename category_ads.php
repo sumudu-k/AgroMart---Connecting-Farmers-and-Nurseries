@@ -26,11 +26,12 @@ if (isset($_GET['category_id_qp'])) {
 
 
     $category_name = htmlspecialchars($category_name);
-
     $ad_sql = "SELECT ads.*, categories.category_name 
-           FROM ads 
-           JOIN categories ON ads.category_id = categories.category_id 
-           WHERE ads.category_id = ?";
+    FROM ads 
+    JOIN categories ON ads.category_id = categories.category_id 
+    WHERE ads.category_id = ? 
+    ORDER BY ads.boosted DESC, RAND()";
+
     $stmt = $conn->prepare($ad_sql);
     $stmt->bind_param("i", $category_id);
     $stmt->execute();
@@ -85,7 +86,7 @@ if (isset($_GET['category_id_qp'])) {
                         <h4><?= htmlspecialchars($ad['title']); ?></h4>
 
                         <?php if ($ad['boosted'] == 1): ?>
-                        <p style="color:white; background-color:green; padding:5px 10px;">Boosted</p>
+                        <p style="color:white; background-color:blue; padding:5px 10px;">Boosted</p>
                         <?php endif; ?>
                         <p class="description"><?= $description; ?></p>
                         <p>Price: <span class="price"> Rs <?= htmlspecialchars($ad['price']); ?></span></p>

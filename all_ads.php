@@ -3,7 +3,7 @@ session_start();
 include 'config.php';
 include 'navbar.php';
 
-$ads_per_page = 16;
+$ads_per_page = 50;
 
 $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($current_page - 1) * $ads_per_page;
@@ -22,11 +22,13 @@ AND boosted_at < NOW() - INTERVAL 5 MINUTE;");
 
 $ads_sql = "
     SELECT ads.*, categories.category_name, 
-        (SELECT image_path FROM ad_images WHERE ad_id = ads.ad_id LIMIT 1) AS image 
+        (SELECT image_path FROM ad_images WHERE ad_id = ads.ad_id LIMIT 1) AS image,
+        (CASE WHEN ads.boosted = 1 THEN 1 ELSE 0 END) AS boost_weight
     FROM ads 
     JOIN categories ON ads.category_id = categories.category_id 
-    ORDER BY RAND() 
+    ORDER BY boost_weight DESC, RAND()
     LIMIT $ads_per_page OFFSET $offset";
+
 $result = $conn->query($ads_sql);
 ?>
 
@@ -51,6 +53,23 @@ $result = $conn->query($ads_sql);
                     if (strlen($description) > 200) {
                         $description = substr($description, 0, 200) . '...';
                     }
+
+                    // get the seller id for verify badge
+                    $seller_id = $ad['user_id'];
+
+                    // check seller is verified
+                    $verify = 0;
+                    $check_seller = "SELECT * FROM verification_requests WHERE user_id=?  AND status ='approved'";
+                    $stmt_check = $conn->prepare($check_seller);
+                    $stmt_check->bind_param('i', $seller_id);
+                    $stmt_check->execute();
+                    $result_check = $stmt_check->get_result();
+                    if ($result_check->num_rows > 0) {
+                        $verify = 1;
+                    } else {
+                        $verify = 0;
+                    }
+
                 ?>
             <!-- ad card container -->
             <div class="ad-card" onclick="window.location.href='view_ad.php?ad_id=<?= $ad['ad_id']; ?>'">
@@ -61,9 +80,25 @@ $result = $conn->query($ads_sql);
                     <p class="description"><?= htmlspecialchars($description); ?></p>
                     <p class="price">Rs <?= htmlspecialchars($ad['price']); ?></p>
                     <p class="district"><?= htmlspecialchars($ad['district']); ?></p>
+                    <?php
+                            if ($verify == 1): ?>
+                    <span style=" background-color:green; padding:5px 10px;color:white;"> Verified Seller</span>
+                    <?php endif; ?>
 
                     <?php if ($ad['boosted'] == 1): ?>
-                    <p style="color:white; background-color:green; padding:5px 10px;">Boosted</p>
+                    <p style="color:white; background-color:blue; padding:5px 10px;">Boosted</p>
+                    <?php endif; ?>
+
+                    <!-- quantity -->
+                    <?php if ($ad['quantity'] == 0): ?>
+                    <p style="color:white; background-color:red; padding:5px 10px;">Almost soldout</p>
+
+                    <?php elseif ($ad['quantity'] <= 10): ?>
+                    <p style="color:white; background-color:orange; padding:5px 10px;"> <?= $ad['quantity'] ?> Items
+                        left</p>
+
+                    <?php else: ?>
+                    <p> <?= $ad['quantity'] ?> Items on stock</p>
                     <?php endif; ?>
 
                     <p class="date"><?= htmlspecialchars(date('Y-m-d h:i A', strtotime($ad['created_at']))) ?></p>

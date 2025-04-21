@@ -62,13 +62,14 @@ if (isset($_GET['ad_id'])) {
     }
 
     $similar_ads_sql = "
-        SELECT ads.*, categories.category_name, 
-            (SELECT image_path FROM ad_images WHERE ad_id = ads.ad_id LIMIT 1) AS image 
-        FROM ads 
-        JOIN categories ON ads.category_id = categories.category_id 
-        WHERE ads.category_id = ? AND ads.ad_id != ? 
-        ORDER BY ads.created_at DESC 
-        LIMIT 4";
+    SELECT ads.*, categories.category_name, 
+        (SELECT image_path FROM ad_images WHERE ad_id = ads.ad_id LIMIT 1) AS image 
+    FROM ads 
+    JOIN categories ON ads.category_id = categories.category_id 
+    WHERE ads.category_id = ? AND ads.ad_id != ? 
+    ORDER BY RAND() 
+    LIMIT 4";
+
     $similar_stmt = $conn->prepare($similar_ads_sql);
     $similar_stmt->bind_param("ii", $category_id, $ad_id);
     $similar_stmt->execute();
@@ -167,8 +168,8 @@ if (isset($_POST['report'])) {
             </div>
             <div class="thumbnail-images">
                 <?php foreach ($images as $image): ?>
-                <img src="<?= htmlspecialchars($image); ?>" alt="Thumbnail"
-                    onclick="updateMainImage('<?= htmlspecialchars($image); ?>')">
+                    <img src="<?= htmlspecialchars($image); ?>" alt="Thumbnail"
+                        onclick="updateMainImage('<?= htmlspecialchars($image); ?>')">
                 <?php endforeach; ?>
             </div>
         </div>
@@ -184,7 +185,7 @@ if (isset($_POST['report'])) {
             </h3>
             <?php
             if ($verify == 1): ?>
-            <span style=" background-color:green; padding:5px 10px;color:white;"> Verified Seller</span>
+                <span style=" background-color:green; padding:5px 10px;color:white;"> Verified Seller</span>
             <?php endif;
             ?>
             <p class="ad-description"><?= htmlspecialchars($ad['description']); ?></p>
@@ -193,14 +194,14 @@ if (isset($_POST['report'])) {
 
             <!-- quantity -->
             <?php if ($ad['quantity'] == 0): ?>
-            <p style="color:white; background-color:red; padding:5px 10px;">Almost soldout</p>
+                <p style="color:white; background-color:red; padding:5px 10px;">Almost soldout</p>
 
             <?php elseif ($ad['quantity'] <= 10): ?>
-            <p style="color:white; background-color:orange; padding:5px 10px;"> <?= $ad['quantity'] ?> Items
-                left</p>
+                <p style="color:white; background-color:orange; padding:5px 10px;"> <?= $ad['quantity'] ?> Items
+                    left</p>
 
             <?php else: ?>
-            <p> <?= $ad['quantity'] ?> Items on stock</p>
+                <p> <?= $ad['quantity'] ?> Items on stock</p>
             <?php endif; ?>
 
             <p><strong>Contact Number:</strong>
@@ -217,16 +218,16 @@ if (isset($_POST['report'])) {
             <p><strong>District:</strong> <?= htmlspecialchars($ad['district']); ?></p>
 
             <?php if ($user_id): ?>
-            <form method="post" action="wishlist.php" class="wishlist-form">
-                <input type="hidden" name="ad_id" value="<?= $ad_id; ?>">
-                <button type="submit" class="wishlist-button">
-                    <?= $is_wishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'; ?>
-                </button>
-            </form>
+                <form method="post" action="wishlist.php" class="wishlist-form">
+                    <input type="hidden" name="ad_id" value="<?= $ad_id; ?>">
+                    <button type="submit" class="wishlist-button">
+                        <?= $is_wishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'; ?>
+                    </button>
+                </form>
             <?php else: ?>
-            <p class="wishlist-login-btn"><a href="#"
-                    onclick="showAlert('Please login to see Wishlist','error','#ff0000')">add to wishlsit</a>
-            </p>
+                <p class="wishlist-login-btn"><a href="#"
+                        onclick="showAlert('Please login to see Wishlist','error','#ff0000')">add to wishlsit</a>
+                </p>
             <?php endif; ?>
         </div>
     </div>
@@ -236,31 +237,31 @@ if (isset($_POST['report'])) {
         <h3>Similar Products</h3>
         <div class="moreItemsContainer">
             <?php while ($similar_ad = $similar_ads_result->fetch_assoc()): ?>
-            <div class="moreItemCard" onclick="window.location.href='view_ad.php?ad_id=<?= $similar_ad['ad_id']; ?>'">
-                <img src="<?= htmlspecialchars($similar_ad['image'] ?? 'images/placeholder/No_Image_AD.png'); ?>"
-                    alt="Product Image">
-                <h4><?= htmlspecialchars($similar_ad['title']); ?></h4>
-                <h4><?= htmlspecialchars($similar_ad['district']); ?></h4>
-                <p>Rs <?= htmlspecialchars($similar_ad['price']); ?></p>
-                <?php if ($similar_ad['quantity'] == 0): ?>
-                <p style="color:white; background-color:red; padding:5px 10px;">Almost soldout</p>
+                <div class="moreItemCard" onclick="window.location.href='view_ad.php?ad_id=<?= $similar_ad['ad_id']; ?>'">
+                    <img src="<?= htmlspecialchars($similar_ad['image'] ?? 'images/placeholder/No_Image_AD.png'); ?>"
+                        alt="Product Image">
+                    <h4><?= htmlspecialchars($similar_ad['title']); ?></h4>
+                    <h4><?= htmlspecialchars($similar_ad['district']); ?></h4>
+                    <p>Rs <?= htmlspecialchars($similar_ad['price']); ?></p>
+                    <?php if ($similar_ad['quantity'] == 0): ?>
+                        <p style="color:white; background-color:red; padding:5px 10px;">Almost soldout</p>
 
-                <?php elseif ($similar_ad['quantity'] <= 10): ?>
-                <p style="color:white; background-color:orange; padding:5px 10px;"> <?= $similar_ad['quantity'] ?> Items
-                    left</p>
+                    <?php elseif ($similar_ad['quantity'] <= 10): ?>
+                        <p style="color:white; background-color:orange; padding:5px 10px;"> <?= $similar_ad['quantity'] ?> Items
+                            left</p>
 
-                <?php else: ?>
-                <p> <?= $similar_ad['quantity'] ?> Items on stock</p>
-                <?php endif; ?>
-            </div>
+                    <?php else: ?>
+                        <p> <?= $similar_ad['quantity'] ?> Items on stock</p>
+                    <?php endif; ?>
+                </div>
             <?php endwhile; ?>
         </div>
     </div>
 
     <script>
-    function updateMainImage(src) {
-        document.getElementById('displayedImage').src = src;
-    }
+        function updateMainImage(src) {
+            document.getElementById('displayedImage').src = src;
+        }
     </script>
     <script src='alertFunction.js'></script>
 

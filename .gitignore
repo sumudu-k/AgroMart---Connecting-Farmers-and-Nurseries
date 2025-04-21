@@ -5,3 +5,4 @@ composer.lock
 notify_log.txt
 notify_errors.txt
 .env
+user_data.txt
