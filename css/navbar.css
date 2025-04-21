@@ -242,3 +242,36 @@ nav ul li .notification {
     width: 350px;
   }
 }
+
+.search-results {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ddd;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-height: 200px;
+  overflow-y: auto;
+  border-radius: 4px;
+}
+
+.search-results ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.search-results li {
+  padding: 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.search-results li a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+}
+
+.search-results li:hover {
+  background-color: #f8f8f8;
+}
