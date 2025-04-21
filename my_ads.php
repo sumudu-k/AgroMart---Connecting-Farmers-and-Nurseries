@@ -21,7 +21,7 @@ $check_boosted = $conn->query("UPDATE ads
 SET boosted = 0 ,
  boosted_at=null
 WHERE boosted = 1 
-AND boosted_at < NOW() - INTERVAL 5 MINUTE;");
+AND boosted_at < NOW() - INTERVAL 1 YEAR;");
 
 
 $sql = "SELECT ads.*, GROUP_CONCAT(ad_images.image_path) AS images 
@@ -106,8 +106,8 @@ if (isset($_POST['unboost'])) {
                             <P>Posted on:<?= htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></P>
 
                             <?php if ($row['boosted'] == 1): ?>
-                                <p style="color:white; background-color:green; padding:5px 10px;">Boosted</p>
-                                <P>Boost will stop on <?= date('Y-m-d h:i A', strtotime($row['boosted_at'] . '+ 5 minutes')) ?></P>
+                                <p style="color:white; background-color:blue; padding:5px 10px;">Boosted</p>
+                                <P>Boost will stop on <?= date('Y-m-d h:i A', strtotime($row['boosted_at'] . '+ 1 year')) ?></P>
                             <?php endif; ?>
                         </div>
                         <div class="ad-buttons" style="margin-top: 10px;">

@@ -22,11 +22,13 @@ AND boosted_at < NOW() - INTERVAL 5 MINUTE;");
 
 $ads_sql = "
     SELECT ads.*, categories.category_name, 
-        (SELECT image_path FROM ad_images WHERE ad_id = ads.ad_id LIMIT 1) AS image 
+        (SELECT image_path FROM ad_images WHERE ad_id = ads.ad_id LIMIT 1) AS image,
+        (CASE WHEN ads.boosted = 1 THEN 1 ELSE 0 END) AS boost_weight
     FROM ads 
     JOIN categories ON ads.category_id = categories.category_id 
-    ORDER BY RAND() 
+    ORDER BY boost_weight DESC, RAND()
     LIMIT $ads_per_page OFFSET $offset";
+
 $result = $conn->query($ads_sql);
 ?>
 
@@ -46,7 +48,7 @@ $result = $conn->query($ads_sql);
         <!-- ads container -->
         <div class="ads-container" id="ads-container">
             <?php if ($result->num_rows > 0): ?>
-                <?php while ($ad = $result->fetch_assoc()):
+            <?php while ($ad = $result->fetch_assoc()):
                     $description = $ad['description'];
                     if (strlen($description) > 200) {
                         $description = substr($description, 0, 200) . '...';
@@ -69,53 +71,53 @@ $result = $conn->query($ads_sql);
                     }
 
                 ?>
-                    <!-- ad card container -->
-                    <div class="ad-card" onclick="window.location.href='view_ad.php?ad_id=<?= $ad['ad_id']; ?>'">
-                        <img src="<?= htmlspecialchars($ad['image'] ?? 'images/placeholder/No_Image_AD.png'); ?>"
-                            alt="Product Image">
-                        <h4><?= htmlspecialchars($ad['title']); ?></h4>
-                        <div class="ad-details">
-                            <p class="description"><?= htmlspecialchars($description); ?></p>
-                            <p class="price">Rs <?= htmlspecialchars($ad['price']); ?></p>
-                            <p class="district"><?= htmlspecialchars($ad['district']); ?></p>
-                            <?php
+            <!-- ad card container -->
+            <div class="ad-card" onclick="window.location.href='view_ad.php?ad_id=<?= $ad['ad_id']; ?>'">
+                <img src="<?= htmlspecialchars($ad['image'] ?? 'images/placeholder/No_Image_AD.png'); ?>"
+                    alt="Product Image">
+                <h4><?= htmlspecialchars($ad['title']); ?></h4>
+                <div class="ad-details">
+                    <p class="description"><?= htmlspecialchars($description); ?></p>
+                    <p class="price">Rs <?= htmlspecialchars($ad['price']); ?></p>
+                    <p class="district"><?= htmlspecialchars($ad['district']); ?></p>
+                    <?php
                             if ($verify == 1): ?>
-                                <span style=" background-color:green; padding:5px 10px;color:white;"> Verified Seller</span>
-                            <?php endif; ?>
+                    <span style=" background-color:green; padding:5px 10px;color:white;"> Verified Seller</span>
+                    <?php endif; ?>
 
-                            <?php if ($ad['boosted'] == 1): ?>
-                                <p style="color:white; background-color:green; padding:5px 10px;">Boosted</p>
-                            <?php endif; ?>
+                    <?php if ($ad['boosted'] == 1): ?>
+                    <p style="color:white; background-color:blue; padding:5px 10px;">Boosted</p>
+                    <?php endif; ?>
 
-                            <!-- quantity -->
-                            <?php if ($ad['quantity'] == 0): ?>
-                                <p style="color:white; background-color:red; padding:5px 10px;">Almost soldout</p>
+                    <!-- quantity -->
+                    <?php if ($ad['quantity'] == 0): ?>
+                    <p style="color:white; background-color:red; padding:5px 10px;">Almost soldout</p>
 
-                            <?php elseif ($ad['quantity'] <= 10): ?>
-                                <p style="color:white; background-color:orange; padding:5px 10px;"> <?= $ad['quantity'] ?> Items
-                                    left</p>
+                    <?php elseif ($ad['quantity'] <= 10): ?>
+                    <p style="color:white; background-color:orange; padding:5px 10px;"> <?= $ad['quantity'] ?> Items
+                        left</p>
 
-                            <?php else: ?>
-                                <p> <?= $ad['quantity'] ?> Items on stock</p>
-                            <?php endif; ?>
+                    <?php else: ?>
+                    <p> <?= $ad['quantity'] ?> Items on stock</p>
+                    <?php endif; ?>
 
-                            <p class="date"><?= htmlspecialchars(date('Y-m-d h:i A', strtotime($ad['created_at']))) ?></p>
-                        </div>
+                    <p class="date"><?= htmlspecialchars(date('Y-m-d h:i A', strtotime($ad['created_at']))) ?></p>
+                </div>
 
 
 
-                    </div>
-                <?php endwhile; ?>
+            </div>
+            <?php endwhile; ?>
             <?php else: ?>
-                <p>No ads found.</p>
+            <p>No ads found.</p>
             <?php endif; ?>
         </div>
 
         <div class="pagination">
             <?php for ($page = 1; $page <= $total_pages; $page++): ?>
-                <a href="?page=<?= $page; ?>" class="<?= $page == $current_page ? 'active' : ''; ?>">
-                    <?= $page; ?>
-                </a>
+            <a href="?page=<?= $page; ?>" class="<?= $page == $current_page ? 'active' : ''; ?>">
+                <?= $page; ?>
+            </a>
             <?php endfor; ?>
         </div>
     </div>
