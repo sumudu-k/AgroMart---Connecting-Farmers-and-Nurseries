@@ -7,7 +7,7 @@ function showAlert(title, icon, color) {
         title: title,
         showConfirmButton: false,
         color: color,
-        timer: 3000
+        timer: 100
     });
 }
 
