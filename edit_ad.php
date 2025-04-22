@@ -2,6 +2,11 @@
 session_start();
 include 'config.php';
 
+if (empty($_SESSION['username'])) {
+    header("Location:login.php");
+}
+
+
 $ad_id = $_GET['ad_id'];
 
 function isValidContact($phone_number)
