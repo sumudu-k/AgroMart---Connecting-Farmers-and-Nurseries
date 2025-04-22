@@ -143,6 +143,30 @@ if (isset($_POST['report'])) {
     }
 };
 
+// check item already in cart
+$sql_check = "SELECT * from cart where user_id=? and ad_id=?";
+$stmt_check = $conn->prepare($sql_check);
+$stmt_check->bind_param('ii', $user_id, $ad_id);
+$stmt_check->execute();
+$result_check = $stmt_check->get_result();
+
+
+
+// add to cart
+if (isset($_POST['add_to_cart'])) {
+    $sql_insert = "INSERT into cart (user_id, ad_id) values (?,?)";
+    $stmt_insert = $conn->prepare($sql_insert);
+    $stmt_insert->bind_param("ii", $user_id, $ad_id);
+    if ($stmt_insert->execute()) {
+        echo "<script>
+        window.onload = function() {
+            showAlert('Product added to cart successfully', 'success', '#008000');
+        };
+        </script>";
+    }
+    header("Location:view_ad.php?ad_id=$ad_id");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -229,6 +253,23 @@ if (isset($_POST['report'])) {
                         onclick="showAlert('Please login to see Wishlist','error','#ff0000')">add to wishlsit</a>
                 </p>
             <?php endif; ?>
+
+            <?Php
+            if ($result_check->num_rows == 1): ?>
+                <a href="my_cart.php"><button>Go to Cart</button></a>
+
+            <?php
+            elseif (!$ad['quantity'] == 0): ?>
+                <form method="post" action="view_ad.php?ad_id=<?= $ad_id ?>">
+                    <input type="hidden" name="ad_id">
+                    <button type="submit" name="add_to_cart"
+                        style="color:white; background-color:blue; padding:5px 10px;">Add to Cart</button>
+                </form>
+            <?php else: ?>
+                <button type="submit" onclick="showAlert('Product is out of stock','error','#ff0000')"
+                    style="color:white; background-color:gray; padding:5px 10px;">Add to Cart</button>
+            <?php endif; ?>
+
         </div>
     </div>
 
