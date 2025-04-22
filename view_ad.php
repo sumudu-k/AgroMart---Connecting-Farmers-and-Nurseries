@@ -149,7 +149,6 @@ $stmt_check = $conn->prepare($sql_check);
 $stmt_check->bind_param('ii', $user_id, $ad_id);
 $stmt_check->execute();
 $result_check = $stmt_check->get_result();
-print_r($result_check);
 
 
 
