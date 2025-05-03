@@ -27,25 +27,40 @@ $result = $conn->query($sql);
     <div class="container">
 
         <?php if ($result->num_rows > 0): ?>
-        <?php while ($row = $result->fetch_assoc()): ?>
+        <?php while ($row = $result->fetch_assoc()):
+                $seller_id = $row['user_id'];
+                // check seller is verified
+                $verify = 0;
+                $check_seller = "SELECT * FROM verification_requests WHERE user_id=?  AND status ='approved'";
+                $stmt_check = $conn->prepare($check_seller);
+                $stmt_check->bind_param('i', $seller_id);
+                $stmt_check->execute();
+                $result_check = $stmt_check->get_result();
+                if ($result_check->num_rows > 0) {
+                    $verify = 1;
+                } else {
+                    $verify = 0;
+                }
+            ?>
         <div class="request-card">
             <a href="view_request.php?request_id=<?= $row['request_id']; ?>">
                 <strong><?= htmlspecialchars($row['subject']); ?></strong>
                 <p><?= htmlspecialchars($row['description']); ?></p>
+                <p>Requested by: <?= htmlspecialchars($row['username']); ?></p>
+                <?php
+                        if ($verify == 1): ?>
+                <span style=" background-color:green; padding:5px 10px;color:white;"> Verified Seller</span>
+                <?php endif;
+                        ?>
                 <p>Contact Number: <?= htmlspecialchars($row['contact']); ?></p>
-                <p>Connect via:
-                    <a href="https://wa.me/+94<?= htmlspecialchars($row['contact']); ?>" target="_blank"
-                        class="whatsapp-link">
-                        WhatsApp
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                </p>
+
                 <p>District: <?= htmlspecialchars($row['district']); ?></p>
                 <p>Posted On: <?= htmlspecialchars($row['created_at']); ?></p>
         </div>
         <?php endwhile; ?>
-        <?php else: ?>
         </a>
+        <?php else: ?>
+
         <p class="no-requests">Sorry! No plant requests available.</p>
         <?php endif; ?>
     </div>

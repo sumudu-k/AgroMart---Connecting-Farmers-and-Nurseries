@@ -30,22 +30,24 @@ $result = $stmt->get_result();
     <h2>My Product Requests</h2>
     <div class="container">
         <?php if ($result->num_rows > 0): ?>
-            <?php while ($row = $result->fetch_assoc()): ?>
-                <div class="request-card">
-                    <strong><?= htmlspecialchars($row['subject']); ?></strong>
-                    <p><?= htmlspecialchars($row['description']); ?></p>
-                    <p>Contact: <?= htmlspecialchars($row['contact']); ?></p>
-                    <p>District: <?= htmlspecialchars($row['district']); ?></p>
-                    <p>Created at: <?= htmlspecialchars(date('Y-m-d h:i A', strtotime($row['created_at']))) ?></p>
-                    <div class="request-actions">
-                        <a href="request_edit.php?id=<?= $row['request_id']; ?>">Edit</a>
-                        <a href="#" onclick="confirmAlerRequest(<?= $row['request_id']; ?>)">Delete</a>
+        <?php while ($row = $result->fetch_assoc()): ?>
+        <div class="request-card">
+            <a href="view_request.php?request_id= <?= $row['request_id'] ?>">
+                <strong><?= htmlspecialchars($row['subject']); ?></strong>
+                <p><?= htmlspecialchars($row['description']); ?></p>
+                <p>Contact: <?= htmlspecialchars($row['contact']); ?></p>
+                <p>District: <?= htmlspecialchars($row['district']); ?></p>
+                <p>Created at: <?= htmlspecialchars(date('Y-m-d h:i A', strtotime($row['created_at']))) ?></p>
+            </a>
+            <div class="request-actions">
+                <a href="request_edit.php?id=<?= $row['request_id']; ?>">Edit</a>
+                <a href="#" onclick="confirmAlerRequest(<?= $row['request_id']; ?>)">Delete</a>
+            </div>
 
-                    </div>
-                </div>
-            <?php endwhile; ?>
+        </div>
+        <?php endwhile; ?>
         <?php else: ?>
-            <p class="no-requests">You have no any requests.</p>
+        <p class="no-requests">You have no any requests.</p>
         <?php endif; ?>
     </div>
     <?php include 'footer.php'; ?>
