@@ -2,6 +2,7 @@
 include 'config.php';
 include 'navbar.php';
 
+// get all plant requests from the database
 $sql = "SELECT plant_requests.*, users.username FROM plant_requests 
         JOIN users ON plant_requests.user_id = users.user_id 
         ORDER BY created_at DESC";
@@ -24,25 +25,28 @@ $result = $conn->query($sql);
 <body>
     <h2>All Plant Requests</h2>
     <div class="container">
+
         <?php if ($result->num_rows > 0): ?>
-            <?php while ($row = $result->fetch_assoc()): ?>
-                <div class="request-card">
-                    <strong><?= htmlspecialchars($row['subject']); ?></strong>
-                    <p><?= htmlspecialchars($row['description']); ?></p>
-                    <p>Contact Number: <?= htmlspecialchars($row['contact']); ?></p>
-                    <p>Connect via:
-                        <a href="https://wa.me/+94<?= htmlspecialchars($row['contact']); ?>" target="_blank"
-                            class="whatsapp-link">
-                            WhatsApp
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                    </p>
-                    <p>District: <?= htmlspecialchars($row['district']); ?></p>
-                    <p>Posted On: <?= htmlspecialchars($row['created_at']); ?></p>
-                </div>
-            <?php endwhile; ?>
+        <?php while ($row = $result->fetch_assoc()): ?>
+        <div class="request-card">
+            <a href="view_request.php?request_id=<?= $row['request_id']; ?>">
+                <strong><?= htmlspecialchars($row['subject']); ?></strong>
+                <p><?= htmlspecialchars($row['description']); ?></p>
+                <p>Contact Number: <?= htmlspecialchars($row['contact']); ?></p>
+                <p>Connect via:
+                    <a href="https://wa.me/+94<?= htmlspecialchars($row['contact']); ?>" target="_blank"
+                        class="whatsapp-link">
+                        WhatsApp
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </p>
+                <p>District: <?= htmlspecialchars($row['district']); ?></p>
+                <p>Posted On: <?= htmlspecialchars($row['created_at']); ?></p>
+        </div>
+        <?php endwhile; ?>
         <?php else: ?>
-            <p class="no-requests">Sorry! No plant requests available.</p>
+        </a>
+        <p class="no-requests">Sorry! No plant requests available.</p>
         <?php endif; ?>
     </div>
     <?php include 'footer.php'; ?>
